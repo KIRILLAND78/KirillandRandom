@@ -25,7 +25,7 @@ namespace KirillandRandom.Items
             item.value= Item.sellPrice(platinum:1);
             item.height = 12;
             item.maxStack = 1;
-            item.defense = 500;
+            item.defense = 500;//ОЧЕНЬ ИМБАЛАНСНАЯ, ТОЛЬКО ДЛЯ ТЕСТОВ
         }
     }
 }
