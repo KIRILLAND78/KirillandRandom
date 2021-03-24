@@ -10,7 +10,7 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("Something"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("Best offence is a defence... \r\nUGA-CHAGA!!!");
+			Tooltip.SetDefault("UGA-CHAGA!!!");
 		}
 
 		public override void SetDefaults()
@@ -27,8 +27,8 @@ namespace KirillandRandom.Items
 			item.rare = ItemRarityID.Expert;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
-			item.shoot = ProjectileID.MolotovFire3;
-			item.shootSpeed = 10;
+			item.shoot = ProjectileID.ChargedBlasterOrb;
+			item.shootSpeed = 20;
 		}
 		//public override void CanEquipAccessory(Player player, int slot){		}
 
