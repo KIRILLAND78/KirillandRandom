@@ -110,14 +110,6 @@ namespace KirillandRandom.Items
 			// DisplayName.SetDefault("Something"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
 			Tooltip.SetDefault("UGA-CHAGA!!!");
 		}
-
-		public override void CanEquipAccessory(Player player, int slot){ return true;		}
-
-
-
-
-
-
 		//public override void AltFunctionUse(Player player){		}
 		public override void AddRecipes()
 		{
