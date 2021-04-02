@@ -10,22 +10,21 @@ using Terraria;
 namespace KirillandRandom.Items
 {
     [AutoloadEquip(EquipType.Head)]
-    public class FamiliarHelmet:ModItem
+    public class TestHead:ModItem
     {
         public override void SetStaticDefaults()
         {//Свойства вещей. статичные.
-            DisplayName.SetDefault("Familiar Helmet");
-            Tooltip.SetDefault("Hmm... It definetely belongs to someone...");
+            DisplayName.SetDefault("Test Head");
+            Tooltip.SetDefault("Beep-beep-beep-bop-bap-beepbeepbeepbeep-beep-boop-bap");
         }
         public override void SetDefaults()
         {
-            //Свойства вещей, только... как дропнутая?
-            item.rare = ItemRarityID.Green;
+            item.rare = ItemRarityID.Gray;
             item.width = 12;
             item.value= Item.sellPrice(platinum:1);
             item.height = 12;
             item.maxStack = 1;
-            item.vanity = true;
+            item.defense = 500;
         }
     }
 }

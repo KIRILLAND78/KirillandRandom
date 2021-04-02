@@ -2,50 +2,84 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
+using System.Text;
 
 namespace KirillandRandom.Items
 {
 	public class Curiosity : ModItem
 	{
+
 		public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("Something"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("UGA-CHAGA!!!");
+			Tooltip.SetDefault("This weapon has alt attack and 'overuse' mechanic\r\nContinuous use of only one fire mode improves damage of other fire mode and\r\n weakens current.");
 		}
+
         public override bool AltFunctionUse(Player player)
         {
 			return true;
 		}
-        public override bool CanUseItem(Player player)
+		public override void HoldItem(Player player)
+		{
+			if (player.GetModPlayer<MPlayer>().OveruseMeterCreated == false)
+			{
+				Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("OveruseMeter"), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("OveruseMeter1"), 0, 0, Main.myPlayer);
+				player.GetModPlayer<MPlayer>().OveruseMeterCreated = true;
+			}
+			base.HoldItem(player);
+		}
+
+
+		public override bool CanUseItem(Player player)
         {
 			if (player.altFunctionUse == 2)
 			{
-
+				item.noUseGraphic = true;
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.shoot = ProjectileID.ChargedBlasterOrb;
-				item.useTime = 30;
-				item.useAnimation = 30;
-
-				item.shootSpeed = 30;
+				item.useTime = 18;
+				item.useAnimation = 18;
+				item.shootSpeed = 18;
 				item.knockBack = 1;
-				item.useStyle = ItemUseStyleID.Stabbing;
-				item.damage = 30;
+				item.useStyle = ItemUseStyleID.HoldingOut;
 
+				item.damage = 60;
+				if (player.GetModPlayer<MPlayer>().overuse > 40)
+                {
+					item.damage = 90;
+				}
+				if (player.GetModPlayer<MPlayer>().overuse < -40)
+				{
+					item.damage = 30;
+				}
+				player.GetModPlayer<MPlayer>().overuse -= 2;
 				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
 			}
 			else
 			{
-				
+				item.noUseGraphic = false;
 				item.shoot = ProjectileID.None;
-				item.damage = 50;
+				item.damage = 80;
+				if (player.GetModPlayer<MPlayer>().overuse > 40)
+				{
+					item.damage = 40;
+				}
+				if (player.GetModPlayer<MPlayer>().overuse < -40)
+				{
+					item.damage = 120;
+				}
 				item.melee = true;
 				item.width = 40;
 				item.height = 90;
-				item.useTime = 30;
-				item.useAnimation = 30;
+				item.useTime = 25;
+				item.useAnimation = 25;
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.knockBack = 6;
-				item.value = 10000;
+				player.GetModPlayer<MPlayer>().overuse += 3;
 				item.rare = ItemRarityID.Expert;
 				item.UseSound = SoundID.Item1;
 				item.autoReuse = true;
@@ -54,7 +88,7 @@ namespace KirillandRandom.Items
         }
         public override void SetDefaults()
 		{
-			item.damage = 50;
+			item.damage = 80;
 			item.melee = true;
 			item.width = 40;
 			item.height = 90;
@@ -77,8 +111,7 @@ namespace KirillandRandom.Items
 		}
 
 
-
-		public override void AddRecipes()
+        public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.DirtBlock, 10);
@@ -88,14 +121,14 @@ namespace KirillandRandom.Items
 		}
 
 
-
-		//КОД ДАЛЬШЕ Я ТУПО СПИЗД... позаимствовал с документации. и изменил немного. да, вот такой я гадкий.
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Vector2 speed = new Vector2(speedX, speedY);
-			speed = speed.RotatedByRandom(MathHelper.ToRadians(5));
+			speed = speed.RotatedByRandom(MathHelper.ToRadians(2));
 			speedX = speed.X;
 			speedY = speed.Y;
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Curiosity_alt"), 0, 0, Main.myPlayer);
+
 			return true;//это что-то типа коррекции поведения снарядов... наверное? По типу изменения урона, угла стрельбы и т.д.
 		}
 
