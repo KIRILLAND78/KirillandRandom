@@ -19,13 +19,22 @@ namespace KirillandRandom.Items
         }
         public override void SetDefaults()
         {
-            //Свойства вещей, только... как дропнутая?
+            //Свойства вещей, только... как инвентарная?
             item.rare = ItemRarityID.Green;
             item.width = 12;
             item.value= Item.sellPrice(platinum:1);
             item.height = 12;
             item.maxStack = 1;
             item.vanity = true;
+        }
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+
+            recipe.AddIngredient(ItemID.IronBar, 5);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

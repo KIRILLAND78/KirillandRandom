@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
+using Terraria.ID;
 
 
 namespace KirillandRandom.Projectiles
 {
     public class lastflame : ModProjectile
     {
+        public int bonusDamage = 0;
         Item Book;
         public int mode = 2;
         private int first=1;
@@ -44,6 +46,17 @@ namespace KirillandRandom.Projectiles
 
 
 
+
+
+
+
+
+
+
+            int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
+            Main.dust[DDustID].noGravity = true;
+
+
             if (mode == 1)
             {
                 if (first == 0)
@@ -53,6 +66,7 @@ namespace KirillandRandom.Projectiles
                     Player p = Main.player[projectile.owner];
                     projectile.tileCollide = true;
 
+                    projectile.damage +=bonusDamage;
                     projectile.light = 0.6f;
                     var shootToX = Main.MouseWorld.X - projectile.Center.X;//обоже.
                     var shootToY = Main.MouseWorld.Y - projectile.Center.Y;//обоже.
@@ -63,8 +77,6 @@ namespace KirillandRandom.Projectiles
                     projectile.velocity.Y = shootToY;//обоже.
                     first = 2;
                 }
-                //int DustID = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width + 4, projectile.height + 4, 36, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 120, default(Color), 0.75f); //Spawns dust
-                //Main.dust[DustID].noGravity = true;
             }
             else{
 
@@ -72,7 +84,7 @@ namespace KirillandRandom.Projectiles
                 if (first == 1)
                 {
                     Book = p.HeldItem;
-                    projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 120* p.GetModPlayer<MPlayer>().flames_summoned;
+                    projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 90* p.GetModPlayer<MPlayer>().flames_summoned;
                     first = 0;
                 }
                     projectile.alpha = 64;
@@ -85,12 +97,19 @@ namespace KirillandRandom.Projectiles
                 projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
 
                 projectile.ai[1] += 3f;
+
+                if (p.GetModPlayer<MPlayer>().flames_summoned * 5 > bonusDamage)
+                {
+                    bonusDamage = p.GetModPlayer<MPlayer>().flames_summoned * 5;
+                }
+
                 if (owner.HeldItem != Book)
                 {
                     projectile.Kill();//РАБОТАЕТ, ЮХУ!
                 }
                 if ((p.controlUseItem)&&(p.altFunctionUse!=2))
                 {
+
                     mode = 1;
                 }
 

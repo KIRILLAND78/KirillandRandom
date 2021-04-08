@@ -10,6 +10,14 @@ namespace KirillandRandom.Projectiles
 {
     public class lastflameBook : ModProjectile
     {
+        public override void Kill(int timeLeft)
+        {
+
+            Main.player[projectile.owner].GetModPlayer<MPlayer>().BookCreated = false;
+            base.Kill(timeLeft);
+        }
+
+
         private int angle=1;
         public Item Book;
         public bool first = true;

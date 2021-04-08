@@ -15,12 +15,15 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Something"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("UGA-CHAGA!!!");
+			Tooltip.SetDefault("Damage boost (+5 for EACH projectile) and reduced mana usage (-5) for each summoned flame.");
 		}
         public override bool AltFunctionUse(Player player)
-        {
-			return true;
+		{
+			if ((player.statMana >= (30 - player.GetModPlayer<MPlayer>().flames_summoned * 5))&&(player.GetModPlayer<MPlayer>().flames_summoned<4))
+			{
+				return true;
+			}
+			else { return false; }
 		}
 		public override void HoldItem(Player player)
         {
@@ -38,21 +41,23 @@ namespace KirillandRandom.Items
         {
 			if (player.altFunctionUse == 2)
 			{
-				item.shoot = ProjectileID.None;
-				if (player.GetModPlayer<MPlayer>().flames_summoned < 3) {
-					item.shoot = mod.ProjectileType("lastflame");
-				}
-				
-				item.useTime = 40;
-				item.useAnimation = 40;
-				item.useStyle = ItemUseStyleID.HoldingUp;
-				item.damage = 60;
-				item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
-				player.GetModPlayer<MPlayer>().flames_summoned += 1;
-			}
+					item.shoot = ProjectileID.None;
+					if (player.GetModPlayer<MPlayer>().flames_summoned < 4) {
+						item.shoot = mod.ProjectileType("lastflame");
+						player.GetModPlayer<MPlayer>().flames_summoned += 1;
+					}
+					item.mana = 30- player.GetModPlayer<MPlayer>().flames_summoned*5;
+					item.useTime = 30;
+					item.useAnimation = 30;
+					item.useStyle = ItemUseStyleID.HoldingUp;
+					item.damage = 60;
+					item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
+				} 
 			else
 			{
-				player.GetModPlayer<MPlayer>().flames_summoned =0;
+
+				item.mana = 0;
+				player.GetModPlayer<MPlayer>().flames_summoned = 0;
 				item.shoot = ProjectileID.None;
 				item.useTime = 5;
 				item.useStyle = ItemUseStyleID.HoldingOut;
@@ -87,8 +92,11 @@ namespace KirillandRandom.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.DirtBlock, 10);
-			recipe.AddTile(TileID.WorkBenches);
+
+			recipe.AddIngredient(ItemID.DemoniteBar, 5);
+			recipe.AddIngredient(ItemID.DemonScythe, 1);
+			recipe.AddIngredient(ItemID.SoulofNight, 10);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

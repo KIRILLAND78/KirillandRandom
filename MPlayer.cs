@@ -19,7 +19,8 @@ namespace KirillandRandom
     class MPlayer : ModPlayer
     {
         public int overuse;
-
+        public int charge_e = 0;
+        public bool charge;
         public bool OveruseMeterCreated;
         public bool BookCreated;
         public bool Something;

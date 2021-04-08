@@ -1,1 +1,1 @@
-KIRILLAND`s Random Stuff! is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+Currently adds 1 pretty cool weapon (can be crafted with demon scythe) (and i working on 2 another) and some vanity stuff. It is a small mod that I am developing in free time so expect some delays between updates. Big thanks to TModLoader community for being so friendly!

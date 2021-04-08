@@ -15,14 +15,14 @@ namespace KirillandRandom.Buffs
         {
             Main.lightPet[Type] = true;
             Main.debuff[Type] = false;
-            DisplayName.SetDefault("Corrupted royal crystal");
-            Description.SetDefault("");
+            DisplayName.SetDefault("Crystal");
+            Description.SetDefault("WIP. INF MANA");
             Main.buffNoTimeDisplay[Type] = true;
             base.SetDefaults();
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.manaRegenBonus += 50;
+            player.statMana+= 100;
             player.buffTime[buffIndex] = 18000;
             player.GetModPlayer<MPlayer>().Something = true;
             bool petProjectileNotSpawned = player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Pets.CrystalP>()] <= 0;

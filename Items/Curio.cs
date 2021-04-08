@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
+using KirillandRandom.NPCs;
 
 namespace KirillandRandom.Items
 {
@@ -14,8 +15,9 @@ namespace KirillandRandom.Items
 
 		public override void SetStaticDefaults()
 		{
+			
 			// DisplayName.SetDefault("Something"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("This weapon has alt attack and 'overuse' mechanic\r\nContinuous use of only one fire mode improves damage of other fire mode and\r\n weakens current.");
+			Tooltip.SetDefault("This weapon has alt attack and 'overuse' mechanic\r\nContinuous use of only one fire mode improves damage of other fire mode and\r\n weakens current.\r\nWIP!");
 		}
 
         public override bool AltFunctionUse(Player player)
@@ -106,19 +108,15 @@ namespace KirillandRandom.Items
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
 			{
-				target.AddBuff(BuffID.CursedInferno, 30);//ÑÈÍÈÉ ÎÃÎÍÜ ÑŞÄÀ. ÈËÈ ÂÎÎÁÙÅ ×ÒÎ-ÒÎ ÄĞÓÃÎÅ.
-			}
+				target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 120);//ÑÈÍÈÉ ÎÃÎÍÜ ÑŞÄÀ. ÈËÈ ÂÎÎÁÙÅ ×ÒÎ-ÒÎ ÄĞÓÃÎÅ.
+				//âğåìåííî äåáàôô çàğÿäà, ïîêà îí íå ğåøèò, êàêîå îğóæèå îí õî÷åò
+				if (target.GetGlobalNPC<MNPC>().charge_e < 5)
+				{
+					target.GetGlobalNPC<MNPC>().charge_e += 1;
+				}
+	}
 		}
 
-
-        public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.DirtBlock, 10);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
 
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

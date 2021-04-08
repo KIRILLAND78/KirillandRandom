@@ -13,8 +13,8 @@ namespace KirillandRandom.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Royal crystal");
-            Tooltip.SetDefault("...");
+            DisplayName.SetDefault("Crystal");
+            Tooltip.SetDefault("WIP");
         }
         public override void SetDefaults()
         {
