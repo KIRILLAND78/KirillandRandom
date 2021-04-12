@@ -9,10 +9,13 @@ namespace KirillandRandom.NPCs
 	public class MNPC : GlobalNPC
 	{
 		public override bool InstancePerEntity => true;
-		public int charge_e = 0;
+
+        public Projectile barrel { get; internal set; }
+
+        public int charge_e = 0;
 		public bool charge;
 
-		public override void ResetEffects(NPC npc)
+        public override void ResetEffects(NPC npc)
 		{
 			charge = false;
 		}

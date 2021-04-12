@@ -39,6 +39,10 @@ namespace KirillandRandom.Projectiles
         public override void AI()
         {
             Player owner = Main.player[projectile.owner];
+            if (owner.dead == true)
+            {
+                projectile.Kill();
+            }
             if (owner.direction == 1)
             {
                 projectile.position.X= owner.Center.X - 43;

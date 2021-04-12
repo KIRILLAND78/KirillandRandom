@@ -107,14 +107,6 @@ namespace KirillandRandom.Items
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			{
-				target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 120);//СИНИЙ ОГОНЬ СЮДА. ИЛИ ВООБЩЕ ЧТО-ТО ДРУГОЕ.
-				//временно дебафф заряда, пока он не решит, какое оружие он хочет
-				if (target.GetGlobalNPC<MNPC>().charge_e < 5)
-				{
-					target.GetGlobalNPC<MNPC>().charge_e += 1;
-				}
-	}
 		}
 
 
