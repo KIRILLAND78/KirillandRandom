@@ -78,7 +78,7 @@ namespace KirillandRandom.Projectiles
             projectile.velocity.X = fshootToX;//help me.
             projectile.velocity.Y = fshootToY;
 
-            double dist = 24;
+            //double dist = 24;
 
             projectile.position.X = p.Center.X + (projectile.position.X - origx)-40;//what am i doing with my life
             projectile.position.Y = p.Center.Y + (projectile.position.Y - origy)-20;
