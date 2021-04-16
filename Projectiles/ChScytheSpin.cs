@@ -18,11 +18,13 @@ namespace KirillandRandom.Projectiles
         private int first = 1;
         public override void SetDefaults()
         {
-            projectile.damage = 50;
+
+            projectile.light = 0.3f;
+            projectile.damage = 80;
             projectile.Name = "ChScythe";
-            projectile.width = 50;
-            projectile.height = 50;
-            projectile.timeLeft = 30;
+            projectile.width = 60;
+            projectile.height = 60;
+            projectile.timeLeft = 20;
             projectile.penetrate = 999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -31,13 +33,17 @@ namespace KirillandRandom.Projectiles
             projectile.ranged = false;
             projectile.aiStyle = -1;
         }
+
+
+
+
         public override void Kill(int timeLeft)
         {
             base.Kill(timeLeft);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
             {
-                target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 120);//СИНИЙ ОГОНЬ СЮДА. ИЛИ ВООБЩЕ ЧТО-ТО ДРУГОЕ.
+                target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);//СИНИЙ ОГОНЬ СЮДА. ИЛИ ВООБЩЕ ЧТО-ТО ДРУГОЕ.
                                                                                   //временно дебафф заряда, пока он не решит, какое оружие он хочет
                 if (target.GetGlobalNPC<MNPC>().charge_e < 5)
                 {
@@ -110,12 +116,12 @@ namespace KirillandRandom.Projectiles
             projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
             if (owner.direction == 1)
             {
-                projectile.ai[1] += 6f;
-                projectile.spriteDirection = 1;
+                projectile.ai[1] += 9f;
+                //projectile.spriteDirection = 1;
             }
             else
             {
-                projectile.ai[1] -= 6f;
+                projectile.ai[1] -= 9f;
 
                 projectile.spriteDirection = -1;
             }

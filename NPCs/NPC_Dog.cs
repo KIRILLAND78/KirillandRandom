@@ -10,7 +10,7 @@ namespace KirillandRandom.NPCs
 	public class NPC_Dog : ModNPC
 	{
 		int fran = 0;
-		int timer = 120;
+		int timer = 115;
 		public override void SetStaticDefaults()
 		{
 			npc.friendly = true;
@@ -19,13 +19,17 @@ namespace KirillandRandom.NPCs
 			npc.frame.Width = 50;
 			npc.scale = 1;
 			DisplayName.SetDefault("The Dog");
-			Main.npcFrameCount[npc.type] = 3;
+			Main.npcFrameCount[npc.type] = 4;
 		}
         public override void FindFrame(int frameHeight)
-        {
-			fran += 1;
-			if (fran >= 30) { fran -= 30; };
-			npc.frame.Y = (int)fran/10 * frameHeight;
+		{
+			npc.frame.Y = (int)3 * frameHeight;
+			if (timer > 0)
+			{
+				fran += 1;
+				if (fran >= 30) { fran -= 30; };
+				npc.frame.Y = (int)fran / 10 * frameHeight;
+			}
 
 			base.FindFrame(frameHeight);
         }
@@ -80,10 +84,23 @@ namespace KirillandRandom.NPCs
             {
 				if (timer == 0)
 				{
-					npc.StrikeNPC(80, 0, 0);
+					npc.StrikeNPC(75, 0, 0);
+
+					timer -= 1;
+				}
+				if (timer < 0)
+				{
+					npc.velocity.X = npc.velocity.X/1.1f;
+					if (timer <= -120)
+                    {
+						npc.StrikeNPCNoInteraction(5, 0, 0);
+
+
+                    }
+					timer -= 1;
 				}
 
-            }
+			}
 
 		}
 		

@@ -1,5 +1,5 @@
 displayName = KIRILLAND`s Random Stuff!
 author = KIRILLAND
-version = 0.14
+version = 0.15
 
 homepage = https://discord.gg/2UzKU86qa8

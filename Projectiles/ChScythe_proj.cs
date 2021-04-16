@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
+using KirillandRandom.NPCs;
 using Terraria.ID;
 
 
@@ -22,7 +23,9 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.damage = 50;
+
+            projectile.light = 0.4f;
+            projectile.damage = 90;
             projectile.Name = "ChScythe";
             projectile.width = 80;
             projectile.height = 80;
@@ -39,6 +42,13 @@ namespace KirillandRandom.Projectiles
         public override void Kill(int timeLeft)
         {
             base.Kill(timeLeft);
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+
+            damage += (50 * target.GetGlobalNPC<MNPC>().charge_e);
+            target.GetGlobalNPC<MNPC>().charge_e = 0;
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void AI()
         {
@@ -62,6 +72,14 @@ namespace KirillandRandom.Projectiles
                 shootToY = Main.MouseWorld.Y - projectile.Center.Y;//обоже.
                 distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
                 first = 0;
+            }
+            if (projectile.timeLeft <= 30)
+            {
+                projectile.damage = 90;
+            }
+            else
+            {
+                projectile.damage = 0;
             }
             projectile.position.X = origx;
             projectile.position.Y = origy;

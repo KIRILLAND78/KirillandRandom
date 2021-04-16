@@ -19,7 +19,7 @@ namespace KirillandRandom.Projectiles
             projectile.Name = "Curiosity gun form";
             projectile.width = 24;
             projectile.height = 24;
-            projectile.timeLeft = 30;
+            projectile.timeLeft = 18;
             projectile.penetrate = 1;
             projectile.friendly = false;
             projectile.hostile = false;

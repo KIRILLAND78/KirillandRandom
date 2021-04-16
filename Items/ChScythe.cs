@@ -15,7 +15,7 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Charge enemies with right click.\r\nDischarge enemies with left click.");
+			Tooltip.SetDefault("Charge enemies with right click.\r\nDischarge enemies with left click for bonus damage.\r\n+40 bonus damage for each stored charge.");
 		}
 		public override bool AltFunctionUse(Player player)
 		{
@@ -31,24 +31,26 @@ namespace KirillandRandom.Items
 			if (player.altFunctionUse == 2)
 			{
 				item.shoot = mod.ProjectileType("ChScytheSpin");//SPINNING SCYTHE
-				item.useTime = 30;
+				item.useTime = 20;
 
 				item.shootSpeed = 0;
-				item.useAnimation = 30;
+				item.useAnimation = 20;
 				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.damage = 60;
-				item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
+				item.damage = 80;
+				item.UseSound = SoundID.DD2_SkyDragonsFurySwing;
 			}
 			else
 			{
 				player.GetModPlayer<MPlayer>().flames_summoned = 0;
 				item.shoot = mod.ProjectileType("ChScythe");//BIG SCYTHE
-				item.shootSpeed = 50;
+				item.shootSpeed = 60;
 				item.useTime = 90;
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.useAnimation = 90;
 				item.value = 10000;
-				item.UseSound = SoundID.DD2_FlameburstTowerShot;
+
+				item.damage = 90;
+				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
 			}
 			return true;
 		}
@@ -57,7 +59,7 @@ namespace KirillandRandom.Items
 
 
 			item.noUseGraphic = true;
-			item.damage = 60;
+			item.damage = 90;
 			item.noMelee = true;
 			item.magic = true;
 			item.useTime = 10;
@@ -76,7 +78,7 @@ namespace KirillandRandom.Items
 		{
 			if (player.altFunctionUse == 2)
 			{
-				Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("ChScytheSpin"), 60, 0, Main.myPlayer, 1f, 0);
+				Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("ChScytheSpin"), 80, 0, Main.myPlayer, 1f, 0);
 			}
 			return true;
         }
@@ -85,16 +87,15 @@ namespace KirillandRandom.Items
 
         public override void AddRecipes()
 		{
-			/**
 			ModRecipe recipe = new ModRecipe(mod);
 
-			recipe.AddIngredient(ItemID.DemoniteBar, 5);
-			recipe.AddIngredient(ItemID.DemonScythe, 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
+			recipe.AddIngredient(ItemID.MartianConduitPlating, 50);
+			recipe.AddIngredient(ItemID.InfluxWaver, 1);
+			recipe.AddIngredient(ItemID.ChargedBlasterCannon, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-			**/
+			
 		}
 
 	}

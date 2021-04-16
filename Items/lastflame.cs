@@ -72,6 +72,7 @@ namespace KirillandRandom.Items
 
 			item.noUseGraphic = true;
 			item.damage = 60;
+			item.mana = 25;
 			item.noMelee = true;
 			item.magic = true;
 			item.useTime = 10;
