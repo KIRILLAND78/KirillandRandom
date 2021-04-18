@@ -78,7 +78,7 @@ namespace KirillandRandom.Items
 		{
 			if (player.altFunctionUse == 2)
 			{
-				Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("ChScytheSpin"), 80, 0, Main.myPlayer, 1f, 0);
+				Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("ChScytheSpin"), 80, 0, item.owner, 1f, 0);
 			}
 			return true;
         }

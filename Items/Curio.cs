@@ -28,8 +28,8 @@ namespace KirillandRandom.Items
 		{
 			if (player.GetModPlayer<MPlayer>().OveruseMeterCreated == false)
 			{
-				Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("OveruseMeter"), 0, 0, Main.myPlayer);
-				Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("OveruseMeter1"), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("OveruseMeter"), 0, 0, player.whoAmI);
+				Projectile.NewProjectile(player.position.X, player.position.Y, 0, 0, mod.ProjectileType("OveruseMeter1"), 0, 0, player.whoAmI);
 				player.GetModPlayer<MPlayer>().OveruseMeterCreated = true;
 			}
 			base.HoldItem(player);
@@ -117,7 +117,8 @@ namespace KirillandRandom.Items
 			speed = speed.RotatedByRandom(MathHelper.ToRadians(2));
 			speedX = speed.X;
 			speedY = speed.Y;
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Curiosity_alt"), 0, 0, Main.myPlayer);
+			//Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Curiosity_alt"), 0, 0, Main.myPlayer);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("nebulavortex"), 0, 0, player.whoAmI);
 
 			return true;//это что-то типа коррекции поведения снарядов... наверное? По типу изменения урона, угла стрельбы и т.д.
 		}
