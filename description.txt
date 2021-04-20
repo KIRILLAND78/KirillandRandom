@@ -1,3 +1,3 @@
 Currently adds 2 pretty cool obtainable weapons and some vanity stuff. It is a small mod that I am developing in free time so expect some delays between updates. Big thanks to TModLoader community for being so friendly!
 And i am always up for cool ideas, so feel free to suggest something cool! 
-Last update: Bugfixes and new electric scythe. Left click to charge enemies, Right click to discharge them, dealing more damage.
+Last update: Multiplayer bugfixes!
