@@ -122,7 +122,7 @@ namespace KirillandRandom.Items
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("Curiosity_alt"), 0, 0, Main.myPlayer);
 			
 
-			return true;//это что-то типа коррекции поведения снарядов... наверное? По типу изменения урона, угла стрельбы и т.д.
+			return true;//Коррекция поведения при выстреле.
 		}
 
 	}

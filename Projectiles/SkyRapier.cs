@@ -10,8 +10,11 @@ namespace KirillandRandom.Projectiles
 {
     public class SkyRapier : ModProjectile
     {
+        //Random rnd = new Random();
         public Vector2 lastplpos;
         bool first = true;
+        //private int vasya;
+
         public override void SetDefaults()
         {
             //projectile.position.Y -= 80;
@@ -31,7 +34,6 @@ namespace KirillandRandom.Projectiles
        public override void AI()
        {
 
-            Random rnd = new Random();
             Player owner = Main.player[projectile.owner];
 
             projectile.velocity *= 1.2f;
@@ -70,6 +72,8 @@ namespace KirillandRandom.Projectiles
                 projectile.light = 0.4f;
                 lastplpos = owner.Center;
                 projectile.rotation = projectile.velocity.ToRotation() +MathHelper.ToRadians(-45f);
+
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("SkyRapier2"), 0, 0, Main.myPlayer);
                 first = false;
             }
             projectile.position += owner.Center - lastplpos;
@@ -102,7 +106,58 @@ namespace KirillandRandom.Projectiles
 
 
         }
-        
+
+        //pls someone help im tired and this is code nightmare please don't look at this.
+
+
+
+        //public override void PostAI()
+        //{
+        //    Vector2 Vel = projectile.velocity;
+        //    Vel.Normalize();
+        //    Rectangle test = new Rectangle((int)projectile.Center.X + (int)Vel.X * -16, (int)projectile.Center.Y + (int)Vel.Y * -16, 1,1);
+        //    Rectangle test2 = new Rectangle((int)projectile.Center.X+ (int)Vel.X*14, (int)projectile.Center.Y + (int)Vel.Y * 14,1,1);
+        //    Rectangle test3 = new Rectangle((int)projectile.Center.X + (int)Vel.X * 46, (int)projectile.Center.Y + (int)Vel.Y * 46, 1, 1);
+        //    if (projectile.owner == Main.myPlayer && projectile.damage > 0)
+        //    {
+        //        Player player = Main.player[projectile.owner];
+        //        for (int k = 0; k < 200; k++)
+        //        {
+        //            NPC curNPC = Main.npc[k];
+        //            if ((((!curNPC.friendly || (curNPC.type == 22 && projectile.owner < 255 && player.killGuide) || (curNPC.type == 54 && projectile.owner < 255 && player.killClothier)))))
+        //            {
+        //                if ((test3.Intersects(curNPC.Hitbox)) || (test.Intersects(curNPC.Hitbox)) || (test2.Intersects(curNPC.Hitbox)))
+        //                {
+        //                    vasya = projectile.damage - 17 + rnd.Next(34);
+        //                    curNPC.StrikeNPC(vasya, projectile.knockBack, (int)projectile.velocity.ToRotation());
+        //                    player.addDPS(vasya);
+        //            } }
+        //        }
+        //        if (Main.LocalPlayer.hostile)
+        //        {
+        //            for (int l = 0; l < 255; l++)
+        //            {
+        //                Player subPlayer = Main.player[l];
+        //                if (l != projectile.owner && subPlayer.active && !subPlayer.dead && !subPlayer.immune && subPlayer.hostile && projectile.playerImmune[l] <= 0 && (Main.LocalPlayer.team == 0 || Main.LocalPlayer.team != subPlayer.team))
+        //                {
+        //                    if ((test3.Intersects(subPlayer.Hitbox)) || (test.Intersects(subPlayer.Hitbox)) || (test2.Intersects(subPlayer.Hitbox)))
+        //                    {
+        //                        subPlayer.HurtOld(projectile.damage, (int)projectile.knockBack);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+
+        //    base.PostAI();
+        //}
+
+
+
+
+
+
 
     }
 }
