@@ -82,7 +82,6 @@ namespace KirillandRandom.Items
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.knockBack = 6;
 				player.GetModPlayer<MPlayer>().overuse += 3;
-				item.rare = ItemRarityID.Expert;
 				item.UseSound = SoundID.Item1;
 				item.autoReuse = true;
 			}

@@ -16,8 +16,8 @@ namespace KirillandRandom.Projectiles
         {
             //projectile.position.Y -= 80;
             projectile.Name = "Flashin' Speed";
-            projectile.width = 60;
-            projectile.height = 6;
+            projectile.width = 58;
+            projectile.height = 10;
             projectile.timeLeft = 10;
             projectile.penetrate = 9999;
             projectile.friendly = false;
@@ -26,12 +26,15 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.ranged = false;
             projectile.melee = true;
+            projectile.alpha = 200;
+            drawOriginOffsetY = -4;
 
+            drawOriginOffsetX = -4;
             Player owner = Main.player[projectile.owner];
             
             lastplpos = owner.Center;// + MathHelper.ToRadians(-45f);
         }
-
+        
         public override void AI()
         {
             Player owner = Main.player[projectile.owner];
@@ -44,7 +47,7 @@ namespace KirillandRandom.Projectiles
             }
 
 
-            projectile.velocity *= 1.2f;
+            projectile.velocity *= 1.15f;
 
             projectile.position += owner.Center - lastplpos;
 

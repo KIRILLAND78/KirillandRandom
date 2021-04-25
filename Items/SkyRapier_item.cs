@@ -16,48 +16,46 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 
-			// DisplayName.SetDefault("Something"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("Pierce with speed of heaven!\r\nWIP!");
+			DisplayName.SetDefault("Rapier of Sky"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+			Tooltip.SetDefault("Pierce with speed of heaven!\r\nProbably buggy! Please report any found bugs!");
 		}
 
-		public override bool AltFunctionUse(Player player)
-		{
-			return false;
-		}
-		public override bool CanUseItem(Player player)
-		{
-				item.noUseGraphic = true;
-				item.shoot = mod.ProjectileType("SkyRapier");
-				item.melee = true;
-				item.width = 0;
-				item.height = 0;
-				item.useTime = 7;
-				item.useAnimation = 7;
-				item.useStyle = ItemUseStyleID.HoldingOut;
-				item.knockBack = 6;
-				item.UseSound = SoundID.Item1;
-				item.autoReuse = true;
-			
-			return true;
-		}
 		public override void SetDefaults()
 		{
-			//todo
-			item.shootSpeed = 18;
-			item.damage = 55;
+			item.noUseGraphic = true;
+			item.shoot = mod.ProjectileType("SkyRapier");
 			item.melee = true;
-			item.width = 40;
-			item.height = 90;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.width = 0;
+			item.noMelee = true;
+			item.height = 0;
+			item.useTime = 6;
+			item.useAnimation = 6;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 6;
-			item.value = 10000;
-			item.rare = ItemRarityID.Expert;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
+			//todo
+			item.shootSpeed = 18;
+			item.damage = 92;
+			item.value = 10000;
+			item.rare = ItemRarityID.Cyan;
 		}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Nanites, 50);
+			recipe.AddIngredient(ItemID.TitaniumBar, 4);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 
+			ModRecipe recipe2 = new ModRecipe(mod);
+			recipe2.AddIngredient(ItemID.Nanites, 50);
+			recipe2.AddIngredient(ItemID.AdamantiteBar, 4);
+			recipe2.AddTile(TileID.MythrilAnvil);
+			recipe2.SetResult(this);
+			recipe2.AddRecipe();
+		}
 
 	}
 }

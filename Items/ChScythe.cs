@@ -15,6 +15,7 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Charged Scythe");
 			Tooltip.SetDefault("Charge enemies with right click.\r\nDischarge enemies with left click for bonus damage.\r\n+40 bonus damage for each stored charge.");
 		}
 		public override bool AltFunctionUse(Player player)
@@ -68,7 +69,7 @@ namespace KirillandRandom.Items
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 0;
 			item.value = 10000;
-			item.rare = ItemRarityID.Purple;
+			item.rare = ItemRarityID.Cyan;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 

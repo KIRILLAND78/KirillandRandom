@@ -19,9 +19,9 @@ namespace KirillandRandom.Projectiles
         {
             //projectile.position.Y -= 80;
             projectile.Name = "Flashin' Speed";
-            projectile.width = 60;
-            projectile.height = 60;
-            projectile.timeLeft = 12;
+            projectile.width = 70;
+            projectile.height = 70;
+            projectile.timeLeft = 11;
             projectile.penetrate = 9999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -30,8 +30,42 @@ namespace KirillandRandom.Projectiles
             projectile.ranged = false;
             projectile.melee = true;
         }
-        
-       public override void AI()
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {if (projectile.timeLeft >= 4) {
+                int DDustID = Dust.NewDust(target.Center, 2, 2, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 0.8f); //Spawns dust
+                Main.dust[DDustID].noGravity = true;
+                Main.dust[DDustID].velocity = 0.8f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(2));
+            }
+            base.OnHitNPC(target, damage, knockback, crit);
+        }
+        public override bool? CanHitNPC(NPC target)
+        {
+            Vector2 Vel = projectile.velocity;
+            Vel.Normalize();
+
+            Rectangle test = new Rectangle((int)projectile.Center.X + ((int)Vel.X * -21) - 3, (int)projectile.Center.Y + ((int)Vel.Y * -21) - 3, 6, 6);//-50
+            Rectangle test1 = new Rectangle((int)projectile.Center.X + ((int)Vel.X * 9) - 3, (int)projectile.Center.Y + ((int)Vel.Y * 9) - 3, 6, 6);//0
+            Rectangle test2 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 39) - 3, (int)projectile.Center.Y + (int)(Vel.Y * 39) - 3, 6, 6);//80
+
+            Player player = Main.player[projectile.owner];
+            if ((((!target.friendly || (target.type == 22 && projectile.owner < 255 && player.killGuide) || (target.type == 54 && projectile.owner < 255 && player.killClothier)))))
+            {
+                if ((test2.Intersects(target.Hitbox))|| (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override void AI()
        {
 
             Player owner = Main.player[projectile.owner];
@@ -80,7 +114,7 @@ namespace KirillandRandom.Projectiles
 
             lastplpos = owner.Center;
 
-            int DDustID = Dust.NewDust(projectile.Center, 4, 4, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 0.2f); //Spawns dust
+            int DDustID = Dust.NewDust(projectile.Center-new Vector2(8,4), 0, 0, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 0.2f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
             Main.dust[DDustID].velocity = 1.1f*Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(10));
 
@@ -98,8 +132,6 @@ namespace KirillandRandom.Projectiles
             //{
             //    projectile.velocity.Y = 16f;
             //}
-            // Since our sprite has an orientation, we need to adjust rotation to compensate for the draw flipping.
-
 
 
 
@@ -108,6 +140,14 @@ namespace KirillandRandom.Projectiles
         }
 
         //pls someone help im tired and this is code nightmare please don't look at this.
+        //i am tired
+        //i am tired
+        //i am tired
+        //i don't like making custom hitboxes AT ALL
+        //i am tired
+        //i am tired
+        //i am tired
+
 
 
 
