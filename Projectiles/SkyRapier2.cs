@@ -18,7 +18,7 @@ namespace KirillandRandom.Projectiles
             projectile.Name = "Flashin' Speed";
             projectile.width = 58;
             projectile.height = 10;
-            projectile.timeLeft = 10;
+            projectile.timeLeft = 12;
             projectile.penetrate = 9999;
             projectile.friendly = false;
             projectile.hostile = false;

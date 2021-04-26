@@ -16,7 +16,7 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Charged Scythe");
-			Tooltip.SetDefault("Charge enemies with right click.\r\nDischarge enemies with left click for bonus damage.\r\n+40 bonus damage for each stored charge.");
+			Tooltip.SetDefault("Charge enemies with right click.\r\nDischarge enemies with left click for bonus damage.\r\n+50 bonus damage for each stored charge.");
 		}
 		public override bool AltFunctionUse(Player player)
 		{
@@ -35,7 +35,7 @@ namespace KirillandRandom.Items
 				item.useTime = 20;
 
 				item.shootSpeed = 0;
-				item.useAnimation = 20;
+				item.useAnimation = (int)(20/player.meleeSpeed);
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.damage = 80;
 				item.UseSound = SoundID.DD2_SkyDragonsFurySwing;

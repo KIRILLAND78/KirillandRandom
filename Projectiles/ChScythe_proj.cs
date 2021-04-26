@@ -24,6 +24,7 @@ namespace KirillandRandom.Projectiles
         public override void SetDefaults()
         {
 
+            projectile.melee = true;
             projectile.light = 0.4f;
             projectile.damage = 90;
             projectile.Name = "ChScythe";
@@ -45,7 +46,7 @@ namespace KirillandRandom.Projectiles
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-
+            knockback = 12;
             damage += (50 * target.GetGlobalNPC<MNPC>().charge_e);
             target.GetGlobalNPC<MNPC>().charge_e = 0;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -73,14 +74,7 @@ namespace KirillandRandom.Projectiles
                 distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
                 first = 0;
             }
-            if (projectile.timeLeft <= 30)
-            {
-                projectile.damage = 90;
-            }
-            else
-            {
-                projectile.damage = 0;
-            }
+
             projectile.position.X = origx;
             projectile.position.Y = origy;
 

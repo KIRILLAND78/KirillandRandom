@@ -36,7 +36,7 @@ namespace KirillandRandom.Items
 			item.autoReuse = true;
 			//todo
 			item.shootSpeed = 18;
-			item.damage = 92;
+			item.damage = 88;
 			item.value = 10000;
 			item.rare = ItemRarityID.Cyan;
 		}

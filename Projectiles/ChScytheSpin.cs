@@ -16,15 +16,17 @@ namespace KirillandRandom.Projectiles
         public double deg;
         public double rad2;
         private int first = 1;
+        private int direct;
         public override void SetDefaults()
         {
-
+            projectile.melee = true;
+            Player player = Main.player[projectile.owner];
             projectile.light = 0.3f;
             projectile.damage = 80;
             projectile.Name = "ChScythe";
             projectile.width = 60;
             projectile.height = 60;
-            projectile.timeLeft = 20;
+            projectile.timeLeft = 20-(int)(1.1/player.meleeSpeed);//Mistake
             projectile.penetrate = 999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -32,8 +34,9 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.ranged = false;
             projectile.aiStyle = -1;
+            projectile.knockBack = 5;
         }
-
+        
 
 
 
@@ -43,8 +46,7 @@ namespace KirillandRandom.Projectiles
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
             {
-                target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);//СИНИЙ ОГОНЬ СЮДА. ИЛИ ВООБЩЕ ЧТО-ТО ДРУГОЕ.
-                                                                                  //временно дебафф заряда, пока он не решит, какое оружие он хочет
+                target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);
                 if (target.GetGlobalNPC<MNPC>().charge_e < 5)
                 {
                     target.GetGlobalNPC<MNPC>().charge_e += 1;
@@ -69,14 +71,15 @@ namespace KirillandRandom.Projectiles
 
                 Player p = Main.player[projectile.owner];
                 if (first == 1)
-                {
-                    first = 0;
+            {
+                direct = p.direction;
+                first = 0;
                 }
                 projectile.alpha = 0;
             if (projectile.ai[0] == 1f){
                 deg = (double)projectile.ai[1] + 225;
                 rad = deg * (Math.PI / 180);
-                if (owner.direction == 1)
+                if (direct == 1)
                 {
                     if (deg >= (225 + 180-6)) { todelete = true; }
                     rad2 = (deg - 45) * (Math.PI / 180);
@@ -94,7 +97,7 @@ namespace KirillandRandom.Projectiles
                 deg = (double)projectile.ai[1] + 45;
                 rad = deg * (Math.PI / 180);
 
-                if (owner.direction == 1)
+                if (direct == 1)
                 {
                     if (deg >= 225-6) { todelete = true; }
                     rad2 = (deg - 45) * (Math.PI / 180);
@@ -110,11 +113,11 @@ namespace KirillandRandom.Projectiles
 
             }
 
-            double dist = 24;
+            double dist = 32;
 
             projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
             projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
-            if (owner.direction == 1)
+            if (direct== 1)
             {
                 projectile.ai[1] += 9f;
                 //projectile.spriteDirection = 1;

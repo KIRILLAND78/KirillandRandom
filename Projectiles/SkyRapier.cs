@@ -21,7 +21,7 @@ namespace KirillandRandom.Projectiles
             projectile.Name = "Flashin' Speed";
             projectile.width = 70;
             projectile.height = 70;
-            projectile.timeLeft = 11;
+            projectile.timeLeft = 13;
             projectile.penetrate = 9999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -43,9 +43,10 @@ namespace KirillandRandom.Projectiles
             Vector2 Vel = projectile.velocity;
             Vel.Normalize();
 
-            Rectangle test = new Rectangle((int)projectile.Center.X + ((int)Vel.X * -21) - 3, (int)projectile.Center.Y + ((int)Vel.Y * -21) - 3, 6, 6);//-50
-            Rectangle test1 = new Rectangle((int)projectile.Center.X + ((int)Vel.X * 9) - 3, (int)projectile.Center.Y + ((int)Vel.Y * 9) - 3, 6, 6);//0
-            Rectangle test2 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 39) - 3, (int)projectile.Center.Y + (int)(Vel.Y * 39) - 3, 6, 6);//80
+            Rectangle test = new Rectangle((int)projectile.Center.X + ((int)Vel.X * -21) - 4, (int)projectile.Center.Y + ((int)Vel.Y * -21) - 4, 8, 8);
+            Rectangle test1 = new Rectangle((int)projectile.Center.X + ((int)Vel.X * -1) - 4, (int)projectile.Center.Y + ((int)Vel.Y * -1) - 4, 8, 8);
+            Rectangle test2 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 19) - 4, (int)projectile.Center.Y + (int)(Vel.Y * 19) - 4, 8, 8);
+            Rectangle test3 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 39) - 5, (int)projectile.Center.Y + (int)(Vel.Y * 39) - 5, 10, 10);
 
             Player player = Main.player[projectile.owner];
             if ((((!target.friendly || (target.type == 22 && projectile.owner < 255 && player.killGuide) || (target.type == 54 && projectile.owner < 255 && player.killClothier)))))
