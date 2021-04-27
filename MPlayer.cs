@@ -26,10 +26,39 @@ namespace KirillandRandom
         public bool Something;
         public int flames_summoned;
         public float angle;
+        public bool eyeofdeath;
         public override void ResetEffects()
         {
              Something = false;
         }
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+        {
+            //if ((eyeofdeath) && (damage < 15) && (!pvp))
+            //{
+                damage = 0;
+            //}
+            base.Hurt(pvp, quiet, damage, hitDirection, crit);
+        }
+    
+        public override void PreUpdate()
+        {
+            if (eyeofdeath)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    if (player.statLife >= (player.statLifeMax / 2))
+                    {
+                        player.statLife = (player.statLifeMax / 2);
+                    }
+
+
+
+                }
+            }
+
+            base.PreUpdate();
+        }
+
         public override void Initialize()
         {
             OveruseMeterCreated = false;

@@ -58,7 +58,6 @@ namespace KirillandRandom.Projectiles
             //{
             //    projectile.velocity.Y = 16f;
             //}
-            // Since our sprite has an orientation, we need to adjust rotation to compensate for the draw flipping.
 
 
 
