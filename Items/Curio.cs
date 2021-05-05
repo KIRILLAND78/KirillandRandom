@@ -48,7 +48,7 @@ namespace KirillandRandom.Items
 				item.shootSpeed = 18;
 				item.knockBack = 1;
 				item.useStyle = ItemUseStyleID.HoldingOut;
-				item.damage = 0;
+				item.damage = 60;
 				//item.damage = 60;
 				if (player.GetModPlayer<MPlayer>().overuse > 40)
                 {

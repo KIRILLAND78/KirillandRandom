@@ -29,17 +29,34 @@ namespace KirillandRandom
         public bool eyeofdeath;
         public override void ResetEffects()
         {
-             Something = false;
+            eyeofdeath = false;
+                Something = false;
         }
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
+            ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            //if ((eyeofdeath) && (damage < 15) && (!pvp))
-            //{
+
+            int fdamage = (int)((damage - (0.5 * player.statDefense)) * (1 - player.endurance));
+            if (Main.expertMode)
+            {
+                fdamage = (int)((damage - (0.75 * player.statDefense)) * (1 - player.endurance));
+                player.immune = true;
+            }
+            if ((eyeofdeath==true) && (fdamage < 25))
+            {
                 damage = 0;
-            //}
-            base.Hurt(pvp, quiet, damage, hitDirection, crit);
+
+                customDamage = true;
+            }
+
+            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
         }
-    
+
+
+
+
+
         public override void PreUpdate()
         {
             if (eyeofdeath)

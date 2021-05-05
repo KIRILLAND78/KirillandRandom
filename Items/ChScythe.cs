@@ -42,13 +42,11 @@ namespace KirillandRandom.Items
 			}
 			else
 			{
-				player.GetModPlayer<MPlayer>().flames_summoned = 0;
 				item.shoot = mod.ProjectileType("ChScythe");//BIG SCYTHE
 				item.shootSpeed = 60;
 				item.useTime = 90;
 				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.useAnimation = 90;
-				item.value = 10000;
+				item.useAnimation = 102;
 
 				item.damage = 90;
 				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;

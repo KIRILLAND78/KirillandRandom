@@ -51,7 +51,6 @@ namespace KirillandRandom.Items
 					item.useTime = 30;
 					item.useAnimation = 30;
 					item.useStyle = ItemUseStyleID.HoldingUp;
-					item.damage = 60;
 					item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
 				} 
 			else
@@ -63,7 +62,6 @@ namespace KirillandRandom.Items
 				item.useTime = 5;
 				item.useStyle = ItemUseStyleID.HoldingOut;
 				item.useAnimation = 5;
-				item.value = 10000;
 				item.UseSound = SoundID.DD2_FlameburstTowerShot;
 			}
 			return true;
@@ -76,9 +74,9 @@ namespace KirillandRandom.Items
 			item.mana = 25;
 			item.noMelee = true;
 			item.magic = true;
-			item.useTime = 10;
+			item.useTime = 5;
 			item.shootSpeed = 0;
-			item.useAnimation = 10;
+			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 0;
 			item.value = 10000;
