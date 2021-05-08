@@ -15,7 +15,7 @@ namespace KirillandRandom.Projectiles
         public override void SetDefaults()
         {
             //projectile.position.Y -= 80;
-            projectile.Name = "Flashin' Speed";
+            projectile.Name = "Sky Rapier";
             projectile.width = 58;
             projectile.height = 10;
             projectile.timeLeft = 12;
@@ -26,7 +26,7 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.ranged = false;
             projectile.melee = true;
-            projectile.alpha = 200;
+            projectile.alpha = 255;
             drawOriginOffsetY = -4;
 
             drawOriginOffsetX = -4;
@@ -43,6 +43,8 @@ namespace KirillandRandom.Projectiles
 
                 projectile.rotation = projectile.velocity.ToRotation();
                 lastplpos = owner.Center;
+
+                projectile.alpha = 200;
                 first = false;
             }
 

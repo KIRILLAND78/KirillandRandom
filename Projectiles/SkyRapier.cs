@@ -18,7 +18,7 @@ namespace KirillandRandom.Projectiles
         public override void SetDefaults()
         {
             //projectile.position.Y -= 80;
-            projectile.Name = "Flashin' Speed";
+            projectile.Name = "Sky Rapier";
             projectile.width = 70;
             projectile.height = 70;
             projectile.timeLeft = 13;

@@ -28,7 +28,7 @@ namespace KirillandRandom.Projectiles
             projectile.hostile = false;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.ranged = true;
+            projectile.magic = true;
             projectile.aiStyle = 0;
         }
         public override void Kill(int timeLeft)

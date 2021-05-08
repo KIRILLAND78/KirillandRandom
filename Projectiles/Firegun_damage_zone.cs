@@ -16,7 +16,7 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.Name = "Firebolt";
+            projectile.Name = "Firegun";
             projectile.width = 2;
             projectile.height = 2;
             projectile.timeLeft = 14;

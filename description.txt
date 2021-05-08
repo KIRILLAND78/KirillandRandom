@@ -1,4 +1,4 @@
-Currently adds 3 pretty cool obtainable weapons and some vanity stuff. It is a small mod that I am developing in free time so expect some delays between updates. Big thanks to TModLoader community for being so friendly!
+Currently adds 3 obtainable weapons and some vanity stuff. It is a small mod that I am developing at free time so expect delays between updates.
 And i am always up for cool ideas, so feel free to suggest something cool! 
 Last major update: New wepon added.
-Last minor update: Weapon rebalance, bugfixes yet again.
+Last minor update: Some tweaks and future update preprations.

@@ -44,9 +44,9 @@ namespace KirillandRandom.Items
 			{
 				item.shoot = mod.ProjectileType("ChScythe");//BIG SCYTHE
 				item.shootSpeed = 60;
-				item.useTime = 90;
+				item.useTime = 60;
 				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.useAnimation = 102;
+				item.useAnimation = 60;
 
 				item.damage = 90;
 				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
@@ -60,7 +60,6 @@ namespace KirillandRandom.Items
 			item.noUseGraphic = true;
 			item.damage = 90;
 			item.noMelee = true;
-			item.magic = true;
 			item.useTime = 10;
 			item.shootSpeed = 0;
 			item.useAnimation = 10;

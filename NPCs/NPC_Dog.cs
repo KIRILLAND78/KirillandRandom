@@ -18,7 +18,7 @@ namespace KirillandRandom.NPCs
 
 			npc.frame.Width = 50;
 			npc.scale = 1;
-			DisplayName.SetDefault("The Dog");
+			DisplayName.SetDefault("Dog");
 			Main.npcFrameCount[npc.type] = 4;
 		}
         public override void FindFrame(int frameHeight)
@@ -47,7 +47,7 @@ namespace KirillandRandom.NPCs
 			npc.DeathSound = SoundID.NPCDeath1;
 			//npc.alpha = 175;
 			//npc.color = new Color(0, 80, 255, 100);
-			npc.value = 25f;
+			npc.value = 0;
 			npc.buffImmune[BuffID.Confused] = true; // npc default to being immune to the Confused debuff. Allowing confused could be a little more work depending on the AI. npc.confused is true while the npc is confused.
 		}
 		// Allows hitting the NPC with melee type weapons, even if it's friendly.

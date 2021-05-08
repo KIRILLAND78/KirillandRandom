@@ -27,15 +27,52 @@ namespace KirillandRandom
         public int flames_summoned;
         public float angle;
         public bool eyeofdeath;
+        public bool fireregen;
+        public float fireamplification;
+        public bool flamingdedication;
         public override void ResetEffects()
         {
+            flamingdedication = false;
             eyeofdeath = false;
                 Something = false;
+            fireregen = false;
+
+            fireamplification = 0;
+        }
+
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {if (flamingdedication) {
+                target.AddBuff(BuffID.OnFire, 60);
+            }
+            base.OnHitNPC(item, target, damage, knockback, crit);
+        }
+
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (flamingdedication)
+            {
+                target.AddBuff(BuffID.OnFire, 60);
+            }
+            base.OnHitNPCWithProj(proj, target, damage, knockback, crit);
+        }
+
+
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            if (flamingdedication)
+            {
+                npc.AddBuff(BuffID.OnFire, 120);
+            }
+            base.OnHitByNPC(npc, damage, crit);
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
             ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
+            if (flamingdedication)
+            {
+                player.AddBuff(BuffID.OnFire, 120);
+            }
 
             int fdamage = (int)((damage - (0.5 * player.statDefense)) * (1 - player.endurance));
             if (Main.expertMode)
@@ -53,7 +90,35 @@ namespace KirillandRandom
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
         }
 
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+        {
+            if (fireamplification>0)
+            {
+                if (player.onFire == true)
+                {
+                    mult += fireamplification;
+                }
+            }
+            base.ModifyWeaponDamage(item, ref add, ref mult, ref flat);
+        }
 
+        public override void UpdateLifeRegen()
+        {   if (fireregen)
+            {
+                
+                if (player.onFire == true)
+                {
+                    player.lifeRegen = +16;
+
+
+                }
+
+
+
+            }
+
+            base.UpdateLifeRegen();
+        }
 
 
 
