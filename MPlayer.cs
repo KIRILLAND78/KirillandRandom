@@ -1,6 +1,7 @@
 ﻿
 using KirillandRandom.Buffs;
 using KirillandRandom.Items;
+using KirillandRandom.Items.Armor;
 using KirillandRandom.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,15 +31,267 @@ namespace KirillandRandom
         public bool fireregen;
         public float fireamplification;
         public bool flamingdedication;
+        public bool fireLeggings;
+        public bool fireBody;
+        public bool fireHead;
         public override void ResetEffects()
         {
             flamingdedication = false;
             eyeofdeath = false;
                 Something = false;
             fireregen = false;
+            fireBody = false;
+            fireHead = false;
+            fireLeggings = false;
 
             fireamplification = 0;
         }
+        public override void ModifyDrawLayers(List<PlayerLayer> layers)
+        {
+            int index = layers.IndexOf(PlayerLayer.Legs);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, LegsGlow);
+            }
+            index = layers.IndexOf(PlayerLayer.Head);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, HeadGlow);
+            }
+            index = layers.IndexOf(PlayerLayer.Body);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, BodyGlow);
+            }
+            index = layers.IndexOf(PlayerLayer.Arms);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, ArmsGlow);
+            }
+            index = index = layers.IndexOf(PlayerLayer.MiscEffectsFront);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, MiscEffect);
+            }
+
+            HeadGlow.visible = true;
+
+            BodyGlow.visible = true;
+            ArmsGlow.visible = true;
+            MiscEffect.visible = true;
+            LegsGlow.visible = true;
+        }
+
+        public override void PostUpdateEquips()
+        {
+
+
+            if (player.forceMerman||player.forceWerewolf || player.wereWolf || player.merman)
+            {
+                fireBody = false;
+                fireHead = false;
+                fireLeggings = false;
+            }
+
+
+
+            if (player.armor[10].type > 0)
+            {
+
+                if (player.armor[10].type != ModContent.ItemType<FiresoulRobeHood>())
+                {
+                    fireHead = false;
+                }
+                else
+                { fireHead = true;
+                }
+                }
+            if (player.armor[11].type > 0)
+            {
+
+                if (player.armor[11].type != ModContent.ItemType<FiresoulRobe>())
+                {
+                    fireBody = false;
+                }
+                else
+                { fireBody = true;
+                } }
+            if (player.armor[12].type > 0)
+            {
+
+                if (player.armor[12].type != ModContent.ItemType<FiresoulRobeLeggings>())
+                {
+                    fireLeggings = false;
+                }
+                else
+                {
+                        fireLeggings = true;
+                }
+            }
+
+
+
+
+
+            base.PostUpdateEquips();
+
+        }
+
+
+
+
+
+
+
+
+        public static readonly PlayerLayer HeadGlow = new PlayerLayer("KirillandRandom", "HeadGlow", PlayerLayer.Head, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+            Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+            Texture2D texture = null;
+
+            if (drawInfo.shadow != 0f || drawInfo.drawPlayer.invis)
+            {
+                return;
+            }
+            Mod mod = ModLoader.GetMod("KirillandRandom");
+
+            if (modPlayer.fireHead)
+            {
+                texture = mod.GetTexture("Items/Armor/FiresoulRobeHood_Head_Glow");
+                color *= 0.4f;
+            }
+
+            if (texture == null)
+            {
+                return;
+            }
+            //I am a bit confused.
+            //just a little bit.
+            Vector2 drawPos = drawInfo.position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition;
+            DrawData drawData = new DrawData(texture, drawPos.Floor() + drawInfo.headOrigin, drawPlayer.bodyFrame, color, drawPlayer.headRotation, drawInfo.headOrigin, 1f, drawInfo.spriteEffects, 0)
+            {
+                shader = drawInfo.headArmorShader
+            };
+            Main.playerDrawData.Add(drawData);
+        });
+        public static readonly PlayerLayer BodyGlow = new PlayerLayer("KirillandRandom", "BodyGlow", PlayerLayer.Body, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+            Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+            Texture2D texture = null;
+
+            if (drawInfo.shadow != 0f || drawInfo.drawPlayer.invis)
+            {
+                return;
+            }
+            Mod mod = ModLoader.GetMod("KirillandRandom");
+
+            if (modPlayer.fireBody)
+            {
+                texture = mod.GetTexture("Items/Armor/FiresoulRobe_Body_Glow");
+                color *= 0.4f;
+            }
+
+            if (texture == null)
+            {
+                return;
+            }
+            //I am a bit confused.
+            //just a little bit.
+            Vector2 drawPos = drawInfo.position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.bodyPosition;
+            DrawData drawData = new DrawData(texture, drawPos.Floor() + drawInfo.bodyOrigin, drawPlayer.bodyFrame, color, drawPlayer.bodyRotation, drawInfo.bodyOrigin, 1f, drawInfo.spriteEffects, 0)
+            {
+                shader = drawInfo.bodyArmorShader
+            };
+            Main.playerDrawData.Add(drawData);
+        });
+        public static readonly PlayerLayer LegsGlow = new PlayerLayer("KirillandRandom", "LegsGlow", PlayerLayer.Legs, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+            Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+            Texture2D texture = null;
+
+            if (drawInfo.shadow != 0f || drawInfo.drawPlayer.invis)
+            {
+                return;
+            }
+            Mod mod = ModLoader.GetMod("KirillandRandom");
+
+            if (modPlayer.fireLeggings)
+            {
+                texture = mod.GetTexture("Items/Armor/FiresoulRobeLeggings_Legs_Glow");
+                color *= 0.4f;
+            }
+
+            if (texture == null)
+            {
+                return;
+            }
+            //I am a bit confused.
+            //just a little bit.
+            Vector2 drawPos = drawInfo.position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.legPosition;
+            DrawData drawData = new DrawData(texture, drawPos.Floor() + drawInfo.legOrigin, drawPlayer.bodyFrame, color, drawPlayer.legRotation, drawInfo.legOrigin, 1f, drawInfo.spriteEffects, 0)
+            {
+                shader = drawInfo.legArmorShader
+            };
+            Main.playerDrawData.Add(drawData);
+        });
+
+        public static readonly PlayerLayer ArmsGlow = new PlayerLayer("KirillandRandom", "ArmsGlow", PlayerLayer.Arms, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+            Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+            Texture2D texture = null;
+
+            if (drawInfo.shadow != 0f || drawInfo.drawPlayer.invis)
+            {
+                return;
+            }
+            Mod mod = ModLoader.GetMod("KirillandRandom");
+
+            if (modPlayer.fireBody)
+            {
+                texture = mod.GetTexture("Items/Armor/FiresoulRobe_Arms_Glow");
+                color *= 0.75f;
+            }
+
+            if (texture == null)
+            {
+                return;
+            }
+            Vector2 drawPos = drawInfo.position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.bodyPosition;
+            DrawData drawData = new DrawData(texture, drawPos.Floor() + drawPlayer.bodyFrame.Size() / 2, drawPlayer.bodyFrame, color, drawPlayer.bodyRotation, drawInfo.bodyOrigin, 1f, drawInfo.spriteEffects, 0)
+            {
+                shader = drawInfo.bodyArmorShader
+            };
+            Main.playerDrawData.Add(drawData);
+        });
+        public static readonly PlayerLayer MiscEffect = new PlayerLayer("KirillandRandom", "MiscEffect", PlayerLayer.MiscEffectsFront, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+
+            if (drawInfo.shadow != 0f || drawPlayer.dead) return;
+
+            if (Main.gameMenu) return;
+
+        });
+
+
+
+
+
+
+
+
+
+
+
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {if (flamingdedication) {

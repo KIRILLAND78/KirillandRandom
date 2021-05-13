@@ -19,15 +19,17 @@ namespace KirillandRandom.Items.Armor
 		{
 			return body.type == ModContent.ItemType<FiresoulRobe>() && legs.type == ModContent.ItemType<FiresoulRobeLeggings>();
 		}
+
+
         public override void UpdateArmorSet(Player player)
 		{
 			player.GetModPlayer<MPlayer>().fireregen = true;
 			player.allDamage += 0.2f;
 			player.setBonus = "When 'On Fire!' regenerate health.";
 		}
-
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
+			item.flame = true;
 			item.width = 18;
 			item.height = 18;
 			item.value = 10000;
@@ -37,6 +39,7 @@ namespace KirillandRandom.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
+			player.GetModPlayer<MPlayer>().fireLeggings = true;
 			player.GetModPlayer<MPlayer>().fireamplification += 0.10f;
 			player.statManaMax2 += 20;
 			player.magicCrit += 4;

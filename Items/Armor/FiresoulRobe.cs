@@ -13,13 +13,13 @@ namespace KirillandRandom.Items.Armor
 			//DisplayName.SetDefault("Somethinngg");
 			Tooltip.SetDefault("'On Fire!' grants 15% increased damage.\r\n+40 max mana.\r\n+4% magic damage and crit chance.");
 		}
-
 		public override void SetDefaults()
 		{
 			item.width = 18;
 			item.height = 18;
 			item.value = 10000;
 			item.rare = ItemRarityID.Green;
+			item.flame = true;
 			item.defense = 14;
 		}
         public override void DrawHands(ref bool drawHands, ref bool drawArms)
@@ -31,6 +31,7 @@ namespace KirillandRandom.Items.Armor
         }
         public override void UpdateEquip(Player player)
 		{
+			player.GetModPlayer<MPlayer>().fireBody = true;
 			player.GetModPlayer<MPlayer>().fireamplification += 0.15f;
 			player.statManaMax2 += 40;
 			player.magicCrit += 4;

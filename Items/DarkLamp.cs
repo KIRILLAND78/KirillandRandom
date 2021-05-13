@@ -30,8 +30,8 @@ namespace KirillandRandom.Items
 			//item.noWet = true;
 			item.useTurn = true;
 			item.autoReuse = true;
-			item.useAnimation = 80;
-			item.useTime = 160;
+			item.useAnimation = 120;
+			item.useTime = 120;
 			item.useStyle = ItemUseStyleID.HoldingUp;
 			item.flame = true;
 			item.value = 50;
@@ -40,9 +40,9 @@ namespace KirillandRandom.Items
 			item.noMelee = true;
 			item.shoot = mod.ProjectileType("DarkLampLight");
 			item.shootSpeed = 0;
-			item.damage = 100;
+			item.damage = 240;
 			item.magic = true;
-			item.mana = 100;
+			item.mana = 120;
 			item.knockBack = 10;
 			item.value = 10000;
 			item.rare = ItemRarityID.Expert; 
@@ -57,12 +57,6 @@ namespace KirillandRandom.Items
 			Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
 			Lighting.AddLight(position, 1f, 1f, 1f);
 		}
-
-		public override Vector2? HoldoutOffset()
-		{
-			return new Vector2(-4, 20); 
-		}
-
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
 			player.AddBuff(BuffID.OnFire, 340);

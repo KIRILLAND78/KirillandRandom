@@ -30,6 +30,7 @@ namespace KirillandRandom.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
+			player.GetModPlayer<MPlayer>().fireHead = true;
 			player.GetModPlayer<MPlayer>().fireamplification += 0.05f;
 			player.statManaMax2 += 40;
 			player.magicCrit += 10;
