@@ -16,7 +16,7 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Fire Zone");
-			Tooltip.SetDefault("Spreads fire in a cone.\r\nUses gel for ammo\r\nWIP!");
+			Tooltip.SetDefault("Spreads fire in a cone.\r\nUses gel for ammo\r\nWIP!\r\n20% chance to not consume ammo");
 		}
 
 
@@ -33,12 +33,12 @@ namespace KirillandRandom.Items
 			item.width = 30;
 			item.height = 90;
 			item.useTime = 5;
-			item.useAnimation = 9;
+			item.useAnimation = 15;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 0;
 			item.value = 10000;
 			item.rare = ItemRarityID.Expert; 
-			item.UseSound = SoundID.Item1;
+			item.UseSound = SoundID.Item34;
 			item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset()// HoldoutOffset has to return a Vector2 because it needs two values (an X and Y value) to move your flamethrower sprite. Think of it as moving a point on a cartesian plane.
@@ -47,8 +47,10 @@ namespace KirillandRandom.Items
 		}
 		public override bool ConsumeAmmo(Player player)
 		{
-			return Main.rand.NextFloat() >= .4f;
+			// To make this item only consume ammo during the first jet, we check to make sure the animation just started. ConsumeAmmo is called 5 times because of item.useTime and item.useAnimation values in SetDefaults above.
+			return ((player.itemAnimation >= player.itemAnimationMax - 2)&& (Main.rand.NextFloat() >= .2f));
 		}
+
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -66,14 +68,6 @@ namespace KirillandRandom.Items
 			speed2 = new Vector2(speedX, speedY);
 			speed2 = speed2.RotatedByRandom(MathHelper.ToRadians(15)) * 3f;
 			Projectile.NewProjectile(position.X, position.Y, speed2.X, speed2.Y, mod.ProjectileType("Firegun_damage_zone"), damage, knockBack, Main.myPlayer);
-
-
-
-
-
-
-
-
 
 
 			return false;

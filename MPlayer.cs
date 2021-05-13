@@ -160,7 +160,7 @@ namespace KirillandRandom
             if (modPlayer.fireHead)
             {
                 texture = mod.GetTexture("Items/Armor/FiresoulRobeHood_Head_Glow");
-                color *= 0.4f;
+                color *= 0.1f;
             }
 
             if (texture == null)
@@ -192,7 +192,7 @@ namespace KirillandRandom
             if (modPlayer.fireBody)
             {
                 texture = mod.GetTexture("Items/Armor/FiresoulRobe_Body_Glow");
-                color *= 0.4f;
+                color *= 0.1f;
             }
 
             if (texture == null)
@@ -224,7 +224,7 @@ namespace KirillandRandom
             if (modPlayer.fireLeggings)
             {
                 texture = mod.GetTexture("Items/Armor/FiresoulRobeLeggings_Legs_Glow");
-                color *= 0.4f;
+                color *= 0.1f;
             }
 
             if (texture == null)
@@ -257,7 +257,7 @@ namespace KirillandRandom
             if (modPlayer.fireBody)
             {
                 texture = mod.GetTexture("Items/Armor/FiresoulRobe_Arms_Glow");
-                color *= 0.75f;
+                color *= 0.08f;
             }
 
             if (texture == null)

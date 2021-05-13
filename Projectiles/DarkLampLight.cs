@@ -14,13 +14,14 @@ namespace KirillandRandom.Projectiles
         Random rnd = new Random();
         public int timer = 0;
         public int distance = 0;
+        public int hitcount = 0;
 
         public override void SetDefaults()
         {
             projectile.Name = "DarkLamp";
             projectile.width = 1;
             projectile.height = 1;
-            projectile.timeLeft = 160;
+            projectile.timeLeft = 140;
             projectile.penetrate = 9999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -29,10 +30,13 @@ namespace KirillandRandom.Projectiles
             projectile.magic = true;
             projectile.aiStyle = 0;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            hitcount += 1;
+                damage -= ((hitcount) * 8);
+            
             target.AddBuff(BuffID.OnFire, 200);
-            base.OnHitNPC(target, damage, knockback, crit);
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void OnHitPvp(Player target, int damage, bool crit)
         {
@@ -71,7 +75,7 @@ namespace KirillandRandom.Projectiles
             projectile.position.X = (float)owner.Center.X;
             projectile.position.Y = (float)owner.Center.Y;
 
-            distance = (int)(800 * (Math.Sin(MathHelper.ToRadians(90 * timer / 160))));
+            distance = (int)(600 * (Math.Sin(MathHelper.ToRadians(90 * timer / 160))));
             if (timer >= 5)
             {
                 int[] DDustID= new int[12];

@@ -1,4 +1,4 @@
-Currently adds 3 obtainable weapons and some vanity stuff. It is a small mod that I am developing at free time so expect delays between updates.
+Small content mod. Adds wepons, armor set, some accessories. I am developing this mod at free time so expect delays between updates.
 And i am always up for cool ideas, so feel free to suggest something cool! 
-Last major update: New wepon added.
-Last minor update: Some tweaks and future update preprations.
+Last major update: New wepon, accessory and armor set added. Bugfixes again.
+Last minor update: None yet.

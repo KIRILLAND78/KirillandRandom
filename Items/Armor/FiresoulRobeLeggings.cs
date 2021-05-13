@@ -12,7 +12,7 @@ namespace KirillandRandom.Items.Armor
 		{
 			base.SetStaticDefaults();
 			//DisplayName.SetDefault("Somethinngg");
-			Tooltip.SetDefault("'On Fire!' grants 10% increased damage.\r\n+20 max mana.\r\n+4% magic damage and crit chance.");
+			Tooltip.SetDefault("'On Fire!' grants 8% increased damage.\r\n+20 max mana.\r\n+4% magic damage and crit chance.");
 			
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -25,32 +25,33 @@ namespace KirillandRandom.Items.Armor
 		{
 			player.GetModPlayer<MPlayer>().fireregen = true;
 			player.allDamage += 0.2f;
-			player.setBonus = "When 'On Fire!' regenerate health.";
+			player.setBonus = "'On Fire!' grants health regeneration. +20% damage";
 		}
         public override void SetDefaults()
 		{
 			item.flame = true;
-			item.width = 18;
-			item.height = 18;
+			item.width = 26;
+			item.height = 14;
 			item.value = 10000;
-			item.rare = ItemRarityID.Green;
-			item.defense = 10;
+			item.rare = ItemRarityID.LightRed;
+			item.defense = 8;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			player.GetModPlayer<MPlayer>().fireLeggings = true;
-			player.GetModPlayer<MPlayer>().fireamplification += 0.10f;
+			player.GetModPlayer<MPlayer>().fireamplification += 0.08f;
 			player.statManaMax2 += 20;
 			player.magicCrit += 4;
 			player.magicDamage += 0.04f;
-		}
+        }
 
-		//public override void AddRecipes()
-		//{
-		//	ModRecipe recipe = new ModRecipe(mod);
-		//	recipe.SetResult(this);
-		//	recipe.AddRecipe();
-		//}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<FierySilk>(), 5);
+			recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+    }
 }

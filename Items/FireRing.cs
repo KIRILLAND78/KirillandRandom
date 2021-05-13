@@ -18,7 +18,7 @@ namespace KirillandRandom.Items
 			item.height = 30;
 			item.accessory = true;
 			item.value = Item.sellPrice(gold: 1);
-			item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.LightRed;
 		}
 
 
@@ -28,13 +28,14 @@ namespace KirillandRandom.Items
 				player.GetModPlayer<MPlayer>().flamingdedication = true; 
 		}
 
-		//public override void AddRecipes()
-		//{
-		//	ModRecipe recipe = new ModRecipe(mod);
-		//	recipe.AddIngredient(ItemID.DirtBlock, 2);
-		//	recipe.AddTile(TileID.Anvils);
-		//	recipe.SetResult(this);
-		//	recipe.AddRecipe();
-		//}
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Ruby, 2);
+			recipe.AddIngredient(ItemID.HellstoneBar, 2);
+			recipe.AddIngredient(ItemID.GoldBar, 4);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
 	}
 }
