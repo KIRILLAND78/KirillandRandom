@@ -37,8 +37,7 @@ namespace KirillandRandom
         public override void ResetEffects()
         {
             flamingdedication = false;
-            eyeofdeath = false;
-                Something = false;
+            Something = false;
             fireregen = false;
             fireBody = false;
             fireHead = false;
@@ -46,6 +45,17 @@ namespace KirillandRandom
 
             fireamplification = 0;
         }
+        public override TagCompound Save()
+        {
+            return new TagCompound {
+				{"eyeofdeath", eyeofdeath}
+            };
+        }
+        public override void Load(TagCompound tag)
+        {
+            eyeofdeath = tag.GetBool("eyeofdeath");
+        }
+
         public override void ModifyDrawLayers(List<PlayerLayer> layers)
         {
             int index = layers.IndexOf(PlayerLayer.Legs);
@@ -128,13 +138,7 @@ namespace KirillandRandom
                         fireLeggings = true;
                 }
             }
-
-
-
-
-
             base.PostUpdateEquips();
-
         }
 
 
@@ -290,7 +294,15 @@ namespace KirillandRandom
 
 
 
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (eyeofdeath == true)
+            {
+                damage = (int)(damage*0.3);
+            }
 
+            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
+        }
 
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -322,16 +334,23 @@ namespace KirillandRandom
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
             ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (flamingdedication)
+            float custom_endurance= player.endurance;
+            if (eyeofdeath == true)
+            {
+                custom_endurance += 0.1f;
+            }
+
+                if (flamingdedication)
             {
                 player.AddBuff(BuffID.OnFire, 120);
             }
 
-            int fdamage = (int)((damage - (0.5 * player.statDefense)) * (1 - player.endurance));
+            int fdamage = (int)((damage - (0.5 * player.statDefense)) * (1 - custom_endurance));
+            player.immune = true;
+
+            player.immuneTime = player.longInvince? 80: 40;
             if (Main.expertMode)
-            {
-                fdamage = (int)((damage - (0.75 * player.statDefense)) * (1 - player.endurance));
-                player.immune = true;
+            {fdamage = (int)((damage - (0.75 * player.statDefense)) * (1 - custom_endurance));
             }
             if ((eyeofdeath==true) && (fdamage < 25))
             {

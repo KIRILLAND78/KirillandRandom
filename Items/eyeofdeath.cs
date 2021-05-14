@@ -14,42 +14,36 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
+			item.useStyle = ItemUseStyleID.HoldingUp;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.width = 30;
 			item.height = 30;
-			item.accessory = true;
 			item.value = Item.sellPrice(gold: 1);
 			item.rare = ItemRarityID.Red;
 		}
-        public override bool CanEquipAccessory(Player player, int slot)
+
+        public override bool UseItem(Player player)
         {
-			for (int k = 0; k < 200; k++)
-			{
-				NPC curNPC = Main.npc[k];
-				if (curNPC.boss == true)
-				{
-					return false;
-				}
-			}
-			return base.CanEquipAccessory(player, slot);
-        }
+            for (int k = 0; k < 200; k++)
+            {
+                NPC curNPC = Main.npc[k];
+                if ((curNPC.boss == true)&&(curNPC.active==true))
+                {
+                    return false;
+                }
+            }
 
-
-        public override void UpdateAccessory(Player player, bool hideVisual)
-		{
-			
-
-				player.GetModPlayer<MPlayer>().eyeofdeath = true; 
-			player.endurance += 0.1f;
-			player.allDamageMult += 0.3f; // The acceleration multiplier of the player's movement speed
+            player.GetModPlayer<MPlayer>().eyeofdeath = player.GetModPlayer<MPlayer>().eyeofdeath ? false : true;
+			return true;
 		}
-
-		//public override void AddRecipes()
-		//{
-		//	ModRecipe recipe = new ModRecipe(mod);
-		//	recipe.AddIngredient(ItemID.DirtBlock, 2);
-		//	recipe.AddTile(TileID.Anvils);
-		//	recipe.SetResult(this);
-		//	recipe.AddRecipe();
-		//}
-	}
+        //public override void AddRecipes()
+        //{
+        //	ModRecipe recipe = new ModRecipe(mod);
+        //	recipe.AddIngredient(ItemID.DirtBlock, 2);
+        //	recipe.AddTile(TileID.Anvils);
+        //	recipe.SetResult(this);
+        //	recipe.AddRecipe();
+        //}
+    }
 }
