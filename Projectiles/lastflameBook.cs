@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace KirillandRandom.Projectiles
 {
-    public class lastflameBook : ModProjectile
+    public class LastFlameBook : ModProjectile
     {
         public override void Kill(int timeLeft)
         {

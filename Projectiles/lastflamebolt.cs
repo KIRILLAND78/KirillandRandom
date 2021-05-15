@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace KirillandRandom.Projectiles
 {
-    public class lastflame : ModProjectile
+    public class LastFlameBolt : ModProjectile
     {
         public int bonusDamage = 0;
         Item Book;
@@ -57,7 +57,7 @@ namespace KirillandRandom.Projectiles
 
 
 
-            int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
+            int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 1.1f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
 
 
@@ -67,7 +67,6 @@ namespace KirillandRandom.Projectiles
                 {
 
                     projectile.friendly = true;
-                    Player p = Main.player[projectile.owner];
                     projectile.tileCollide = true;
 
                     projectile.damage +=bonusDamage;

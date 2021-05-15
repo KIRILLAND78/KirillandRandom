@@ -17,9 +17,7 @@ namespace KirillandRandom.Projectiles
         public double rad;
         public double deg;
         private int first = 1;
-        private float shootToX;
-        private float distance;
-        private float shootToY;
+        private float acceleration;
 
         public override void SetDefaults()
         {
@@ -30,7 +28,7 @@ namespace KirillandRandom.Projectiles
             projectile.Name = "ChScythe";
             projectile.width = 80;
             projectile.height = 80;
-            projectile.timeLeft = 60;
+            projectile.timeLeft = 65;
             projectile.penetrate = 999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -38,11 +36,6 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.ranged = false;
             projectile.aiStyle = -1;
-            projectile.scale = 1;
-        }
-        public override void Kill(int timeLeft)
-        {
-            base.Kill(timeLeft);
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -67,37 +60,34 @@ namespace KirillandRandom.Projectiles
             Player p = Main.player[projectile.owner];
             if (first == 1)
             {
-                origx = projectile.position.X;
-                origy = projectile.position.Y;
-                shootToX = Main.MouseWorld.X - projectile.Center.X;//обоже.
-                shootToY = Main.MouseWorld.Y - projectile.Center.Y;//обоже.
-                distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
                 first = 0;
             }
+            acceleration = 0;
+            if (projectile.timeLeft < 55)
+            {
+                if ((p.Center - projectile.Center).Length() < 20)
+                {
+                    projectile.Kill();
+                }
+                acceleration = 1;
 
-            projectile.position.X = origx;
-            projectile.position.Y = origy;
+                if (projectile.timeLeft < 25)
+                {
+                    projectile.damage = 0;
+                    acceleration = 3;
+                }
+            }
+            projectile.velocity += Vector2.Normalize(p.Center-projectile.Center) * acceleration;
+            if ((projectile.velocity.Length() > 35f)&& (projectile.timeLeft>24))
+            {
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * 35;
+            }
 
-            projectile.alpha = 0;
-                deg = (double)projectile.ai[1];
-                double deg2= projectile.ai[0];
-                rad = (deg-90) * (Math.PI / 180);
-                double rad2 = (deg2+30) * (Math.PI / 180);
-            projectile.rotation = (float)rad2 +projectile.velocity.ToRotation();
-            
-            float fshootToX = shootToX * (float)Math.Cos(rad)* 180.0f / distance;
-            float fshootToY = shootToY * (float)Math.Cos(rad)* 180.0f  / distance;
-            projectile.velocity.X = fshootToX;//help me.
-            projectile.velocity.Y = fshootToY;
+            double rad2 = (projectile.ai[0]) * (Math.PI / 180);
+            projectile.rotation = (float)rad2;
 
-            //double dist = 24;
 
-            projectile.position.X = p.Center.X + (projectile.position.X - origx)-40;//what am i doing with my life
-            projectile.position.Y = p.Center.Y + (projectile.position.Y - origy)-20;
-            //projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
-            //projectile.position.Y += p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
-            projectile.ai[1] += 3f;
-            projectile.ai[0] += 1f;
+            projectile.ai[0] += 14f;
 
 
         }

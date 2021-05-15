@@ -5,7 +5,7 @@ using Terraria.Utilities;
 using KirillandRandom;
 namespace KirillandRandom.Items
 {
-	public class eyeofdeath : ModItem
+	public class EyeOfDeath : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -34,7 +34,7 @@ namespace KirillandRandom.Items
                 }
             }
 
-            player.GetModPlayer<MPlayer>().eyeofdeath = player.GetModPlayer<MPlayer>().eyeofdeath ? false : true;
+            player.GetModPlayer<MPlayer>().eyeofdeath = !player.GetModPlayer<MPlayer>().eyeofdeath;
 			return true;
 		}
         //public override void AddRecipes()

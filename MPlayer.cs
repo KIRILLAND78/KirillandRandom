@@ -78,7 +78,7 @@ namespace KirillandRandom
             {
                 layers.Insert(index + 1, ArmsGlow);
             }
-            index = index = layers.IndexOf(PlayerLayer.MiscEffectsFront);
+            index = layers.IndexOf(PlayerLayer.MiscEffectsFront);
             if (index != -1)
             {
                 layers.Insert(index + 1, MiscEffect);
@@ -105,7 +105,7 @@ namespace KirillandRandom
 
 
 
-            if (player.armor[10].type > 0)
+            if (player.armor[10].type > ItemID.None)
             {
 
                 if (player.armor[10].type != ModContent.ItemType<FiresoulRobeHood>())
@@ -116,7 +116,7 @@ namespace KirillandRandom
                 { fireHead = true;
                 }
                 }
-            if (player.armor[11].type > 0)
+            if (player.armor[11].type > ItemID.None)
             {
 
                 if (player.armor[11].type != ModContent.ItemType<FiresoulRobe>())
@@ -126,7 +126,7 @@ namespace KirillandRandom
                 else
                 { fireBody = true;
                 } }
-            if (player.armor[12].type > 0)
+            if (player.armor[12].type > ItemID.None)
             {
 
                 if (player.armor[12].type != ModContent.ItemType<FiresoulRobeLeggings>())

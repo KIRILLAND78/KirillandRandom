@@ -39,7 +39,7 @@ namespace KirillandRandom.Projectiles
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {if (projectile.timeLeft >= 4) {
-                int DDustID = Dust.NewDust(target.Center, 2, 2, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 0.8f); //Spawns dust
+                int DDustID = Dust.NewDust(target.Center, 2, 2, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 0.8f); //Spawns dust
                 Main.dust[DDustID].noGravity = true;
                 Main.dust[DDustID].velocity = 0.8f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(2));
             }
@@ -56,9 +56,9 @@ namespace KirillandRandom.Projectiles
             Rectangle test3 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 39) - 5, (int)projectile.Center.Y + (int)(Vel.Y * 39) - 5, 10, 10);
 
             Player player = Main.player[projectile.owner];
-            if ((((!target.friendly || (target.type == 22 && projectile.owner < 255 && player.killGuide) || (target.type == 54 && projectile.owner < 255 && player.killClothier)))))
+            if ((((!target.friendly || (target.type == NPCID.Guide && projectile.owner < 255 && player.killGuide) || (target.type == NPCID.Clothier && projectile.owner < 255 && player.killClothier)))))
             {
-                if ((test2.Intersects(target.Hitbox))|| (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
+                if ((test2.Intersects(target.Hitbox))|| (test3.Intersects(target.Hitbox)) || (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
                 {
                     return true;
                 }
@@ -83,7 +83,6 @@ namespace KirillandRandom.Projectiles
             if (first)
             {
 
-                    Vector2 MousePos = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y);
                 Vector2 PlayerPos = owner.Center;
                 //float angle;
 
@@ -124,7 +123,7 @@ namespace KirillandRandom.Projectiles
 
             lastplpos = owner.Center;
 
-            int DDustID = Dust.NewDust(projectile.Center-new Vector2(8,4), 0, 0, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 0.2f); //Spawns dust
+            int DDustID = Dust.NewDust(projectile.Center-new Vector2(8,4), 0, 0, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 0.2f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
             Main.dust[DDustID].velocity = 1.1f*Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(10));
 

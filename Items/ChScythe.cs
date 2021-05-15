@@ -43,7 +43,7 @@ namespace KirillandRandom.Items
 			else
 			{
 				item.shoot = mod.ProjectileType("ChScythe");//BIG SCYTHE
-				item.shootSpeed = 60;
+				item.shootSpeed = 17;
 				item.useTime = 60;
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.useAnimation = 60;
@@ -73,7 +73,7 @@ namespace KirillandRandom.Items
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (player.altFunctionUse == 2)
+				if (player.altFunctionUse == 2)
 			{
 				Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("ChScytheSpin"), 80, 0, item.owner, 1f, 0);
 			}

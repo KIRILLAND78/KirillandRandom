@@ -44,7 +44,7 @@ namespace KirillandRandom.Items
 			{
 					item.shoot = ProjectileID.None;
 					if (player.GetModPlayer<MPlayer>().flames_summoned < 4) {
-						item.shoot = mod.ProjectileType("lastflame");
+						item.shoot = mod.ProjectileType("LastFlameBolt");
 						player.GetModPlayer<MPlayer>().flames_summoned += 1;
 					}
 					item.mana = 30- player.GetModPlayer<MPlayer>().flames_summoned*5;
