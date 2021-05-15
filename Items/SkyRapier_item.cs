@@ -34,7 +34,6 @@ namespace KirillandRandom.Items
 			item.knockBack = 6;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
-			//todo
 			item.shootSpeed = 18;
 			item.damage = 88;
 			item.value = 10000;
@@ -55,6 +54,17 @@ namespace KirillandRandom.Items
 			recipe2.AddTile(TileID.MythrilAnvil);
 			recipe2.SetResult(this);
 			recipe2.AddRecipe();
+		}
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+
+			Vector2 MousePos = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y);
+			Vector2 PlayerPos = player.Center;
+			Vector2 Diff = MousePos - PlayerPos;
+			Vector2 DiffRand = Diff.RotatedByRandom(MathHelper.ToRadians(45));
+			Vector2 nposition = player.Center+(30 * Vector2.Normalize(DiffRand));
+			Projectile.NewProjectile(nposition.X, nposition.Y, speedX, speedY, mod.ProjectileType("SkyRapier"), 0, 0, player.whoAmI);
+			return false;
 		}
 
 	}

@@ -53,10 +53,9 @@ namespace KirillandRandom.Items
 			}
 			return true;
 		}
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
-
-
+			
 			item.noUseGraphic = true;
 			item.damage = 90;
 			item.noMelee = true;

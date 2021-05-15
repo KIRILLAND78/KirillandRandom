@@ -37,6 +37,7 @@ namespace KirillandRandom.Projectiles
         
         public override void AI()
         {
+            
             Player owner = Main.player[projectile.owner];
             if (first)
             {

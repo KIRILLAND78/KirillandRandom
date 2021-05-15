@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -29,6 +30,12 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.ranged = false;
             projectile.melee = true;
+
+
+            //projectile.netUpdate2 = true;
+            //projectile.netUpdate = true;//this thing is pretty unreliable. and by unreliable i mean those sometimes don't work. at all.
+            //projectile.netSpam = 6;//fix desync asap
+            //projectile.netImportant = true;//i dunno what those do, i just slapped them wothout thinking twice. Remove if it lags.
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {if (projectile.timeLeft >= 4) {
@@ -65,7 +72,7 @@ namespace KirillandRandom.Projectiles
                 return false;
             }
         }
-
+        
         public override void AI()
        {
 
@@ -73,18 +80,14 @@ namespace KirillandRandom.Projectiles
 
             projectile.velocity *= 1.2f;
 
-            if (first){
+            if (first)
+            {
 
-                Vector2 MousePos = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y);
+                    Vector2 MousePos = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y);
                 Vector2 PlayerPos = owner.Center;
                 //float angle;
 
-                Vector2 AimFor = 150 * Vector2.Normalize(projectile.velocity)+ PlayerPos;
-                Vector2 Diff = MousePos - PlayerPos;
-
-                Vector2 DiffRand = Diff.RotatedByRandom(MathHelper.ToRadians(45));
-                
-                projectile.Center += (32 * Vector2.Normalize(DiffRand));
+                Vector2 AimFor = 150 * Vector2.Normalize(projectile.velocity) + PlayerPos;
 
                 Vector2 Diff2 = AimFor - projectile.Center;
 
@@ -106,11 +109,17 @@ namespace KirillandRandom.Projectiles
 
                 projectile.light = 0.4f;
                 lastplpos = owner.Center;
-                projectile.rotation = projectile.velocity.ToRotation() +MathHelper.ToRadians(-45f);
+                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
 
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("SkyRapier2"), 0, 0, Main.myPlayer);
+                    if (owner.whoAmI == Main.myPlayer)
+                    {
+                        Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("SkyRapier2"), 0, 0, owner.whoAmI);
+                }
+
                 first = false;
             }
+
+
             projectile.position += owner.Center - lastplpos;
 
             lastplpos = owner.Center;

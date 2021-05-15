@@ -30,6 +30,7 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.aiStyle = 0;
+
         }
         public override void Kill(int timeLeft)
         {

@@ -298,8 +298,9 @@ namespace KirillandRandom
         {
             if (eyeofdeath == true)
             {
-                damage = (int)(damage*0.3);
+                damage = (int)(damage*1.3);
             }
+            
 
             base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
         }

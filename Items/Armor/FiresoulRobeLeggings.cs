@@ -17,7 +17,7 @@ namespace KirillandRandom.Items.Armor
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == ModContent.ItemType<FiresoulRobe>() && legs.type == ModContent.ItemType<FiresoulRobeLeggings>();
+			return body.type == ModContent.ItemType<FiresoulRobe>() && head.type == ModContent.ItemType<FiresoulRobeHood>() && legs.type == ModContent.ItemType<FiresoulRobeLeggings>();
 		}
 
 
