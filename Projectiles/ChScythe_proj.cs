@@ -52,35 +52,27 @@ namespace KirillandRandom.Projectiles
                 projectile.Kill();
             }
 
-            //int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
-            //Main.dust[DDustID].noGravity = true;
-
-
-
-            Player p = Main.player[projectile.owner];
-            if (first == 1)
-            {
-                first = 0;
+                //int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
+                //Main.dust[DDustID].noGravity = true;
+                if (first == 1)
+                {
+                    first = 0;
             }
             acceleration = 0;
             if (projectile.timeLeft < 55)
             {
-                if ((p.Center - projectile.Center).Length() < 20)
+                if ((owner.Center - projectile.Center).Length() <= 50)
                 {
-                    projectile.Kill();
+                   projectile.Kill();
                 }
-                acceleration = 1;
+                acceleration = 2;
+                projectile.velocity += Vector2.Normalize(owner.Center - projectile.Center) * acceleration;
 
                 if (projectile.timeLeft < 25)
                 {
                     projectile.damage = 0;
-                    acceleration = 3;
+                    projectile.velocity = Vector2.Normalize(owner.Center - projectile.Center) * 35;
                 }
-            }
-            projectile.velocity += Vector2.Normalize(p.Center-projectile.Center) * acceleration;
-            if ((projectile.velocity.Length() > 35f)&& (projectile.timeLeft>24))
-            {
-                projectile.velocity = Vector2.Normalize(projectile.velocity) * 35;
             }
 
             double rad2 = (projectile.ai[0]) * (Math.PI / 180);

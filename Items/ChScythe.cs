@@ -31,17 +31,7 @@ namespace KirillandRandom.Items
 		{
 			if (player.altFunctionUse == 2)
 			{
-				item.shoot = mod.ProjectileType("ChScytheSpin");//SPINNING SCYTHE
-				item.useTime = 20;
-
-				item.shootSpeed = 0;
-				item.useAnimation = (int)(20/player.meleeSpeed);
-				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.damage = 80;
-				item.UseSound = SoundID.DD2_SkyDragonsFurySwing;
-			}
-			else
-			{
+				item.channel = false;
 				item.shoot = mod.ProjectileType("ChScythe");//BIG SCYTHE
 				item.shootSpeed = 17;
 				item.useTime = 60;
@@ -50,6 +40,19 @@ namespace KirillandRandom.Items
 
 				item.damage = 90;
 				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
+			}
+			else
+			{
+				item.shoot = mod.ProjectileType("ChScytheSpin");//SPINNING SCYTHE
+				item.useTime = 20;
+
+
+				item.channel = true;
+				item.shootSpeed = 0;
+				item.useAnimation = (int)(20 / player.meleeSpeed);
+				item.useStyle = ItemUseStyleID.SwingThrow;
+				item.damage = 80;
+				item.UseSound = SoundID.DD2_SkyDragonsFurySwing;
 			}
 			return true;
 		}
@@ -71,15 +74,6 @@ namespace KirillandRandom.Items
 
 			item.melee = true;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-				if (player.altFunctionUse == 2)
-			{
-				Projectile.NewProjectile(position.X, position.Y, 0, 0, mod.ProjectileType("ChScytheSpin"), 80, 0, item.owner, 1f, 0);
-			}
-			return true;
-        }
-
 
 
         public override void AddRecipes()

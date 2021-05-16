@@ -24,9 +24,8 @@ namespace KirillandRandom.Projectiles
             projectile.light = 0.3f;
             projectile.damage = 80;
             projectile.Name = "ChScythe";
-            projectile.width = 60;
-            projectile.height = 60;
-            projectile.timeLeft = 20-(int)(1.1/player.meleeSpeed);//Mistake
+            projectile.width = 118;
+            projectile.height = 118;
             projectile.penetrate = 999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -55,17 +54,17 @@ namespace KirillandRandom.Projectiles
        
         public override void AI()
         {
-            if (todelete) {
-                projectile.Kill();//нужно для того, чтобы коса не мелькала в последнем кадре атаки и переходила в следующий цикл плавно.
-            }
             Player owner = Main.player[projectile.owner];
             if (owner.dead == true)
             {
                 projectile.Kill();
             }
-
-            //int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
-            //Main.dust[DDustID].noGravity = true;
+            if (!owner.channel)
+            {
+                projectile.Kill();
+            }
+                //int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
+                //Main.dust[DDustID].noGravity = true;
 
 
 
@@ -75,62 +74,27 @@ namespace KirillandRandom.Projectiles
                 direct = p.direction;
                 first = 0;
                 }
-                projectile.alpha = 0;
-            if (projectile.ai[0] == 1f){
-                deg = (double)projectile.ai[1] + 225;
+                deg = (double)projectile.ai[0] + 45;
                 rad = deg * (Math.PI / 180);
-                if (direct == 1)
-                {
-                    if (deg >= (225 + 180-6)) { todelete = true; }
-                    rad2 = (deg - 45) * (Math.PI / 180);
-                }
-                else
-                {
-                    if (deg <= (45+6)) { todelete=true; }
-                    rad2 = (deg - 135) * (Math.PI / 180);
-
-                }
-                projectile.rotation = (float)rad2;
-            }
-            else
-            {
-                deg = (double)projectile.ai[1] + 45;
-                rad = deg * (Math.PI / 180);
-
-                if (direct == 1)
-                {
-                    if (deg >= 225-6) { todelete = true; }
-                    rad2 = (deg - 45) * (Math.PI / 180);
-                }else{
-                    if (deg <= 45-180+6) { todelete = true; }
-                    rad2 = (deg-135) * (Math.PI / 180);
-                }
-                projectile.rotation = (float)rad2;
+                projectile.rotation = MathHelper.ToRadians(projectile.ai[0]);
+            
 
 
-
-
-
-            }
-
-            double dist = 32;
-
-            projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
-            projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
+            projectile.Center = p.Center;
+            projectile.Center = p.Center;
             if (direct== 1)
             {
-                projectile.ai[1] += 9f;
+                p.direction = 1;
+                projectile.ai[0] += 9f;
                 //projectile.spriteDirection = 1;
             }
             else
             {
-                projectile.ai[1] -= 9f;
+                p.direction = -1;
+                projectile.ai[0] -= 9f;
 
                 projectile.spriteDirection = -1;
             }
-
-            
-
 
         }
     }
