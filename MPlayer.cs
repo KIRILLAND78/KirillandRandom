@@ -393,7 +393,7 @@ namespace KirillandRandom
             base.UpdateLifeRegen();
         }
 
-
+        
 
         public override void PreUpdate()
         {
@@ -426,8 +426,31 @@ namespace KirillandRandom
         public override void clientClone(ModPlayer clientClone)
         {
             MPlayer clone = clientClone as MPlayer;
-            // Here we would make a backup clone of values that are only correct on the local players Player instance.
-            // Some examples would be RPG stats from a GUI, Hotkey states, and Extra Item Slots
+            clone.flames_summoned = flames_summoned;
         }
+
+        //public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        //{
+        //    ModPacket packet = mod.GetPacket();
+        //    packet.Write((byte)ExampleModMessageType.ExamplePlayerSyncPlayer);
+        //    packet.Write((byte)player.whoAmI);
+        //    packet.Write(flames_summoned);
+        //    packet.Send(toWho, fromWho);
+        //}
+
+        //public override void SendClientChanges(ModPlayer clientPlayer)
+        //{
+        //    // Here we would sync something like an RPG stat whenever the player changes it.
+        //    ExamplePlayer clone = clientPlayer as ExamplePlayer;
+        //    if (clone.nonStopParty != nonStopParty)
+        //    {
+        //        // Send a Mod Packet with the changes.
+        //        var packet = mod.GetPacket();
+        //        packet.Write((byte)ExampleModMessageType.NonStopPartyChanged);
+        //        packet.Write((byte)player.whoAmI);
+        //        packet.Write(nonStopParty);
+        //        packet.Send();
+        //    }
+        //}
     }
 }

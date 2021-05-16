@@ -15,6 +15,7 @@ namespace KirillandRandom.Projectiles
         Item Book;
         public int mode = 2;
         private int first=1;
+        private bool backup_update=false;
 
         public override void SetDefaults()
         {
@@ -71,24 +72,39 @@ namespace KirillandRandom.Projectiles
 
                     projectile.damage +=bonusDamage;
                     projectile.light = 0.6f;
-                    var shootToX = Main.MouseWorld.X - projectile.Center.X;//обоже.
-                    var shootToY = Main.MouseWorld.Y - projectile.Center.Y;//обоже.
+                    if (Main.myPlayer == projectile.owner && projectile.ai[0] == 0f)
+                    {
+                        var shootToX = Main.MouseWorld.X - projectile.Center.X;//обоже.
+                        var shootToY = Main.MouseWorld.Y - projectile.Center.Y;//обоже.
                     float distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
                     shootToX *= 15.0f/ distance;
                     shootToY *= 15.0f/ distance;
                     projectile.velocity.X = shootToX;//обоже.
                     projectile.velocity.Y = shootToY;//обоже.
+                        projectile.netUpdate = true;
+                    }
                     first = 2;
                 }
             }
             else{
 
                 Player p = Main.player[projectile.owner];
+                if ((first != 1)&&(backup_update))
+                {
 
+                    projectile.netUpdate = true;
+
+
+                }
                 if (first == 1)
                 {
                     Book = p.HeldItem;
-                    projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 90* p.GetModPlayer<MPlayer>().flames_summoned;
+                    if (Main.myPlayer == projectile.owner && projectile.ai[0] == 0f)
+                    {
+                        projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 90* p.GetModPlayer<MPlayer>().flames_summoned;
+
+                        projectile.netUpdate = true;
+                    }
                     first = 0;
                 }
                     projectile.alpha = 64;
