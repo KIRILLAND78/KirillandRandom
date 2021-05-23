@@ -63,7 +63,7 @@ namespace KirillandRandom.Items
 			Vector2 Diff = MousePos - PlayerPos;
 			Vector2 DiffRand = Diff.RotatedByRandom(MathHelper.ToRadians(45));
 			Vector2 nposition = player.Center+(30 * Vector2.Normalize(DiffRand));
-			Projectile.NewProjectile(nposition.X, nposition.Y, speedX, speedY, mod.ProjectileType("SkyRapier"), 0, 0, player.whoAmI);
+			Projectile.NewProjectile(nposition.X, nposition.Y, speedX, speedY, mod.ProjectileType("SkyRapier"), damage, knockBack, player.whoAmI);
 			return false;
 		}
 

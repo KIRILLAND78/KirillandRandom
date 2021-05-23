@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 
 using KirillandRandom.NPCs;
 using Terraria.ID;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 
 
 namespace KirillandRandom.Projectiles
@@ -56,7 +58,8 @@ namespace KirillandRandom.Projectiles
                 //Main.dust[DDustID].noGravity = true;
                 if (first == 1)
                 {
-                    first = 0;
+                Filters.Scene.Activate("nihil");
+                first = 0;
             }
             acceleration = 0;
             if (projectile.timeLeft < 55)

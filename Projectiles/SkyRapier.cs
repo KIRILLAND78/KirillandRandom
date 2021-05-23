@@ -72,9 +72,9 @@ namespace KirillandRandom.Projectiles
                 return false;
             }
         }
-        
+
         public override void AI()
-       {
+        {
 
             Player owner = Main.player[projectile.owner];
 
@@ -110,12 +110,17 @@ namespace KirillandRandom.Projectiles
                 lastplpos = owner.Center;
                 projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
 
-                    if (owner.whoAmI == Main.myPlayer)
-                    {
-                        Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("SkyRapier2"), 0, 0, owner.whoAmI);
+                if (owner.whoAmI == Main.myPlayer)
+                {
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("SkyRapier2"), 0, 0, owner.whoAmI);
                 }
 
                 first = false;
+            }
+            else
+            {
+                projectile.netUpdate = true;
+
             }
 
 
@@ -146,6 +151,16 @@ namespace KirillandRandom.Projectiles
 
 
 
+        }
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            // By using ModifyDamageHitbox, we can allow the flames to damage enemies in a larger area than normal without colliding with tiles.
+            // Here we adjust the damage hitbox. We adjust the normal 6x6 hitbox and make it 66x66 while moving it left and up to keep it centered.
+            int size = 500;
+            hitbox.X -= size;
+            hitbox.Y -= size;
+            hitbox.Width += size * 2;
+            hitbox.Height += size * 2;
         }
 
         //pls someone help im tired and this is code nightmare please don't look at this.

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "97/ZABDPSZWSX2BZz/OnWB0gGxg9Y9fQnl769tFCMcKHTnPQrxFK7gUV9QkmaSpvU4bkpqkP7yYCCmFAZ6mSuw==",
+  "dgSpecHash": "+uT51CWUypKgiiEkkAMeG3IZxtGVJciceSIYWooYAcRCezijiaFi8tnxWYgAjz22xAsorHarsVu9YUe0O3S3cQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\kirill\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\KirillandRandom\\KirillandRandom.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kirill\\.nuget\\packages\\tmodloader.codeassist\\0.1.1\\tmodloader.codeassist.0.1.1.nupkg.sha512"
+    "C:\\Users\\kirill\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
   ],
   "logs": []
 }
