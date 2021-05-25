@@ -37,7 +37,7 @@ namespace KirillandRandom.Items
 				item.useTime = 60;
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.useAnimation = 60;
-
+				item.autoReuse = true;
 				item.damage = 90;
 				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
 			}
@@ -45,7 +45,7 @@ namespace KirillandRandom.Items
 			{
 				item.shoot = mod.ProjectileType("ChScytheSpin");//SPINNING SCYTHE
 				item.useTime = 20;
-
+				item.autoReuse = false;
 
 				item.channel = true;
 				item.shootSpeed = 0;

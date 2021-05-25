@@ -40,7 +40,7 @@ namespace KirillandRandom.Items
 			item.noMelee = true;
 			item.shoot = mod.ProjectileType("DarkLampLight");
 			item.shootSpeed = 0;
-			item.damage = 95;
+			item.damage = 101;
 			item.magic = true;
 			item.mana = 120;
 			item.knockBack = 10;

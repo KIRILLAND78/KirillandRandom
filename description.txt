@@ -1,4 +1,4 @@
 Small content mod. Adds wepons, armor set, some accessories. I am developing this mod at free time so expect delays between updates.
 And i am always up for cool ideas, so feel free to suggest something cool! 
-Last major update: New wepon, accessory and armor set added. Bugfixes again.
-Last minor update: None yet.
+Last major update: New wepon, accessory and armor set added.
+Last minor update: Multiplayer bugfixes. I just hope it works.

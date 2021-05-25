@@ -58,7 +58,8 @@ namespace KirillandRandom.Projectiles
                 //Main.dust[DDustID].noGravity = true;
                 if (first == 1)
                 {
-                Filters.Scene.Activate("nihil");
+                //Shader
+                //Filters.Scene.Activate("nihil");
                 first = 0;
             }
             acceleration = 0;
