@@ -353,7 +353,7 @@ namespace KirillandRandom
             if (Main.expertMode)
             {fdamage = (int)((damage - (0.75 * player.statDefense)) * (1 - custom_endurance));
             }
-            if ((eyeofdeath==true) && (fdamage < 25))
+            if ((eyeofdeath==true) && (fdamage < 30))
             {
                 damage = 0;
 
