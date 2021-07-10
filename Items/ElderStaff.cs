@@ -10,14 +10,13 @@ using KirillandRandom.NPCs;
 
 namespace KirillandRandom.Items
 {
-	public class DogBottle : ModItem
+	public class ElderStaff : ModItem
 	{
 
 		public override void SetStaticDefaults()
 		{
 
-			DisplayName.SetDefault("Dog and bottle."); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("OH NO! OH NO! OH NOOOO!!!");
+			DisplayName.SetDefault("Crystal staff");
 		}
 
 
@@ -27,17 +26,17 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
-			item.ranged= true;
-			item.width = 40;
-			item.height = 40;
+			item.magic= true;
+			item.width = 60;
+			item.height = 60;
 			item.value = 10000;
-			item.shoot = mod.ProjectileType("ExplodingBottle"); ;
-			item.damage = 80;
-			item.shootSpeed = 4;
-			item.useTime = 25;
-			item.useAnimation = 25;
+			item.shoot = mod.ProjectileType("ElderStaffProjectile"); ;
+			item.damage = 100;
+			item.shootSpeed = 20;
+			item.useTime = 71;
+			item.useAnimation = 71;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 6;
+			item.knockBack = 20;
 			item.noMelee = true;
 			item.noUseGraphic = true;
 			item.rare = ItemRarityID.Expert;
@@ -47,7 +46,6 @@ namespace KirillandRandom.Items
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			player.AddBuff(ModContent.BuffType<Buffs.Hexed>(), 100, false);
 			return true;//это что-то типа коррекции поведения снарядов... наверное? По типу изменения урона, угла стрельбы и т.д.
 		}
 

@@ -30,9 +30,13 @@ namespace KirillandRandom.Projectiles
         }
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 10; i++)
             {
-                int ADust = Dust.NewDust(projectile.Center - new Vector2(30, 30), 60, 60, 61, 0, 0, 0, default, 1.6f);
+                int ADust = Dust.NewDust(projectile.Center - new Vector2(30, 30), 60, 60, 60, 0, 0, 0, default, 1.6f);
+                ADust = Dust.NewDust(projectile.Center - new Vector2(30, 30), 60, 60, 59, 0, 0, 0, default, 1.6f);
+                ADust = Dust.NewDust(projectile.Center - new Vector2(30, 30), 60, 60, 61, 0, 0, 0, default, 1.6f);
+                ADust = Dust.NewDust(projectile.Center - new Vector2(30, 30), 60, 60, 62, 0, 0, 0, default, 1.6f);
+                ADust = Dust.NewDust(projectile.Center - new Vector2(30, 30), 60, 60, 64, 0, 0, 0, default, 1.6f);
 
             }
             if (projectile.owner == Main.myPlayer)
@@ -68,13 +72,17 @@ namespace KirillandRandom.Projectiles
 
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
             Dustt = new Vector2((float)Math.Cos(projectile.velocity.ToRotation() + MathHelper.ToRadians(15f)), (float)Math.Sin(projectile.velocity.ToRotation() + MathHelper.ToRadians(15f)));
-
-            int GreenFl = Dust.NewDust(projectile.Center+new Vector2(-4,-4)+Dustt*20f,2,2, 61,0, 0, 0, default, 1.2f);
+            if (projectile.timeLeft % 3 == 0) { 
+            int GreenFl = Dust.NewDust(projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 61, 0, 0, 0, default, 1f);
+            GreenFl = Dust.NewDust(projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 64, 0, 0, 0, default, 1f);
+            GreenFl = Dust.NewDust(projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 62, 0, 0, 0, default, 1f);
+            GreenFl = Dust.NewDust(projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 60, 0, 0, 0, default, 1f);
+            GreenFl = Dust.NewDust(projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 59, 0, 0, 0, default, 1f);
             //Main.NewText(Convert.ToString(projectile.velocity.ToRotation()));
 
-            
+        }
 
-                Player p = Main.player[projectile.owner];
+            Player p = Main.player[projectile.owner];
             
                 double deg = (double)projectile.ai[1];
                 double rad = deg * (Math.PI / 180);
@@ -84,8 +92,8 @@ namespace KirillandRandom.Projectiles
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            width = 40;
-            height = 40;
+            width = 35;
+            height = 35;
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
     }

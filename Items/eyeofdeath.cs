@@ -10,7 +10,7 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Eye Of Death");
-			Tooltip.SetDefault("Your hp is limited to half of maximum hp.\r\nReduces incoming damage by 10%, increases your damage by 30%\r\nIgnore instances of damage that would deal less than 25 hp.\r\nCan't equip during bossfights.");
+			Tooltip.SetDefault("Your hp is limited to half of maximum hp.\r\nIncreases your damage by 30%\r\nIgnore instances of damage that would deal less than 30 hp.\r\nCan't use during bossfights.");
 		}
 		public override void SetDefaults()
 		{

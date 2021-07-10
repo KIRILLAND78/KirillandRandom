@@ -34,6 +34,7 @@ namespace KirillandRandom
         public bool fireLeggings;
         public bool fireBody;
         public bool fireHead;
+        public bool Hexed;
         public override void ResetEffects()
         {
             flamingdedication = false;
@@ -42,6 +43,7 @@ namespace KirillandRandom
             fireBody = false;
             fireHead = false;
             fireLeggings = false;
+            Hexed = false;
 
             fireamplification = 0;
         }
@@ -83,6 +85,11 @@ namespace KirillandRandom
             {
                 layers.Insert(index + 1, MiscEffect);
             }
+            index = layers.IndexOf(PlayerLayer.Legs);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, Animal);
+            }
 
             HeadGlow.visible = true;
 
@@ -90,7 +97,69 @@ namespace KirillandRandom
             ArmsGlow.visible = true;
             MiscEffect.visible = true;
             LegsGlow.visible = true;
+            Animal.visible = false;
+            if (Hexed)
+            {
+                layers.ForEach(delegate (PlayerLayer lay) {
+                    lay.visible = false;
+                }
+                );
+                PlayerLayer.Legs.visible = true;
+                Animal.visible = true;
+                PlayerLayer.MountBack.visible = true;
+                PlayerLayer.MountBack.visible = true;
+
+            }
+            else{
+                layers.ForEach(delegate (PlayerLayer lay) {
+                    lay.visible = true;
+                }
+                );
+
+                Animal.visible = false;
+
+            }
         }
+        public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo)
+        {
+            if (Hexed){
+                drawInfo.legColor = Color.Transparent;
+                drawInfo.lowerArmorColor = Color.Transparent;
+                drawInfo.shoeColor = Color.Transparent;
+                drawInfo.pantsColor = Color.Transparent;
+
+            }
+
+
+
+
+                base.ModifyDrawInfo(ref drawInfo);
+        }
+
+        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {if (Hexed)
+            {
+                return false;
+            }
+            return base.Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+        }
+        public override bool CanHitPvp(Item item, Player target)
+        {
+            if (Hexed)
+            {
+                return false;
+            }
+            return base.CanHitPvp(item, target);
+        }
+        public override bool? CanHitNPC(Item item, NPC target)
+        {
+            if (Hexed)
+            {
+                return false;
+            }
+            return base.CanHitNPC(item, target);
+        }
+
 
         public override void PostUpdateEquips()
         {
@@ -144,7 +213,34 @@ namespace KirillandRandom
 
 
 
+        public static readonly PlayerLayer Animal = new PlayerLayer("KirillandRandom", "Animal", PlayerLayer.Legs, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            Color color = drawInfo.faceColor;
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+            Texture2D texture = null;
 
+            if (drawInfo.shadow != 0f || drawInfo.drawPlayer.invis)
+            {
+                return;
+            }
+            Mod mod = ModLoader.GetMod("KirillandRandom");
+
+                texture = mod.GetTexture("Items/Armor/Pig_Legs");
+
+            if (texture == null)
+            {
+                return;
+            }
+            //I am a bit confused.
+            //just a little bit.
+            Vector2 drawPos = drawInfo.position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.legPosition;
+            DrawData drawData = new DrawData(texture, drawPos.Floor() + drawInfo.legOrigin, drawPlayer.bodyFrame, color, drawPlayer.legRotation, drawInfo.legOrigin, 1f, drawInfo.spriteEffects, 0)
+            {
+                shader = drawInfo.legArmorShader
+            };
+            Main.playerDrawData.Add(drawData);
+        });
 
 
 
