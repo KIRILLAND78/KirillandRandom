@@ -47,7 +47,6 @@ namespace KirillandRandom.Items
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			player.AddBuff(ModContent.BuffType<Buffs.Hexed>(), 100, false);
 			return true;//это что-то типа коррекции поведения снарядов... наверное? По типу изменения урона, угла стрельбы и т.д.
 		}
 

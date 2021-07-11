@@ -15,7 +15,6 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-
             projectile.Name = "ElderStaffProjectile";
             projectile.width = 60;
             projectile.height = 60;

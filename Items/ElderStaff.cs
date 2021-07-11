@@ -26,6 +26,7 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
+			item.mana = 100;
 			item.magic= true;
 			item.width = 60;
 			item.height = 60;

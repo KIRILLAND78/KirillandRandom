@@ -216,7 +216,7 @@ namespace KirillandRandom
         public static readonly PlayerLayer Animal = new PlayerLayer("KirillandRandom", "Animal", PlayerLayer.Legs, delegate (PlayerDrawInfo drawInfo)
         {
             Player drawPlayer = drawInfo.drawPlayer;
-            Color color = drawInfo.faceColor;
+            Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
             MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
             Texture2D texture = null;
 
