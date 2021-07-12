@@ -12,3 +12,6 @@ obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
 obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
 .vs/KirillandRandom/v16/Browse.VC.db
 obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
+obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
+*.cache
+.vs/KirillandRandom/v16/.suo

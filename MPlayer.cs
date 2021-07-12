@@ -106,7 +106,7 @@ namespace KirillandRandom
                 );
                 PlayerLayer.Legs.visible = true;
                 Animal.visible = true;
-                PlayerLayer.MountBack.visible = true;
+                PlayerLayer.MountFront.visible = true;
                 PlayerLayer.MountBack.visible = true;
 
             }

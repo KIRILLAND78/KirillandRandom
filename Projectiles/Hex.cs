@@ -24,6 +24,9 @@ namespace KirillandRandom.Projectiles
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.aiStyle = 0;
+
+            projectile.alpha = 255;
+
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
@@ -35,21 +38,23 @@ namespace KirillandRandom.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 29)
+            if ((projectile.owner == Main.myPlayer) && (projectile.timeLeft == 29))
             {
-                for (int i = 0; i < 255; i++)
+                projectile.position = new Vector2(Main.MouseWorld.X - 50, Main.MouseWorld.Y - 50);
+                projectile.netUpdate = true;
+            }
+            if (projectile.timeLeft == 25){
+                for (int i = 0; i < 256; i++)
                 {
-                    if ((Main.player[i].position - projectile.position).Length() <= 40)
+
+                    projectile.alpha = 0;
+                    if ((Main.player[i].Center - projectile.Center).Length() <= 60)
                     {
                         Main.player[i].AddBuff(ModContent.BuffType<Buffs.Hexed>(), 600);
                     }
                 }
-                if ((projectile.owner == Main.myPlayer) && (projectile.timeLeft == 29))
-                {
-                    projectile.position = new Vector2(Main.MouseWorld.X - 50, Main.MouseWorld.Y - 50);
-                    projectile.netUpdate = true;
-                }
             }
+            
             Player owner = Main.player[projectile.owner];
 
 
@@ -57,7 +62,7 @@ namespace KirillandRandom.Projectiles
             {
                 projectile.Kill();
             }
-            projectile.alpha -= 1;
+            projectile.alpha += 10;
 
 
             projectile.velocity = new Vector2(0, 0);
