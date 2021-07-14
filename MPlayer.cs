@@ -159,12 +159,27 @@ namespace KirillandRandom
             }
             return base.CanHitNPC(item, target);
         }
+        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {if (player.name == "KIRILLAND-Modder")
+            {//test stuff
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                {
+                    int TestDust = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), player.width + 4, player.height + 4, 63, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
+                    Main.dust[TestDust].noGravity = true;
+                    Main.dust[TestDust].noLight = true;
+                    Main.playerDrawDust.Add(TestDust);
+                }
+            }
 
-
+            base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+        }
         public override void PostUpdateEquips()
         {
 
-
+            if (Hexed)
+            {
+                player.wingTime = 0;
+            }
             if (player.forceMerman||player.forceWerewolf || player.wereWolf || player.merman)
             {
                 fireBody = false;
@@ -386,22 +401,6 @@ namespace KirillandRandom
 
 
 
-
-
-
-
-        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
-        {
-            if (eyeofdeath == true)
-            {
-                damage = (int)(damage*1.3);
-            }
-            
-
-            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
-        }
-
-
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {if (flamingdedication) {
                 target.AddBuff(BuffID.OnFire, 60);
@@ -461,6 +460,10 @@ namespace KirillandRandom
 
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
         {
+            if (eyeofdeath == true)
+            {
+                mult += 0.3f;
+            }
             if (fireamplification>0)
             {
                 if (player.onFire == true)

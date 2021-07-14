@@ -78,7 +78,7 @@ namespace KirillandRandom.Projectiles
 
             Player owner = Main.player[projectile.owner];
 
-            projectile.velocity *= 1.2f;
+            projectile.velocity *= 1.25f;
 
             if (first)
             {
@@ -104,7 +104,7 @@ namespace KirillandRandom.Projectiles
                 projectile.velocity.X = Diff2.X;
                 projectile.velocity.Y = Diff2.Y;
                 projectile.velocity.Normalize();
-                projectile.velocity *= 3f;
+                projectile.velocity *= 3.1f;
 
                 projectile.light = 0.4f;
                 lastplpos = owner.Center;
