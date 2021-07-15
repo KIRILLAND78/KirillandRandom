@@ -34,6 +34,7 @@ namespace KirillandRandom
         public bool fireLeggings;
         public bool fireBody;
         public bool fireHead;
+        public bool Hexed;
         public override void ResetEffects()
         {
             flamingdedication = false;
@@ -42,6 +43,7 @@ namespace KirillandRandom
             fireBody = false;
             fireHead = false;
             fireLeggings = false;
+            Hexed = false;
 
             fireamplification = 0;
         }
@@ -83,6 +85,11 @@ namespace KirillandRandom
             {
                 layers.Insert(index + 1, MiscEffect);
             }
+            index = layers.IndexOf(PlayerLayer.Legs);
+            if (index != -1)
+            {
+                layers.Insert(index + 1, Animal);
+            }
 
             HeadGlow.visible = true;
 
@@ -90,12 +97,89 @@ namespace KirillandRandom
             ArmsGlow.visible = true;
             MiscEffect.visible = true;
             LegsGlow.visible = true;
+            Animal.visible = false;
+            if (Hexed)
+            {
+                layers.ForEach(delegate (PlayerLayer lay) {
+                    lay.visible = false;
+                }
+                );
+                PlayerLayer.Legs.visible = true;
+                Animal.visible = true;
+                PlayerLayer.MountFront.visible = true;
+                PlayerLayer.MountBack.visible = true;
+
+            }
+            else{
+                layers.ForEach(delegate (PlayerLayer lay) {
+                    lay.visible = true;
+                }
+                );
+
+                Animal.visible = false;
+
+            }
+        }
+        public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo)
+        {
+            if (Hexed){
+                drawInfo.legColor = Color.Transparent;
+                drawInfo.lowerArmorColor = Color.Transparent;
+                drawInfo.shoeColor = Color.Transparent;
+                drawInfo.pantsColor = Color.Transparent;
+
+            }
+
+
+
+
+                base.ModifyDrawInfo(ref drawInfo);
         }
 
+        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {if (Hexed)
+            {
+                return false;
+            }
+            return base.Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+        }
+        public override bool CanHitPvp(Item item, Player target)
+        {
+            if (Hexed)
+            {
+                return false;
+            }
+            return base.CanHitPvp(item, target);
+        }
+        public override bool? CanHitNPC(Item item, NPC target)
+        {
+            if (Hexed)
+            {
+                return false;
+            }
+            return base.CanHitNPC(item, target);
+        }
+        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {if (player.name == "KIRILLAND-Modder")
+            {//test stuff
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                {
+                    int TestDust = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), player.width + 4, player.height + 4, 63, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
+                    Main.dust[TestDust].noGravity = true;
+                    Main.dust[TestDust].noLight = true;
+                    Main.playerDrawDust.Add(TestDust);
+                }
+            }
+
+            base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+        }
         public override void PostUpdateEquips()
         {
 
-
+            if (Hexed)
+            {
+                player.wingTime = 0;
+            }
             if (player.forceMerman||player.forceWerewolf || player.wereWolf || player.merman)
             {
                 fireBody = false;
@@ -144,7 +228,34 @@ namespace KirillandRandom
 
 
 
+        public static readonly PlayerLayer Animal = new PlayerLayer("KirillandRandom", "Animal", PlayerLayer.Legs, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+            MPlayer modPlayer = drawPlayer.GetModPlayer<MPlayer>();
+            Texture2D texture = null;
 
+            if (drawInfo.shadow != 0f || drawInfo.drawPlayer.invis)
+            {
+                return;
+            }
+            Mod mod = ModLoader.GetMod("KirillandRandom");
+
+                texture = mod.GetTexture("Items/Armor/Pig_Legs");
+
+            if (texture == null)
+            {
+                return;
+            }
+            //I am a bit confused.
+            //just a little bit.
+            Vector2 drawPos = drawInfo.position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.legPosition;
+            DrawData drawData = new DrawData(texture, drawPos.Floor() + drawInfo.legOrigin, drawPlayer.bodyFrame, color, drawPlayer.legRotation, drawInfo.legOrigin, 1f, drawInfo.spriteEffects, 0)
+            {
+                shader = drawInfo.legArmorShader
+            };
+            Main.playerDrawData.Add(drawData);
+        });
 
 
 
@@ -290,22 +401,6 @@ namespace KirillandRandom
 
 
 
-
-
-
-
-        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
-        {
-            if (eyeofdeath == true)
-            {
-                damage = (int)(damage*1.3);
-            }
-            
-
-            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
-        }
-
-
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {if (flamingdedication) {
                 target.AddBuff(BuffID.OnFire, 60);
@@ -353,7 +448,7 @@ namespace KirillandRandom
             if (Main.expertMode)
             {fdamage = (int)((damage - (0.75 * player.statDefense)) * (1 - custom_endurance));
             }
-            if ((eyeofdeath==true) && (fdamage < 25))
+            if ((eyeofdeath==true) && (fdamage < 30))
             {
                 damage = 0;
 
@@ -365,6 +460,10 @@ namespace KirillandRandom
 
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
         {
+            if (eyeofdeath == true)
+            {
+                mult += 0.3f;
+            }
             if (fireamplification>0)
             {
                 if (player.onFire == true)
