@@ -28,10 +28,10 @@ namespace KirillandRandom.Items
 			item.width = 0;
 			item.noMelee = true;
 			item.height = 0;
-			item.useTime = 6;
-			item.useAnimation = 6;
+			item.useTime = 4;
+			item.useAnimation = 4;
 			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 6;
+			item.knockBack = 4;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 			item.shootSpeed = 18;

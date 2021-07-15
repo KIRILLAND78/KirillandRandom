@@ -42,8 +42,8 @@ namespace KirillandRandom.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             knockback = 12;
-            damage += (50 * target.GetGlobalNPC<MNPC>().charge_e);
-            target.GetGlobalNPC<MNPC>().charge_e = 0;
+            damage += (90 * target.GetGlobalNPC<MNPC>().charge_e);
+            //target.GetGlobalNPC<MNPC>().charge_e = 0;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
         public override void AI()
