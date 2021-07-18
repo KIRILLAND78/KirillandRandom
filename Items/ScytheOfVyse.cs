@@ -37,11 +37,22 @@ namespace KirillandRandom.Items
 			item.knockBack = 0;
 			item.noMelee = true;
 			item.noUseGraphic = true;
-			item.rare = ItemRarityID.Expert;
-			item.UseSound = SoundID.Item1;
+			item.rare = ItemRarityID.Cyan;
+			item.UseSound = SoundID.Item117;
 			item.autoReuse = false;
 		}
 
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+
+			recipe.AddIngredient(ItemID.GravityGlobe, 1);
+			recipe.AddIngredient(ItemID.LunarBar, 10);
+			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+
+		}
 
 	}
 }

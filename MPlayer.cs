@@ -431,25 +431,20 @@ namespace KirillandRandom
             ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             float custom_endurance= player.endurance;
-            if (eyeofdeath == true)
-            {
-                custom_endurance += 0.1f;
-            }
 
                 if (flamingdedication)
             {
                 player.AddBuff(BuffID.OnFire, 120);
             }
-
             int fdamage = (int)((damage - (0.5 * player.statDefense)) * (1 - custom_endurance));
-            player.immune = true;
-
-            player.immuneTime = player.longInvince? 80: 40;
             if (Main.expertMode)
             {fdamage = (int)((damage - (0.75 * player.statDefense)) * (1 - custom_endurance));
             }
-            if ((eyeofdeath==true) && (fdamage < 30))
+            if ((eyeofdeath==true) && (fdamage < 30) && (damageSource.SourceOtherIndex!=3))
             {
+                player.immune = true;
+                player.immuneTime = player.longInvince ? 80 : 40;
+
                 damage = 0;
 
                 customDamage = true;

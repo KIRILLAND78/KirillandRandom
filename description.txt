@@ -1,4 +1,3 @@
-Small content mod. Adds wepons, armor set, some accessories. I am developing this mod at free time so expect delays between updates.
-And i am always up for cool ideas, so feel free to suggest something cool! 
-Last major update: New wepon, accessory and armor set added.
-Last minor update: Multiplayer bugfixes. I just hope it works.
+Small content mod. Developing this to just test my skills in programming. Nothing too exciting, but i trying to make this mod as unique as possible.
+Last major update: Hex debuff and weapon.
+Last minor update: None yet.
