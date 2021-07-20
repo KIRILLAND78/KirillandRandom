@@ -1,24 +1,4 @@
 
-.vs/KirillandRandom/v16/Browse.VC.opendb
-.vs/KirillandRandom/v16/Browse.VC.db-wal
-.vs/KirillandRandom/v16/Browse.VC.db-shm
-.vs/KirillandRandom/v16/Browse.VC.db
-.vs/KirillandRandom/v16/Browse.VC.db
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
-.vs/KirillandRandom/v16/Browse.VC.db
-.vs/KirillandRandom/v16/Browse.VC.db
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
-.vs/KirillandRandom/v16/Browse.VC.db
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
-.vs/KirillandRandom/v16/Browse.VC.db
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
+/.vs/**
+obj/**
 *.cache
-.vs/KirillandRandom/v16/.suo
-.vs/KirillandRandom/DesignTimeBuild/.dtbcache.v2
-.vs/KirillandRandom/v16/.suo
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
-.vs/KirillandRandom/v16/Browse.VC.db
-.vs/KirillandRandom/v16/.suo
-.vs/KirillandRandom/DesignTimeBuild/.dtbcache.v2
-obj/Debug/net45/KirillandRandom.csprojAssemblyReference.cache
