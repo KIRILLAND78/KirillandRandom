@@ -46,7 +46,6 @@ namespace KirillandRandom.Projectiles
             if (projectile.timeLeft == 25){
                 for (int i = 0; i < 256; i++)
                 {
-
                     projectile.alpha = 0;
                     if ((Main.player[i].Center - projectile.Center).Length() <= 60)
                     {
