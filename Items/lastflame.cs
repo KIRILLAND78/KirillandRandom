@@ -15,7 +15,7 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Damage boost (+5 for EACH projectile) and reduced mana usage (-5) for each summoned flame.");
+			Tooltip.SetDefault("+5 damage boost and reduced mana usage (-5) for each summoned flame.");
 		}
         public override bool AltFunctionUse(Player player)
 		{
@@ -34,7 +34,7 @@ namespace KirillandRandom.Items
             {
 				player.GetModPlayer<MPlayer>().BookCreated = true;
 
-				Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("lastflameBook"), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
+				Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("LastFlameBook"), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
             }
         }
 

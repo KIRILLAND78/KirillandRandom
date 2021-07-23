@@ -56,7 +56,7 @@ namespace KirillandRandom.Items
 				}
 				if (player.GetModPlayer<MPlayer>().overuse < -40)
 				{
-					item.damage = 30;
+					item.damage = 45;
 				}
 				player.GetModPlayer<MPlayer>().overuse -= 2;
 				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
@@ -68,7 +68,7 @@ namespace KirillandRandom.Items
 				item.damage = 80;
 				if (player.GetModPlayer<MPlayer>().overuse > 40)
 				{
-					item.damage = 40;
+					item.damage = 60;
 				}
 				if (player.GetModPlayer<MPlayer>().overuse < -40)
 				{
@@ -77,14 +77,15 @@ namespace KirillandRandom.Items
 				item.melee = true;
 				item.width = 40;
 				item.height = 90;
-				item.useTime = 25;
-				item.useAnimation = 25;
+				item.useTime = 15;
+				item.useAnimation = 15;
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.knockBack = 6;
 				player.GetModPlayer<MPlayer>().overuse += 3;
 				item.UseSound = SoundID.Item1;
 				item.autoReuse = true;
 			}
+			item.damage = (int)(item.damage*1.1);
 			return true;
         }
         public override void SetDefaults()
