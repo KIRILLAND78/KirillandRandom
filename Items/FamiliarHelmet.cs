@@ -13,13 +13,11 @@ namespace KirillandRandom.Items
     public class FamiliarHelmet:ModItem
     {
         public override void SetStaticDefaults()
-        {//Свойства вещей. статичные.
+        {
             DisplayName.SetDefault("Familiar Helmet");
-            Tooltip.SetDefault("Hmm... It definetely belongs to someone...");
         }
         public override void SetDefaults()
         {
-            //Свойства вещей, только... как инвентарная?
             item.rare = ItemRarityID.Green;
             item.width = 12;
             item.value= Item.sellPrice(platinum:1);

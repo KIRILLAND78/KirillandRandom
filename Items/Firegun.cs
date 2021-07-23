@@ -15,7 +15,7 @@ namespace KirillandRandom.Items
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fire Zone");
+			DisplayName.SetDefault("Nethersong");
 			Tooltip.SetDefault("Spreads fire in a cone.\r\nUses gel for ammo\r\nWIP!\r\n20% chance to not consume ammo");
 		}
 

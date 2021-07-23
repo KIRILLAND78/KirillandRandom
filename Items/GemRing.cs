@@ -17,6 +17,8 @@ namespace KirillandRandom.Items
 		{
 
 			DisplayName.SetDefault("Crystal staff");
+			Tooltip.SetDefault("Link fades if distance between players is too big.\r\nCan be used only in multiplayer.\r\nWIP very buggy");
+
 		}
 
 
@@ -26,7 +28,7 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
-			item.mana = 100;
+			item.mana = 0;
 			item.magic= true;
 			item.width = 60;
 			item.height = 60;
@@ -37,41 +39,26 @@ namespace KirillandRandom.Items
 			item.useTime = 71;
 			item.useAnimation = 71;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 20;
+			item.knockBack = 1;
 			item.noMelee = true;
 			item.noUseGraphic = true;
-			item.rare = ItemRarityID.Pink;
+			item.rare = ItemRarityID.Expert;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = false;
 			item.channel = true;
 		}
-		public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-
-			recipe.AddIngredient(ItemID.CrystalShard, 20);
-			recipe.AddIngredient(ItemID.SoulofFright, 5);
-			recipe.AddIngredient(ItemID.SoulofMight, 5);
-			recipe.AddIngredient(ItemID.SoulofSight, 5);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
-		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            for (int i = 0; i <= 255; i++)
-            {
-				if ((Main.player[i].team == player.team)&& (Main.player[i].position.Length() > 0))
-				{//check if player exist Kiri: This is bad method. Reimplement later.
-						speedX = (Main.player[i].position - position).X;
-						speedY = (Main.player[i].position - position).Y;
-						Projectile.NewProjectile(player.position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, default, i);
-					
+			for (int i = 0; i < 256; i++)
+			{
+				if ((Main.player[i].team == player.team) && Main.player[i].active && player.whoAmI != i && !Main.player[i].dead)//check if player exist Kiri: This is bad method. Reimplement later.
+				{
+					int dd = Projectile.NewProjectile(player.position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i, i);
+					Main.projectile[dd].ai[1] = i;
 				}
-            }
 
+			}
 
             return false;
 		}

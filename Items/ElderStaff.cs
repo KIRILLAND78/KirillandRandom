@@ -17,6 +17,7 @@ namespace KirillandRandom.Items
 		{
 
 			DisplayName.SetDefault("Crystal staff");
+			Tooltip.SetDefault("Holding same energy as Rod of Discord.");
 		}
 
 
@@ -26,7 +27,7 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
-			item.mana = 100;
+			item.mana = 70;
 			item.magic= true;
 			item.width = 60;
 			item.height = 60;

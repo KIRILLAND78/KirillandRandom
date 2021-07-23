@@ -27,7 +27,7 @@ namespace KirillandRandom.Projectiles
             projectile.melee = true;
             projectile.light = 0.4f;
             projectile.damage = 90;
-            projectile.Name = "ChScythe";
+            projectile.Name = "Spark";
             projectile.width = 80;
             projectile.height = 80;
             projectile.timeLeft = 65;
