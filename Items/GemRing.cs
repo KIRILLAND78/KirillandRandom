@@ -17,6 +17,8 @@ namespace KirillandRandom.Items
 		{
 
 			DisplayName.SetDefault("Crystal staff");
+			Tooltip.SetDefault("Link fades if distance between players is too big.\r\nCan be used only in multiplayer.\r\nWIP very buggy");
+
 		}
 
 

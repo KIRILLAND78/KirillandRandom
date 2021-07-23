@@ -15,7 +15,7 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Charged Scythe");
+			DisplayName.SetDefault("Spark");
 			Tooltip.SetDefault("Charge enemies with right click.\r\n+90 bonus damage (for right click attack) with each stored charge on enemy.");
 		}
 		public override bool AltFunctionUse(Player player)
@@ -44,12 +44,12 @@ namespace KirillandRandom.Items
 			else
 			{
 				item.shoot = mod.ProjectileType("ChScytheSpin");//SPINNING SCYTHE
-				item.useTime = 20;
+				item.useTime = 21;
 				item.autoReuse = false;
 
 				item.channel = true;
 				item.shootSpeed = 0;
-				item.useAnimation = (int)(20 / player.meleeSpeed);
+				item.useAnimation = (int)(21 / player.meleeSpeed);
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.damage = 100;
 				item.UseSound = SoundID.DD2_SkyDragonsFurySwing;

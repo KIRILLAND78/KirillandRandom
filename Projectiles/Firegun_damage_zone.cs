@@ -16,7 +16,7 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.Name = "Firegun";
+            projectile.Name = "Nethersong";
             projectile.width = 2;
             projectile.height = 2;
             projectile.timeLeft = 14;

@@ -15,7 +15,7 @@ namespace KirillandRandom.Items
         public override void SetStaticDefaults()
         {//Свойства вещей. статичные.
             DisplayName.SetDefault("Test Head");
-            Tooltip.SetDefault("Beep-beep-beep-bop-bap-beepbeepbeepbeep-beep-boop-bap");
+            Tooltip.SetDefault("Beep-bap bop?");
         }
         public override void SetDefaults()
         {

@@ -23,7 +23,7 @@ namespace KirillandRandom.Projectiles
             Player player = Main.player[projectile.owner];
             projectile.light = 0.3f;
             projectile.damage = 80;
-            projectile.Name = "ChScythe";
+            projectile.Name = "Spark";
             projectile.width = 118;
             projectile.height = 118;
             projectile.penetrate = 999;
@@ -77,7 +77,12 @@ namespace KirillandRandom.Projectiles
                 deg = (double)projectile.ai[0] + 45;
                 rad = deg * (Math.PI / 180);
                 projectile.rotation = MathHelper.ToRadians(projectile.ai[0]);
-            
+            if (projectile.ai[0]%180 == 0)
+            {
+                p.heldProj = projectile.whoAmI;
+                p.itemTime = 21; // Set item time to 2 frames while we are used
+                p.itemAnimation = 21; // Set item animation time to 2 frames while we are used
+            }
 
 
             projectile.Center = p.Center;
