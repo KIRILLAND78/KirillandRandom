@@ -17,6 +17,7 @@ namespace KirillandRandom.Projectiles
             base.Kill(timeLeft);
         }
 
+
         private int angle=1;
         public Item Book;
         public bool first = true;
