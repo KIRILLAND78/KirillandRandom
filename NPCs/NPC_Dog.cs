@@ -13,53 +13,53 @@ namespace KirillandRandom.NPCs
 		int timer = 115;
 		public override void SetStaticDefaults()
 		{
-			npc.friendly = true;
-			npc.frame.Height = 34;
+			NPC.friendly = true;
+			NPC.frame.Height = 34;
 
-			npc.frame.Width = 50;
-			npc.scale = 1;
+			NPC.frame.Width = 50;
+			NPC.scale = 1;
 			DisplayName.SetDefault("Dog");
-			Main.npcFrameCount[npc.type] = 4;
+			Main.npcFrameCount[NPC.type] = 4;
 		}
         public override void FindFrame(int frameHeight)
 		{
-			npc.frame.Y = (int)3 * frameHeight;
+			NPC.frame.Y = (int)3 * frameHeight;
 			if (timer > 0)
 			{
 				fran += 1;
 				if (fran >= 30) { fran -= 30; };
-				npc.frame.Y = (int)fran / 10 * frameHeight;
+				NPC.frame.Y = (int)fran / 10 * frameHeight;
 			}
 
 			base.FindFrame(frameHeight);
         }
         public override void SetDefaults()
 		{
-			npc.scale = 1;
-			npc.knockBackResist = 0f;
-			npc.width = 50;
-			npc.height = 34;
-			npc.aiStyle = -1; // This npc has a completely unique AI, so we set this to -1. The default aiStyle 0 will face the player, which might conflict with custom AI code.
-			npc.damage = 0;
-			npc.defense = 0;
-			npc.lifeMax = 80;
-			npc.HitSound = SoundID.NPCHit1;
-			npc.DeathSound = SoundID.NPCDeath1;
-			//npc.alpha = 175;
-			//npc.color = new Color(0, 80, 255, 100);
-			npc.value = 0;
-			npc.buffImmune[BuffID.Confused] = true; // npc default to being immune to the Confused debuff. Allowing confused could be a little more work depending on the AI. npc.confused is true while the npc is confused.
+			NPC.scale = 1;
+			NPC.knockBackResist = 0f;
+			NPC.width = 50;
+			NPC.height = 34;
+			NPC.aiStyle = -1; // This NPC has a completely unique AI, so we set this to -1. The default aiStyle 0 will face the Player, which might conflict with custom AI code.
+			NPC.damage = 0;
+			NPC.defense = 0;
+			NPC.lifeMax = 80;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			//NPC.alpha = 175;
+			//NPC.color = new Color(0, 80, 255, 100);
+			NPC.value = 0;
+			NPC.buffImmune[BuffID.Confused] = true; // NPC default to being immune to the Confused debuff. Allowing confused could be a little more work depending on the AI. NPC.confused is true while the NPC is confused.
 		}
 		// Allows hitting the NPC with melee type weapons, even if it's friendly.
-		public override bool? CanBeHitByItem(Player player, Item item)
+		public override bool? CanBeHitByItem(Player Player, Item Item)
 		{
 			return true;
 		}
 
 		// Same as the above but with projectiles.
-		public override bool? CanBeHitByProjectile(Projectile projectile)
+		public override bool? CanBeHitByProjectile(Projectile Projectile)
 		{
-			return projectile.friendly && projectile.owner < 255;
+			return Projectile.friendly && Projectile.owner < 255;
 		}
 
 
@@ -67,16 +67,16 @@ namespace KirillandRandom.NPCs
 		public override void AI()
 		{
 			if (timer > 0){
-				if (npc.GetGlobalNPC<MNPC>().barrel.position.X >= npc.position.X)
+				if (NPC.GetGlobalNPC<MNPC>().barrel.position.X >= NPC.position.X)
                 {
-					npc.velocity.X +=0.2f;
+					NPC.velocity.X +=0.2f;
 
-					npc.spriteDirection = 1;
+					NPC.spriteDirection = 1;
 				}
                 else
                 {
-					npc.velocity.X -= 0.2f;
-					npc.spriteDirection = -1;
+					NPC.velocity.X -= 0.2f;
+					NPC.spriteDirection = -1;
 				}
 				timer -= 1;
             }
@@ -84,16 +84,16 @@ namespace KirillandRandom.NPCs
             {
 				if (timer == 0)
 				{
-					npc.StrikeNPC(75, 0, 0);
+					NPC.StrikeNPC(75, 0, 0);
 
 					timer -= 1;
 				}
 				if (timer < 0)
 				{
-					npc.velocity.X = npc.velocity.X/1.1f;
+					NPC.velocity.X = NPC.velocity.X/1.1f;
 					if (timer <= -120)
                     {
-						npc.StrikeNPCNoInteraction(5, 0, 0);
+						NPC.StrikeNPCNoInteraction(5, 0, 0);
 
 
                     }

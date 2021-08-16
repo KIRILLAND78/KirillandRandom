@@ -15,35 +15,33 @@ namespace KirillandRandom.Items.Armor
 		}
 		public override void SetDefaults()
 		{
-			item.width = 34;
-			item.height = 18;
-			item.value = 10000;
-			item.rare = ItemRarityID.LightRed;
-			item.flame = true;
-			item.defense = 10;
+			Item.width = 34;
+			Item.height = 18;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.LightRed;
+			Item.flame = true;
+			Item.defense = 10;
 		}
         public override void DrawHands(ref bool drawHands, ref bool drawArms)
         {
 			drawHands = true;
-			drawArms = false;
+			drawArms = true;
 
             base.DrawHands(ref drawHands, ref drawArms);
         }
-        public override void UpdateEquip(Player player)
+        public override void UpdateEquip(Player Player)
 		{
-			player.GetModPlayer<MPlayer>().fireBody = true;
-			player.GetModPlayer<MPlayer>().fireamplification += 0.10f;
-			player.statManaMax2 += 40;
-			player.magicCrit += 4;
-			player.magicDamage += 0.02f;
+			Player.GetModPlayer<MPlayer>().fireBody = true;
+			Player.GetModPlayer<MPlayer>().fireamplification += 0.10f;
+			Player.statManaMax2 += 40;
+			Player.GetDamage(DamageClass.Magic) += 0.02f;
+			Player.GetCritChance(DamageClass.Magic) += 4;
 		}
-
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FierySilk>(), 6);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<FierySilk>(), 7)
+				.Register();
 		}
 	}
 }

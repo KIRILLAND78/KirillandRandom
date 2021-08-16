@@ -17,32 +17,31 @@ namespace KirillandRandom.Items.Armor
         public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
         {
 			drawHair = true;
+			drawAltHair = true;
             base.DrawHair(ref drawHair, ref drawAltHair);
         }
         public override void SetDefaults()
 		{
-			item.width = 20;
-			item.height = 20;
-			item.value = 10000;
-			item.rare = ItemRarityID.LightRed;
-			item.defense = 6;
+			Item.width = 20;
+			Item.height = 20;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.LightRed;
+			Item.defense = 6;
 		}
 
-		public override void UpdateEquip(Player player)
+		public override void UpdateEquip(Player Player)
 		{
-			player.GetModPlayer<MPlayer>().fireHead = true;
-			player.GetModPlayer<MPlayer>().fireamplification += 0.06f;
-			player.statManaMax2 += 40;
-			player.magicCrit += 10;
-			player.magicDamage += 0.06f;
+			Player.GetModPlayer<MPlayer>().fireHead = true;
+			Player.GetModPlayer<MPlayer>().fireamplification += 0.06f;
+			Player.statManaMax2 += 40;
+			Player.GetCritChance(DamageClass.Magic) += 10;
+			Player.GetDamage(DamageClass.Magic) += 0.06f;
 		}
-
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<FierySilk>(), 4);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<FierySilk>(), 5)
+				.Register();
 		}
 	}
 }

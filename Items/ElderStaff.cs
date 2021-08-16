@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
-using KirillandRandom.NPCs;
+using KirillandRandom.Projectiles;
 
 namespace KirillandRandom.Items
 {
@@ -21,48 +21,53 @@ namespace KirillandRandom.Items
 		}
 
 
-		public override bool CanUseItem(Player player)
+		public override bool CanUseItem(Player Player)
 		{
 			return true;
 		}
 		public override void SetDefaults()
 		{
-			item.mana = 70;
-			item.magic= true;
-			item.width = 60;
-			item.height = 60;
-			item.value = 10000;
-			item.shoot = mod.ProjectileType("ElderStaffProjectile"); ;
-			item.damage = 100;
-			item.shootSpeed = 20;
-			item.useTime = 71;
-			item.useAnimation = 71;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 20;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.rare = ItemRarityID.Pink;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;
+			Item.mana = 70;
+			Item.DamageType= DamageClass.Magic;
+			Item.width = 60;
+			Item.height = 60;
+			Item.value = 10000;
+			Item.shoot = ModContent.ProjectileType<ElderStaffProjectile>(); ;
+			Item.damage = 100;
+			Item.shootSpeed = 20;
+			Item.useTime = 71;
+			Item.useAnimation = 71;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.knockBack = 20;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.rare = ItemRarityID.Pink;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;
 		}
+
+
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			CreateRecipe()
+				.AddIngredient(ItemID.CrystalShard, 20)
+			.AddIngredient(ItemID.SoulofFright, 5)
+			.AddIngredient(ItemID.SoulofMight, 5)
+			.AddIngredient(ItemID.SoulofSight, 5)
 
-			recipe.AddIngredient(ItemID.CrystalShard, 20);
-			recipe.AddIngredient(ItemID.SoulofFright, 5);
-			recipe.AddIngredient(ItemID.SoulofMight, 5);
-			recipe.AddIngredient(ItemID.SoulofSight, 5);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			return true;//это что-то типа коррекции поведения снарядов... наверное? По типу изменения урона, угла стрельбы и т.д.
-		}
+        //public override void AddRecipes()
+        //{
+        //	ModRecipe recipe = new ModRecipe(mod);
 
-	}
+        
+        //	recipe.AddRecipe();
+
+        //}
+
+
+    }
 }

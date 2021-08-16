@@ -18,21 +18,19 @@ namespace KirillandRandom.Items
         }
         public override void SetDefaults()
         {
-            item.rare = ItemRarityID.Green;
-            item.width = 12;
-            item.value= Item.sellPrice(platinum:1);
-            item.height = 12;
-            item.maxStack = 1;
-            item.vanity = true;
+            Item.rare = ItemRarityID.Green;
+            Item.width = 12;
+            Item.value= Item.sellPrice(platinum:1);
+            Item.height = 12;
+            Item.maxStack = 1;
+            Item.vanity = true;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-
-            recipe.AddIngredient(ItemID.IronBar, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe()
+                .AddIngredient(ItemID.IronBar, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

@@ -7,6 +7,8 @@ using System;
 using System.IO;
 using System.Text;
 using KirillandRandom.NPCs;
+using KirillandRandom.Projectiles;
+using Terraria.DataStructures;
 
 namespace KirillandRandom.Items
 {
@@ -24,51 +26,50 @@ namespace KirillandRandom.Items
 
         public override void SetDefaults()
 		{
-			item.useAmmo = AmmoID.Gel;
-			item.noMelee = true;
-			item.shoot = mod.ProjectileType("Firegun_damage_zone");
-			item.shootSpeed = 9;
-			item.damage = 40;
-			item.ranged = true;
-			item.width = 30;
-			item.height = 90;
-			item.useTime = 5;
-			item.useAnimation = 15;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 0;
-			item.value = 10000;
-			item.rare = ItemRarityID.Expert; 
-			item.UseSound = SoundID.Item34;
-			item.autoReuse = true;
+			Item.useAmmo = AmmoID.Gel;
+			Item.noMelee = true;
+			Item.shoot = ModContent.ProjectileType<Firegun_damage_zone>();
+			Item.shootSpeed = 9;
+			Item.damage = 37;
+			Item.DamageType = DamageClass.Magic;
+			Item.width = 30;
+			Item.height = 90;
+			Item.useTime = 5;
+			Item.useAnimation = 15;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.knockBack = 0;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.Orange; 
+			Item.UseSound = SoundID.Item34;
+			Item.autoReuse = true;
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ItemID.Flamethrower, 1)
+				.AddIngredient(ItemID.ShroomiteBar, 5)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 		public override Vector2? HoldoutOffset()// HoldoutOffset has to return a Vector2 because it needs two values (an X and Y value) to move your flamethrower sprite. Think of it as moving a point on a cartesian plane.
 		{
 			return new Vector2(0, -2); // If your own flamethrower is being held wrong, edit these values. You can test out holdout offsets using Modder's Toolkit.
 		}
-		public override bool ConsumeAmmo(Player player)
+		public override bool ConsumeAmmo(Player Player)
 		{
-			// To make this item only consume ammo during the first jet, we check to make sure the animation just started. ConsumeAmmo is called 5 times because of item.useTime and item.useAnimation values in SetDefaults above.
-			return ((player.itemAnimation >= player.itemAnimationMax - 2)&& (Main.rand.NextFloat() >= .2f));
+			// To make this Item only consume ammo during the first jet, we check to make sure the animation just started. ConsumeAmmo is called 5 times because of Item.useTime and Item.useAnimation values in SetDefaults above.
+			return ((Player.itemAnimation >= Player.itemAnimationMax - 2)&& (Main.rand.NextFloat() >= .2f));
 		}
-
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 pos, Vector2 velocity, int type, int damage, float knockBack)
         {
+			int fire = ModContent.ProjectileType<Firegun_damage_zone>();
 
-			Vector2 speed2 = new Vector2(speedX, speedY);
-			speed2 = speed2.RotatedByRandom(MathHelper.ToRadians(15))*3f;
-			Projectile.NewProjectile(position.X, position.Y, speed2.X, speed2.Y, mod.ProjectileType("Firegun_damage_zone"), damage, knockBack, Main.myPlayer);
 
-			speed2 = new Vector2(speedX, speedY);
-			speed2 = speed2.RotatedByRandom(MathHelper.ToRadians(15)) * 3f;
-			Projectile.NewProjectile(position.X, position.Y, speed2.X, speed2.Y, mod.ProjectileType("Firegun_damage_zone"), damage, knockBack, Main.myPlayer);
-			speed2 = new Vector2(speedX, speedY);
-			speed2 = speed2.RotatedByRandom(MathHelper.ToRadians(15)) * 3f;
-			Projectile.NewProjectile(position.X, position.Y, speed2.X, speed2.Y, mod.ProjectileType("Firegun_damage_zone"), damage, knockBack, Main.myPlayer);
-			speed2 = new Vector2(speedX, speedY);
-			speed2 = speed2.RotatedByRandom(MathHelper.ToRadians(15)) * 3f;
-			Projectile.NewProjectile(position.X, position.Y, speed2.X, speed2.Y, mod.ProjectileType("Firegun_damage_zone"), damage, knockBack, Main.myPlayer);
+			for (int i = 0; i <= 4; i++) {
+				Vector2 speed2 = velocity.RotatedByRandom(MathHelper.ToRadians(15)) * 3f;
+				Projectile.NewProjectile(source, pos, speed2, fire, damage, knockBack, Main.myPlayer);
 
+			}
 
 			return false;
         }

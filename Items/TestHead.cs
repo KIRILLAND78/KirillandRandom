@@ -19,12 +19,12 @@ namespace KirillandRandom.Items
         }
         public override void SetDefaults()
         {
-            item.rare = ItemRarityID.Gray;
-            item.width = 12;
-            item.value= Item.sellPrice(platinum:1);
-            item.height = 12;
-            item.maxStack = 1;
-            item.defense = 500;
+            Item.rare = ItemRarityID.Gray;
+            Item.width = 12;
+            Item.value= Item.sellPrice(platinum:1);
+            Item.height = 12;
+            Item.maxStack = 1;
+            Item.defense = 500;
         }
     }
 }

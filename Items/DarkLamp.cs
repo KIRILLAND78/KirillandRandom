@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
-using KirillandRandom.NPCs;
+using KirillandRandom.Projectiles;
+using Terraria.DataStructures;
 
 namespace KirillandRandom.Items
 {
@@ -24,63 +25,72 @@ namespace KirillandRandom.Items
 
 		public override void SetDefaults()
 		{
-			item.width = 10;
-			item.height = 12;
-			item.holdStyle = 1;
-			//item.noWet = true;
-			item.useTurn = true;
-			item.autoReuse = true;
-			item.useAnimation = 120;
-			item.useTime = 120;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.flame = true;
-			item.value = 50;
+			Item.width = 10;
+			Item.height = 12;
+			Item.holdStyle = 1;
+			//Item.noWet = true;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 120;
+			Item.useTime = 120;
+			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.flame = true;
+			Item.value = 50;
 
 
-			item.noMelee = true;
-			item.shoot = mod.ProjectileType("DarkLampLight");
-			item.shootSpeed = 0;
-			item.damage = 101;
-			item.magic = true;
-			item.mana = 120;
-			item.knockBack = 10;
-			item.value = 10000;
-			item.rare = ItemRarityID.LightRed;
-			item.UseSound = SoundID.Item34;
+			Item.noMelee = true;
+			Item.shoot = ModContent.ProjectileType<DarkLampLight>();
+			Item.shootSpeed = 0;
+			Item.damage = 101;
+			Item.DamageType = DamageClass.Magic;
+			Item.mana = 120;
+			Item.knockBack = 10;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = SoundID.Item34;
 		}
-		public override void HoldItem(Player player)
+		public override void HoldItem(Player Player)
 		{
-			if (Main.rand.Next(player.itemAnimation > 0 ? 40 : 80) == 0)
+			if (Main.rand.Next(Player.itemAnimation > 0 ? 40 : 80) == 0)
 			{
-				Dust.NewDust(new Vector2(player.itemLocation.X + 12f * player.direction, player.itemLocation.Y - 12f * player.gravDir), 4, 4, 6);
+				Dust.NewDust(new Vector2(Player.itemLocation.X + 12f * Player.direction, Player.itemLocation.Y - 12f * Player.gravDir), 4, 4, 6);
 			}
-			Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
+			Vector2 position = Player.RotatedRelativePoint(new Vector2(Player.itemLocation.X + 12f * Player.direction + Player.velocity.X, Player.itemLocation.Y - 14f + Player.velocity.Y), true);
 			Lighting.AddLight(position, 1f, 1f, 1f);
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
 			player.AddBuff(BuffID.OnFire, 340);
-
-			return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+			return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
-
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.AdamantiteBar, 8);
-			recipe.AddIngredient(ItemID.LivingFireBlock, 50);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddIngredient(ItemID.SoulofLight, 10);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			ModRecipe recipe2 = new ModRecipe(mod);
-			recipe2.AddIngredient(ItemID.TitaniumBar, 8);
-			recipe2.AddIngredient(ItemID.LivingFireBlock, 50);
-			recipe2.AddIngredient(ItemID.SoulofNight, 10);
-			recipe2.AddIngredient(ItemID.SoulofLight, 10);
-			recipe2.SetResult(this);
-			recipe2.AddRecipe();
+            CreateRecipe()
+			.AddIngredient(ItemID.AdamantiteBar, 8)
+
+            .AddIngredient(ItemID.LivingFireBlock, 50)
+
+            .AddIngredient(ItemID.SoulofNight, 10)
+
+            .AddIngredient(ItemID.SoulofLight, 10)
+                .AddTile(TileID.MythrilAnvil)
+				.Register();
+
+			CreateRecipe()
+
+			.AddIngredient(ItemID.TitaniumBar, 8)
+
+			.AddIngredient(ItemID.LivingFireBlock, 50)
+
+			.AddIngredient(ItemID.SoulofNight, 10)
+
+			.AddIngredient(ItemID.SoulofLight, 10)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
+
+
 		}
+
 
 	}
 }

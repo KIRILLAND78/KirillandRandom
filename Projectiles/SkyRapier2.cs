@@ -14,23 +14,22 @@ namespace KirillandRandom.Projectiles
         bool first = true;
         public override void SetDefaults()
         {
-            //projectile.position.Y -= 80;
-            projectile.Name = "Sky Rapier";
-            projectile.width = 58;
-            projectile.height = 10;
-            projectile.timeLeft = 12;
-            projectile.penetrate = 9999;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.ranged = false;
-            projectile.melee = true;
-            projectile.alpha = 255;
-            drawOriginOffsetY = -4;
+            //Projectile.position.Y -= 80;
+            Projectile.Name = "Sky Rapier";
+            Projectile.width = 58;
+            Projectile.height = 10;
+            Projectile.timeLeft = 12;
+            Projectile.penetrate = 9999;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.alpha = 255;
+            DrawOriginOffsetY = -4;
 
-            drawOriginOffsetX = -4;
-            Player owner = Main.player[projectile.owner];
+            DrawOriginOffsetX = -4;
+            Player owner = Main.player[Projectile.owner];
             
             lastplpos = owner.Center;// + MathHelper.ToRadians(-45f);
         }
@@ -38,28 +37,28 @@ namespace KirillandRandom.Projectiles
         public override void AI()
         {
             
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
             if (first)
             {
 
-                projectile.rotation = projectile.velocity.ToRotation();
+                Projectile.rotation = Projectile.velocity.ToRotation();
                 lastplpos = owner.Center;
 
-                projectile.alpha = 200;
+                Projectile.alpha = 200;
                 first = false;
             }
 
 
-            projectile.velocity *= 1.15f;
+            Projectile.velocity *= 1.15f;
 
-            projectile.position += owner.Center - lastplpos;
+            Projectile.position += owner.Center - lastplpos;
 
             lastplpos = owner.Center;
 
 
-            //if (projectile.velocity.Y > 16f)
+            //if (Projectile.velocity.Y > 16f)
             //{
-            //    projectile.velocity.Y = 16f;
+            //    Projectile.velocity.Y = 16f;
             //}
 
 

@@ -14,17 +14,19 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.width = 30;
-			item.height = 30;
-			item.value = Item.sellPrice(gold: 1);
-			item.rare = ItemRarityID.Red;
+			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.width = 30;
+			Item.height = 30;
+			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Red;
 		}
 
-        public override bool UseItem(Player player)
+
+        public override bool? UseItem(Player player)
         {
+
             for (int k = 0; k < 200; k++)
             {
                 NPC curNPC = Main.npc[k];
@@ -37,13 +39,13 @@ namespace KirillandRandom.Items
             player.GetModPlayer<MPlayer>().eyeofdeath = !player.GetModPlayer<MPlayer>().eyeofdeath;
 			return true;
 		}
-        //public override void AddRecipes()
-        //{
-        //	ModRecipe recipe = new ModRecipe(mod);
-        //	recipe.AddIngredient(ItemID.DirtBlock, 2);
-        //	recipe.AddTile(TileID.Anvils);
-        //	recipe.SetResult(this);
-        //	recipe.AddRecipe();
-        //}
-    }
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ItemID.WallOfFleshBossBag, 1)
+				.AddTile(TileID.Anvils)
+				.Register();
+		}
+
+	}
 }

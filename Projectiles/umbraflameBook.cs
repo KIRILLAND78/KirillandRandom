@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace KirillandRandom.Projectiles
 {
-    public class LastFlameBook : ModProjectile
+    public class UmbraFlameBook : ModProjectile
     {
         public override void Kill(int timeLeft)
         {
@@ -16,6 +16,7 @@ namespace KirillandRandom.Projectiles
             Main.player[Projectile.owner].GetModPlayer<MPlayer>().BookCreated = false;
             base.Kill(timeLeft);
         }
+
 
         private int angle=1;
         public Item Book;

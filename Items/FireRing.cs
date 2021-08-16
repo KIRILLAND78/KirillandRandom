@@ -14,28 +14,27 @@ namespace KirillandRandom.Items
 		}
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 30;
-			item.accessory = true;
-			item.value = Item.sellPrice(gold: 1);
-			item.rare = ItemRarityID.LightRed;
+			Item.width = 30;
+			Item.height = 30;
+			Item.accessory = true;
+			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.LightRed;
 		}
 
 
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
+        public override void UpdateAccessory(Player Player, bool hideVisual)
 		{
-				player.GetModPlayer<MPlayer>().flamingdedication = true; 
+				Player.GetModPlayer<MPlayer>().flamingdedication = true;
 		}
-
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Ruby, 2);
-			recipe.AddIngredient(ItemID.HellstoneBar, 2);
-			recipe.AddIngredient(ItemID.GoldBar, 4);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.Ruby, 2)
+				.AddIngredient(ItemID.HellstoneBar, 2)
+				.AddIngredient(ItemID.GoldBar, 4)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
 	}
 }

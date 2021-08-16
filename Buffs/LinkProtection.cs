@@ -11,18 +11,18 @@ namespace KirillandRandom.Buffs
 {
     class LinkProtection : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.lightPet[Type] = false;
             Main.debuff[Type] = false;
             DisplayName.SetDefault("Protected");
             Description.SetDefault("+20 defense\r\nYou feel much safer.");
             Main.buffNoTimeDisplay[Type] = false;
-            base.SetDefaults();
+            base.SetStaticDefaults();
         }
-        public override void Update(Player player, ref int buffIndex)
+        public override void Update(Player Player, ref int buffIndex)
         {
-            player.statDefense += 20;
+            Player.statDefense += 20;
         }
     }
 }
