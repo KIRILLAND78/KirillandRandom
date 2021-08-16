@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
+using KirillandRandom.Projectiles;
 
 
 namespace KirillandRandom.Items
@@ -18,75 +19,64 @@ namespace KirillandRandom.Items
 			DisplayName.SetDefault("Spark");
 			Tooltip.SetDefault("Charge enemies with right click.\r\n+90 bonus damage (for right click attack) with each stored charge on enemy.");
 		}
-		public override bool AltFunctionUse(Player player)
+		public override bool AltFunctionUse(Player Player)
 		{
 			return true;
 		}
-		public override void HoldItem(Player player)
-		{
-			base.HoldItem(player);
-		}
 
-		public override bool CanUseItem(Player player)
+        public override bool CanUseItem(Player Player)
 		{
-			if (player.altFunctionUse == 2)
+			if (Player.altFunctionUse != 2)
 			{
-				item.channel = false;
-				item.shoot = mod.ProjectileType("ChScythe");//BIG SCYTHE
-				item.shootSpeed = 17;
-				item.useTime = 60;
-				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.useAnimation = 60;
-				item.autoReuse = true;
-				item.damage = 100;
-				item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
+				Item.channel = false;
+				Item.shoot = ModContent.ProjectileType<Projectiles.ChScythe>();//BIG SCYTHE
+				Item.shootSpeed = 17;
+				Item.useTime = 600;
+				Item.useStyle = ItemUseStyleID.Swing;
+				Item.useAnimation = 60;
+				Item.autoReuse = true;
+				Item.UseSound = SoundID.DD2_SkyDragonsFuryShot;
 			}
 			else
 			{
-				item.shoot = mod.ProjectileType("ChScytheSpin");//SPINNING SCYTHE
-				item.useTime = 21;
-				item.autoReuse = false;
+				Item.shoot = ModContent.ProjectileType<ChScytheSpin>();//SPINNING SCYTHE
+				Item.useTime = 21;
+				Item.autoReuse = false;
 
-				item.channel = true;
-				item.shootSpeed = 0;
-				item.useAnimation = (int)(21 / player.meleeSpeed);
-				item.useStyle = ItemUseStyleID.SwingThrow;
-				item.damage = 100;
-				item.UseSound = SoundID.DD2_SkyDragonsFurySwing;
+				Item.channel = true;
+				Item.shootSpeed = 0;
+				Item.useAnimation = 21;
+				Item.useStyle = 6;
+				Item.UseSound = SoundID.DD2_SkyDragonsFurySwing;
 			}
 			return true;
 		}
         public override void SetDefaults()
 		{
 			
-			item.noUseGraphic = true;
-			item.damage = 100;
-			item.noMelee = true;
-			item.useTime = 10;
-			item.shootSpeed = 0;
-			item.useAnimation = 10;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 0;
-			item.value = 10000;
-			item.rare = ItemRarityID.Cyan;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.noUseGraphic = true;
+			Item.damage = 75;
+			Item.noMelee = true;
+			Item.useTime = 10;
+			Item.shootSpeed = 0;
+			Item.useAnimation = 10;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.knockBack = 0;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.Cyan;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 
-			item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 		}
-
-
-        public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-
-			recipe.AddIngredient(ItemID.MartianConduitPlating, 50);
-			recipe.AddIngredient(ItemID.InfluxWaver, 1);
-			recipe.AddIngredient(ItemID.ChargedBlasterCannon, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-			
+			CreateRecipe()
+				.AddIngredient(ItemID.MartianConduitPlating, 50)
+				.AddIngredient(ItemID.InfluxWaver, 1)
+				.AddIngredient(ItemID.ChargedBlasterCannon, 1)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 
 	}

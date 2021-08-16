@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 using KirillandRandom.NPCs;
+using KirillandRandom.Projectiles;
 
 namespace KirillandRandom.Items
 {
@@ -16,52 +17,52 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 
-			DisplayName.SetDefault("Crystal staff");
-			Tooltip.SetDefault("Link fades if distance between players is too big.\r\nCan be used only in multiplayer.\r\nWIP very buggy");
+			DisplayName.SetDefault("Link Gem Ring");
+			Tooltip.SetDefault("Link fades if distance between players is too big.\r\nCan be used only in multiplayer.\r\nUnobtainable. Disabled.");
 
 		}
 
 
-		public override bool CanUseItem(Player player)
-		{
-			return true;
-		}
+		//public override bool CanUseItem(Player Player)
+		//{
+		//	return true;
+		//}
 		public override void SetDefaults()
 		{
-			item.mana = 0;
-			item.magic= true;
-			item.width = 60;
-			item.height = 60;
-			item.value = 10000;
-			item.shoot = mod.ProjectileType("GemRingLaser");
-			item.damage = 100;
-			item.shootSpeed = 20;
-			item.useTime = 71;
-			item.useAnimation = 71;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.knockBack = 1;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.rare = ItemRarityID.Expert;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = false;
-			item.channel = true;
+			Item.mana = 0;
+			Item.DamageType= DamageClass.Magic;
+			Item.width = 60;
+			Item.height = 60;
+			Item.value = 10000;
+			Item.shoot = ModContent.ProjectileType<GemRingLaser>();
+			Item.damage = 100;
+			Item.shootSpeed = 20;
+			Item.useTime = 71;
+			Item.useAnimation = 71;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.knockBack = 1;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+			Item.rare = ItemRarityID.Expert;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = false;
+			Item.channel = true;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			for (int i = 0; i < 256; i++)
-			{
-				if ((Main.player[i].team == player.team) && Main.player[i].active && player.whoAmI != i && !Main.player[i].dead)//check if player exist Kiri: This is bad method. Reimplement later.
-				{
-					int dd = Projectile.NewProjectile(player.position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i, i);
-					Main.projectile[dd].ai[1] = i;
-				}
+		//public override bool Shoot(Player Player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+  //      {
+		//	for (int i = 0; i < 256; i++)
+		//	{
+		//		if ((Main.player[i].team == Player.team) && Main.player[i].active && Player.whoAmI != i && !Main.player[i].dead)//check if Player exist Kiri: This is bad method. Reimplement later.
+		//		{
+		//			int dd = Projectile.NewProjectile(Player.position, new Vector2(speedX, speedY), type, damage, knockBack, Player.whoAmI, i, i);
+		//			Main.projectile[dd].ai[1] = i;
+		//		}
 
-			}
+		//	}
 
-            return false;
-		}
+  //          return false;
+		//}
 
 	}
 }

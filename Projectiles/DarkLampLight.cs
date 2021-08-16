@@ -18,17 +18,17 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.Name = "DarkLamp";
-            projectile.width = 1;
-            projectile.height = 1;
-            projectile.timeLeft = 140;
-            projectile.penetrate = 9999;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.magic = true;
-            projectile.aiStyle = 0;
+            Projectile.Name = "DarkLamp";
+            Projectile.width = 1;
+            Projectile.height = 1;
+            Projectile.timeLeft = 140;
+            Projectile.penetrate = 9999;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.aiStyle = 0;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -47,10 +47,10 @@ namespace KirillandRandom.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            Player player = Main.player[projectile.owner];
-            if ((((!target.friendly || (target.type == 22 && projectile.owner < 255 && player.killGuide) || (target.type == 54 && projectile.owner < 255 && player.killClothier)))))
+            Player Player = Main.player[Projectile.owner];
+            if ((((!target.friendly || (target.type == 22 && Projectile.owner < 255 && Player.killGuide) || (target.type == 54 && Projectile.owner < 255 && Player.killClothier)))))
             {
-                if (((target.Center-player.Center).Length()<=distance)&& ((target.Center - player.Center).Length() >= distance-60))
+                if (((target.Center-Player.Center).Length()<=distance)&& ((target.Center - Player.Center).Length() >= distance-60))
                 {
                     return true;
                 }
@@ -67,13 +67,13 @@ namespace KirillandRandom.Projectiles
 
         public override void AI()
         {
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
             if (owner.dead == true)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
-            projectile.position.X = (float)owner.Center.X;
-            projectile.position.Y = (float)owner.Center.Y;
+            Projectile.position.X = (float)owner.Center.X;
+            Projectile.position.Y = (float)owner.Center.Y;
 
             distance = (int)(600 * (Math.Sin(MathHelper.ToRadians(90 * timer / 160))));
             if (timer >= 5)

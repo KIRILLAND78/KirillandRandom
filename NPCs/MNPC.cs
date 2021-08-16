@@ -15,21 +15,21 @@ namespace KirillandRandom.NPCs
         public int charge_e = 0;
 		public bool charge;
 
-        public override void ResetEffects(NPC npc)
+        public override void ResetEffects(NPC NPC)
 		{
 			charge = false;
 		}
 
-		public override void UpdateLifeRegen(NPC npc, ref int damage)
+		public override void UpdateLifeRegen(NPC NPC, ref int damage)
 		{
 			if (charge == false) { charge_e = 0; };
 			if (charge)
 			{
-				if (npc.lifeRegen > 0)
+				if (NPC.lifeRegen > 0)
 				{
-					npc.lifeRegen = 0;
+					NPC.lifeRegen = 0;
 				}
-				npc.lifeRegen -= 2*charge_e;
+				NPC.lifeRegen -= 2*charge_e;
 				if (damage < charge_e)
 				{
 					damage = charge_e;
@@ -37,13 +37,13 @@ namespace KirillandRandom.NPCs
 			}
 		}
 
-		public override void DrawEffects(NPC npc, ref Color drawColor)
+		public override void DrawEffects(NPC NPC, ref Color drawColor)
 		{
 			if (charge)
 			{
 				if (Main.rand.Next(4) < 3)
 				{
-					int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.Electric, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 0.13f*charge_e);
+					int dust = Dust.NewDust(NPC.position - new Vector2(2f, 2f), NPC.width + 4, NPC.height + 4, DustID.Electric, NPC.velocity.X * 0.4f, NPC.velocity.Y * 0.4f, 100, default(Color), 0.13f*charge_e);
 					Main.dust[dust].noGravity = true;
 					Main.dust[dust].velocity *= 0.15f*charge_e;
 					Main.dust[dust].velocity.Y -= 0.075f * charge_e;
@@ -53,7 +53,7 @@ namespace KirillandRandom.NPCs
 						Main.dust[dust].scale = 0.02f * charge_e;
 					}
 				}
-				Lighting.AddLight(npc.position, 0.1f, 0.2f, 0.5f);
+				Lighting.AddLight(NPC.position, 0.1f, 0.2f, 0.5f);
 			}
 		}
 	}

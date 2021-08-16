@@ -20,36 +20,36 @@ namespace KirillandRandom.Projectiles
         public override void SetDefaults()
         {
 
-            projectile.Name = "Last Flame";
-            projectile.width = 12;
-            projectile.height = 12;
-            projectile.timeLeft = 7200;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.magic = true;
-            projectile.aiStyle = 0;
+            Projectile.Name = "Last Flame";
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.timeLeft = 7200;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.aiStyle = 0;
 
         }
         public override void Kill(int timeLeft)
         {
             if (mode != 1)
             {
-                Main.player[projectile.owner].GetModPlayer<MPlayer>().flames_summoned -= 1;
+                Main.player[Projectile.owner].GetModPlayer<MPlayer>().flames_summoned -= 1;
 
             }
             base.Kill(timeLeft);
         }
         public override void AI()
         {
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
 
 
             if (owner.dead == true)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
 
@@ -58,7 +58,7 @@ namespace KirillandRandom.Projectiles
 
 
 
-            int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 1.1f); //Spawns dust
+            int DDustID = Dust.NewDust(Projectile.position - new Vector2(2f, 2f), Projectile.width + 4, Projectile.height + 4, 17, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 1.1f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
 
 
@@ -67,56 +67,56 @@ namespace KirillandRandom.Projectiles
                 if (first == 0)
                 {
 
-                    projectile.friendly = true;
-                    projectile.tileCollide = true;
+                    Projectile.friendly = true;
+                    Projectile.tileCollide = true;
 
-                    projectile.damage +=bonusDamage;
-                    projectile.light = 0.6f;
-                    if (Main.myPlayer == projectile.owner && projectile.ai[0] == 0f)
+                    Projectile.damage +=bonusDamage;
+                    Projectile.light = 0.6f;
+                    if (Main.myPlayer == Projectile.owner && Projectile.ai[0] == 0f)
                     {
-                        var shootToX = Main.MouseWorld.X - projectile.Center.X;//обоже.
-                        var shootToY = Main.MouseWorld.Y - projectile.Center.Y;//обоже.
+                        var shootToX = Main.MouseWorld.X - Projectile.Center.X;//обоже.
+                        var shootToY = Main.MouseWorld.Y - Projectile.Center.Y;//обоже.
                     float distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
                     shootToX *= 15.0f/ distance;
                     shootToY *= 15.0f/ distance;
-                    projectile.velocity.X = shootToX;//обоже.
-                    projectile.velocity.Y = shootToY;//обоже.
-                        projectile.netUpdate = true;
+                    Projectile.velocity.X = shootToX;//обоже.
+                    Projectile.velocity.Y = shootToY;//обоже.
+                        Projectile.netUpdate = true;
                     }
                     first = 2;
                 }
             }
             else{
 
-                Player p = Main.player[projectile.owner];
+                Player p = Main.player[Projectile.owner];
                 if ((first != 1)&&(backup_update))
                 {
 
-                    projectile.netUpdate = true;
+                    Projectile.netUpdate = true;
 
 
                 }
                 if (first == 1)
                 {
                     Book = p.HeldItem;
-                    if (Main.myPlayer == projectile.owner && projectile.ai[0] == 0f)
+                    if (Main.myPlayer == Projectile.owner && Projectile.ai[0] == 0f)
                     {
-                        projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 90* p.GetModPlayer<MPlayer>().flames_summoned;
+                        Projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 90* p.GetModPlayer<MPlayer>().flames_summoned;
 
-                        projectile.netUpdate = true;
+                        Projectile.netUpdate = true;
                     }
                     first = 0;
                 }
-                    projectile.alpha = 64;
+                    Projectile.alpha = 64;
 
-                double deg = (double)projectile.ai[1];
+                double deg = (double)Projectile.ai[1];
                 double rad = deg * (Math.PI / 180);
                 double dist = 32; 
 
-                projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
-                projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
+                Projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - Projectile.width / 2;
+                Projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - Projectile.height / 2;
 
-                projectile.ai[1] += 3f;
+                Projectile.ai[1] += 3f;
 
                 if (p.GetModPlayer<MPlayer>().flames_summoned * 5 > bonusDamage)
                 {
@@ -125,9 +125,9 @@ namespace KirillandRandom.Projectiles
 
                 if (owner.HeldItem != Book)
                 {
-                    projectile.Kill();//РАБОТАЕТ, ЮХУ!
+                    Projectile.Kill();//РАБОТАЕТ, ЮХУ!
                 }
-                if ((p.controlUseItem)&&(p.altFunctionUse!=2))
+                if ((p.controlUseItem)&&(p.altFunctionUse==2))
                 {
 
                     mode = 1;

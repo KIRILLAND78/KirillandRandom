@@ -16,17 +16,17 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.Name = "Nethersong";
-            projectile.width = 2;
-            projectile.height = 2;
-            projectile.timeLeft = 14;
-            projectile.penetrate = 999;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = false;
-            projectile.ranged = true;
-            projectile.aiStyle = 0;
+            Projectile.Name = "Nethersong";
+            Projectile.width = 2;
+            Projectile.height = 2;
+            Projectile.timeLeft = 14;
+            Projectile.penetrate = 999;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.aiStyle = 0;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -41,24 +41,24 @@ namespace KirillandRandom.Projectiles
 
         public override void AI()
         {
-            if (projectile.wet)
+            if (Projectile.wet)
             {
-                projectile.Kill(); //This kills the projectile when touching water. However, since our projectile is a cursed flame, we will comment this so that it won't run it. If you want to test this, feel free to uncomment this.
+                Projectile.Kill(); //This kills the Projectile when touching water. However, since our Projectile is a cursed flame, we will comment this so that it won't run it. If you want to test this, feel free to uncomment this.
             }
             if (timer >= 2)
             {
                 if (rnd.Next(3) == 2)
                 {
 
-                    int DDustID2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0, 0, 50, default(Color), 6f); //Spawns dust
+                    int DDustID2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 50, default(Color), 6f); //Spawns dust
                     Main.dust[DDustID2].noGravity = true;
                     Main.dust[DDustID2].velocity = 0.9f * Main.dust[DDustID2].velocity;
 
 
                 }
-                int DDustID3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0, 0, 50, default(Color), 1f); //Spawns dust
+                int DDustID3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 50, default(Color), 1f); //Spawns dust
 
-                int DDustID = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0, 0, 50, default(Color), 4f); //Spawns dust
+                int DDustID = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 50, default(Color), 4f); //Spawns dust
                     Main.dust[DDustID].noGravity = true;
                     Main.dust[DDustID].velocity = 0.9f * Main.dust[DDustID].velocity;
                 } 

@@ -21,23 +21,30 @@ namespace KirillandRandom.Projectiles
         private int first = 1;
         private float acceleration;
 
+        public override void Kill(int timeLeft)
+        {
+            Main.player[Main.myPlayer].itemAnimation = 0;
+            Main.player[Main.myPlayer].itemTime = 2;
+            base.Kill(timeLeft);
+        }
+
         public override void SetDefaults()
         {
 
-            projectile.melee = true;
-            projectile.light = 0.4f;
-            projectile.damage = 90;
-            projectile.Name = "Spark";
-            projectile.width = 80;
-            projectile.height = 80;
-            projectile.timeLeft = 65;
-            projectile.penetrate = 999;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.ranged = false;
-            projectile.aiStyle = -1;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.light = 0.4f;
+            Projectile.damage = 90;
+            Projectile.Name = "Spark";
+            Projectile.width = 80;
+            Projectile.height = 80;
+            Projectile.timeLeft = 65;
+            Projectile.penetrate = 999;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.aiStyle = -1;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -48,13 +55,13 @@ namespace KirillandRandom.Projectiles
         }
         public override void AI()
         {
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
             if (owner.dead == true)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
-                //int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
+                //int DDustID = Dust.NewDust(Projectile.position - new Vector2(2f, 2f), Projectile.width + 4, Projectile.height + 4, 17, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
                 //Main.dust[DDustID].noGravity = true;
                 if (first == 1)
                 {
@@ -63,27 +70,27 @@ namespace KirillandRandom.Projectiles
                 first = 0;
             }
             acceleration = 0;
-            if (projectile.timeLeft < 55)
+            if (Projectile.timeLeft < 55)
             {
-                if ((owner.Center - projectile.Center).Length() <= 50)
+                if ((owner.Center - Projectile.Center).Length() <= 50)
                 {
-                   projectile.Kill();
+                   Projectile.Kill();
                 }
                 acceleration = 2;
-                projectile.velocity += Vector2.Normalize(owner.Center - projectile.Center) * acceleration;
+                Projectile.velocity += Vector2.Normalize(owner.Center - Projectile.Center) * acceleration;
 
-                if (projectile.timeLeft < 25)
+                if (Projectile.timeLeft < 25)
                 {
-                    projectile.damage = 0;
-                    projectile.velocity = Vector2.Normalize(owner.Center - projectile.Center) * 35;
+                    Projectile.damage = 0;
+                    Projectile.velocity = Vector2.Normalize(owner.Center - Projectile.Center) * 35;
                 }
             }
 
-            double rad2 = (projectile.ai[0]) * (Math.PI / 180);
-            projectile.rotation = (float)rad2;
+            double rad2 = (Projectile.ai[0]) * (Math.PI / 180);
+            Projectile.rotation = (float)rad2;
 
 
-            projectile.ai[0] += 14f;
+            Projectile.ai[0] += 14f;
 
 
         }

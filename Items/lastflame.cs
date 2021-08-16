@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
-
+using KirillandRandom.Projectiles;
+using Terraria.DataStructures;
 
 namespace KirillandRandom.Items
 {
@@ -15,15 +16,12 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("+5 damage boost and reduced mana usage (-5) for each summoned flame.");
+			Tooltip.SetDefault("Right click to release flames. +5 damage boost and reduced mana usage (-5) for each summoned flame.");
 		}
-        public override bool AltFunctionUse(Player player)
+
+        public override bool AltFunctionUse(Player Player)
 		{
-			if ((player.statMana >= (30 - player.GetModPlayer<MPlayer>().flames_summoned * 5))&&(player.GetModPlayer<MPlayer>().flames_summoned<4))
-			{
-				return true;
-			}
-			else { return false; }
+			return true;
 		}
 		public override void HoldItem(Player player)
         {
@@ -34,72 +32,75 @@ namespace KirillandRandom.Items
             {
 				player.GetModPlayer<MPlayer>().BookCreated = true;
 
-				Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("LastFlameBook"), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
+				Projectile.NewProjectile(new ProjectileSource_Item(player, Item),new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), ModContent.ProjectileType<LastFlameBook>(), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
             }
         }
 
-        public override bool CanUseItem(Player player)
+        public override bool CanUseItem(Player Player)
         {
-			if (player.altFunctionUse == 2)
+			if (Player.altFunctionUse != 2)
 			{
-					item.shoot = ProjectileID.None;
-					if (player.GetModPlayer<MPlayer>().flames_summoned < 4) {
-						item.shoot = mod.ProjectileType("LastFlameBolt");
-						player.GetModPlayer<MPlayer>().flames_summoned += 1;
+				if ((Player.statMana >= (30 - Player.GetModPlayer<MPlayer>().flames_summoned * 5)) && (Player.GetModPlayer<MPlayer>().flames_summoned < 4))
+				{
+				Item.shoot = ProjectileID.None;
+					if (Player.GetModPlayer<MPlayer>().flames_summoned < 4) {
+						Item.shoot = ModContent.ProjectileType<LastFlameBolt>();
+						Player.GetModPlayer<MPlayer>().flames_summoned += 1;
 					}
-					item.mana = 30- player.GetModPlayer<MPlayer>().flames_summoned*5;
-					item.useTime = 30;
-					item.useAnimation = 30;
-					item.useStyle = ItemUseStyleID.HoldingUp;
-					item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
-				} 
+					Item.mana = 30- Player.GetModPlayer<MPlayer>().flames_summoned*5;
+					Item.useTime = 30;
+					Item.useAnimation = 30;
+					Item.useStyle = ItemUseStyleID.HoldUp;
+					Item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
+
+					return true;
+				}
+				return false;
+			} 
 			else
 			{
 
-				item.mana = 0;
-				player.GetModPlayer<MPlayer>().flames_summoned = 0;
-				item.shoot = ProjectileID.None;
-				item.useTime = 5;
-				item.useStyle = ItemUseStyleID.HoldingOut;
-				item.useAnimation = 5;
-				item.UseSound = SoundID.DD2_FlameburstTowerShot;
+				Item.mana = 0;
+				Player.GetModPlayer<MPlayer>().flames_summoned = 0;
+				Item.shoot = ProjectileID.None;
+				Item.useTime = 5;
+				Item.useStyle = ItemUseStyleID.Shoot;
+				Item.useAnimation = 5;
+				Item.UseSound = SoundID.DD2_FlameburstTowerShot;
 			}
 			return true;
         }
         public override void SetDefaults()
 		{
 
-			item.noUseGraphic = true;
-			item.damage = 60;
-			item.mana = 25;
-			item.noMelee = true;
-			item.magic = true;
-			item.useTime = 5;
-			item.shootSpeed = 0;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 0;
-			item.value = 10000;
-			item.rare = ItemRarityID.Purple; 
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.noUseGraphic = true;
+			Item.damage = 60;
+			Item.mana = 25;
+			Item.noMelee = true;
+			Item.DamageType = DamageClass.Magic;
+			Item.useTime = 5;
+			Item.shootSpeed = 0;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.knockBack = 0;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.Purple; 
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
-
-
 
 
 
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-
-			recipe.AddIngredient(ItemID.DemoniteBar, 5);
-			recipe.AddIngredient(ItemID.DemonScythe, 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.DemoniteBar, 5)
+				.AddIngredient(ItemID.DemonScythe, 1)
+				.AddIngredient(ItemID.SoulofNight, 10)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
+
 
 	}
 }

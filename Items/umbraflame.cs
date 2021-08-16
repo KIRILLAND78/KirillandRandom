@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
-
+using Terraria.DataStructures;
+using KirillandRandom.Projectiles;
 
 namespace KirillandRandom.Items
 {
@@ -15,106 +16,119 @@ namespace KirillandRandom.Items
 		public int first = 1;
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("+16 damage boost for each summoned circle of flames.");
+			Tooltip.SetDefault("Right click to release flames. +16 damage boost for each summoned circle of flames.");
 		}
-        public override bool AltFunctionUse(Player player)
+        public override bool AltFunctionUse(Player Player)
 		{
-			if ((player.statMana >= (30))&&(player.GetModPlayer<MPlayer>().flames_summoned<16))
-			{
-				return true;
-			}
-			else { return false; }
+			return true;
 		}
-		public override void HoldItem(Player player)
+		public override void HoldItem(Player Player)
         {
-			player.GetModPlayer<MPlayer>().angle += 4f;
-			base.HoldItem(player);
-            if (player.GetModPlayer<MPlayer>().BookCreated==false)
+			Player.GetModPlayer<MPlayer>().angle += 4f;
+			base.HoldItem(Player);
+            if (Player.GetModPlayer<MPlayer>().BookCreated==false)
             {
-				player.GetModPlayer<MPlayer>().BookCreated = true;
-
-				Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), mod.ProjectileType("UmbraFlameBook"), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
+				Player.GetModPlayer<MPlayer>().BookCreated = true;
+                //POSSIBLE ERROR
+                IProjectileSource spawnSource = new ProjectileSource_Item(Player, Item);
+                Projectile.NewProjectile(spawnSource, new Vector2(Player.position.X, Player.position.Y), Vector2.Zero, ModContent.ProjectileType<UmbraFlameBook>(), 0,0, Player.whoAmI);
             }
-        }
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ItemID.FragmentNebula, 8)
+				.AddIngredient(ItemID.FragmentSolar, 8)
+				.AddIngredient(ItemID.FragmentStardust, 8)
+				.AddIngredient(ItemID.FragmentVortex, 8)
 
-        public override bool CanUseItem(Player player)
+				.AddIngredient(ModContent.ItemType<LastFlame>(), 1)
+
+				.AddTile(TileID.LunarCraftingStation)
+				.Register();
+		}
+
+		public override bool CanUseItem(Player Player)
         {
-			if (player.altFunctionUse == 2)
+			if (Player.altFunctionUse != 2)
 			{
-					item.shoot = ProjectileID.None;
-					if (player.GetModPlayer<MPlayer>().flames_summoned < 16) {
-						item.shoot = mod.ProjectileType("UmbraFlameBolt");
+				if ((Player.statMana >= (30)) && (Player.GetModPlayer<MPlayer>().flames_summoned < 16))
+				{
+				Item.shoot = ProjectileID.None;
+					if (Player.GetModPlayer<MPlayer>().flames_summoned < 16) {
+					Item.shoot = ModContent.ProjectileType<UmbraFlameBolt>();
 
 					}
 
-						item.mana = 30;
-				item.useTime = 40;
-					item.useAnimation = 40;
-					item.useStyle = ItemUseStyleID.HoldingUp;
-					item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
-				} 
+				Item.mana = 30;
+				Item.useTime = 40;
+				Item.useAnimation = 40;
+				Item.useStyle = ItemUseStyleID.Shoot;
+				Item.UseSound = SoundID.DD2_ExplosiveTrapExplode;
+					return true;
+				}
+				return false;
+			} 
 			else
 			{
 
-				item.mana = 0;
-				player.GetModPlayer<MPlayer>().flames_summoned = 0;
-				item.shoot = ProjectileID.None;
-				item.useTime = 5;
-				item.useStyle = ItemUseStyleID.HoldingOut;
-				item.useAnimation = 5;
-				item.UseSound = SoundID.DD2_FlameburstTowerShot;
+				Item.mana = 0;
+				Player.GetModPlayer<MPlayer>().flames_summoned = 0;
+				Item.shoot = ProjectileID.None;
+				Item.useTime = 5;
+				Item.useStyle = ItemUseStyleID.Shoot;
+				Item.useAnimation = 5;
+				Item.UseSound = SoundID.DD2_FlameburstTowerShot;
 			}
 			return true;
         }
         public override void SetDefaults()
 		{
 
-			item.noUseGraphic = true;
-			item.damage = 90;
-			item.mana = 25;
-			item.noMelee = true;
-			item.magic = true;
-			item.useTime = 5;
-			item.shootSpeed = 0;
-			item.useAnimation = 30;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 0;
-			item.value = 10000;
-			item.rare = ItemRarityID.Purple; 
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.noUseGraphic = true;
+			Item.damage = 90;
+			Item.mana = 25;
+			Item.noMelee = true;
+			Item.DamageType = DamageClass.Magic;
+			Item.useTime = 5;
+			Item.shootSpeed = 0;
+			Item.useAnimation = 30;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.knockBack = 0;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.Purple; 
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			if (player.GetModPlayer<MPlayer>().flames_summoned == 8)
+        public override bool Shoot(Player Player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+			if (Player.GetModPlayer<MPlayer>().flames_summoned == 8)
 			{
 				for (int i = 9; i <= 16; i++)
 				{
-					Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i);
+					Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, Player.whoAmI, i);
 				}
-				player.GetModPlayer<MPlayer>().flames_summoned += 8;
+				Player.GetModPlayer<MPlayer>().flames_summoned += 8;
 			}
-			if (player.GetModPlayer<MPlayer>().flames_summoned == 3)
+			if (Player.GetModPlayer<MPlayer>().flames_summoned == 3)
 			{
 				for (int i = 4; i <= 8; i++)
 				{
-					Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i);
+					Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, Player.whoAmI, i);
 				}
-				player.GetModPlayer<MPlayer>().flames_summoned += 5;
+				Player.GetModPlayer<MPlayer>().flames_summoned += 5;
 			}
-			if (player.GetModPlayer<MPlayer>().flames_summoned == 0)
+			if (Player.GetModPlayer<MPlayer>().flames_summoned == 0)
 			{
-				for (int i = 0; i <= 3; i++)
+				for (int i = 1; i <= 3; i++)
 				{
-					Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i);
+					Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, Player.whoAmI, i);
 				}
-				player.GetModPlayer<MPlayer>().flames_summoned += 3;
+				Player.GetModPlayer<MPlayer>().flames_summoned += 3;
 			}
 
 			return false;
-        }
-
+		}
 
 
     }

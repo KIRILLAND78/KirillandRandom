@@ -14,22 +14,22 @@ namespace KirillandRandom.Projectiles
 
 		// The maximum charge value
 		private const float MAX_CHARGE = 50f;
-		//The distance charge particle from the player center
+		//The distance charge particle from the Player center
 		private const float MOVE_DISTANCE = 60f;
 
 		// The actual distance is stored in the ai0 field
 		// By making a property to handle this it makes our life easier, and the accessibility more readable
 		public float Distance
 		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 
 		// The actual charge value is stored in the localAI0 field
 		public float Charge
 		{
-			get => projectile.localAI[0];
-			set => projectile.localAI[0] = value;
+			get => Projectile.localAI[0];
+			set => Projectile.localAI[0] = value;
 		}
 
 		// Are we at max charge? With c#6 you can simply use => which indicates this is a get only property
@@ -37,22 +37,22 @@ namespace KirillandRandom.Projectiles
 
 		public override void SetDefaults()
 		{
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.magic = true;
-			projectile.hide = true;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.hide = true;
 		}
-
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-		{
+        public override bool PreDraw(ref Color lightColor)
+        {
 			// We start drawing the laser if we have charged up
 			if (IsAtMaxCharge)
 			{
-				DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], Main.player[projectile.owner].Center,
-					projectile.velocity, 10, projectile.damage, -1.57f, 1f, 1000f, Color.White, (int)MOVE_DISTANCE);
+				Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+				DrawLaser(Main.spriteBatch, texture, Main.player[Projectile.owner].Center,
+					Projectile.velocity, 10, Projectile.damage, -1.57f, 1f, 1000f, Color.White, (int)MOVE_DISTANCE);
 			}
 			return false;
 		}
@@ -81,65 +81,65 @@ namespace KirillandRandom.Projectiles
 				new Rectangle(0, 52, 28, 26), Color.White, r, new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
 		}
 
-		// Change the way of collision check of the projectile
+		// Change the way of collision check of the Projectile
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			// We can only collide if we are at max charge, which is when the laser is actually fired
 			if (!IsAtMaxCharge) return false;
 
-			Player player = Main.player[projectile.owner];
-			Vector2 unit = projectile.velocity;
+			Player Player = Main.player[Projectile.owner];
+			Vector2 unit = Projectile.velocity;
 			float point = 0f;
 			// Run an AABB versus Line check to look for collisions, look up AABB collision first to see how it works
 			// It will look for collisions on the given line using AABB
-			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.Center,
-				player.Center + unit * Distance, 22, ref point);
+			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Player.Center,
+				Player.Center + unit * Distance, 22, ref point);
 		}
 
 		// Set custom immunity time on hitting an NPC
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 5;
+			target.immune[Projectile.owner] = 5;
 		}
 
-		// The AI of the projectile
+		// The AI of the Projectile
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
-			projectile.position = player.Center + projectile.velocity * MOVE_DISTANCE;
-			projectile.timeLeft = 2;
+			Player Player = Main.player[Projectile.owner];
+			Projectile.position = Player.Center + Projectile.velocity * MOVE_DISTANCE;
+			Projectile.timeLeft = 2;
 
 			// By separating large AI into methods it becomes very easy to see the flow of the AI in a broader sense
-			// First we update player variables that are needed to channel the laser
+			// First we update Player variables that are needed to channel the laser
 			// Then we run our charging laser logic
 			// If we are fully charged, we proceed to update the laser's position
 			// Finally we spawn some effects like dusts and light
 
-			UpdatePlayer(player);
-			ChargeLaser(player);
+			UpdatePlayer(Player);
+			ChargeLaser(Player);
 
 			// If laser is not charged yet, stop the AI here.
 			if (Charge < MAX_CHARGE) return;
 
-			SetLaserPosition(player);
-			SpawnDusts(player);
+			SetLaserPosition(Player);
+			SpawnDusts(Player);
 			CastLights();
 		}
 
-		private void SpawnDusts(Player player)
+		private void SpawnDusts(Player Player)
 		{
-			Vector2 unit = projectile.velocity * -1;
-			Vector2 dustPos = player.Center + projectile.velocity * Distance;
+			Vector2 unit = Projectile.velocity * -1;
+			Vector2 dustPos = Player.Center + Projectile.velocity * Distance;
 
 			for (int i = 0; i < 2; ++i)
 			{
-				float num1 = projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
+				float num1 = Projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
 				float num2 = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
 				Vector2 dustVel = new Vector2((float)Math.Cos(num1) * num2, (float)Math.Sin(num1) * num2);
 				Dust dust = Main.dust[Dust.NewDust(dustPos, 0, 0, 226, dustVel.X, dustVel.Y)];
 				dust.noGravity = true;
 				dust.scale = 1.2f;
-				dust = Dust.NewDustDirect(Main.player[projectile.owner].Center, 0, 0, 31,
+				dust = Dust.NewDustDirect(Main.player[Projectile.owner].Center, 0, 0, 31,
 					-unit.X * Distance, -unit.Y * Distance);
 				dust.fadeIn = 0f;
 				dust.noGravity = true;
@@ -149,13 +149,13 @@ namespace KirillandRandom.Projectiles
 
 			if (Main.rand.NextBool(5))
 			{
-				Vector2 offset = projectile.velocity.RotatedBy(1.57f) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
+				Vector2 offset = Projectile.velocity.RotatedBy(1.57f) * ((float)Main.rand.NextDouble() - 0.5f) * Projectile.width;
 				Dust dust = Main.dust[Dust.NewDust(dustPos + offset - Vector2.One * 4f, 8, 8, 31, 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.velocity *= 0.5f;
 				dust.velocity.Y = -Math.Abs(dust.velocity.Y);
-				unit = dustPos - Main.player[projectile.owner].Center;
+				unit = dustPos - Main.player[Projectile.owner].Center;
 				unit.Normalize();
-				dust = Main.dust[Dust.NewDust(Main.player[projectile.owner].Center + 55 * unit, 8, 8, 31, 0.0f, 0.0f, 100, new Color(), 1.5f)];
+				dust = Main.dust[Dust.NewDust(Main.player[Projectile.owner].Center + 55 * unit, 8, 8, 31, 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.velocity = dust.velocity * 0.5f;
 				dust.velocity.Y = -Math.Abs(dust.velocity.Y);
 			}
@@ -164,12 +164,12 @@ namespace KirillandRandom.Projectiles
 		/*
 		 * Sets the end of the laser position based on where it collides with something
 		 */
-		private void SetLaserPosition(Player player)
+		private void SetLaserPosition(Player Player)
 		{
 			for (Distance = MOVE_DISTANCE; Distance <= 2200f; Distance += 5f)
 			{
-				var start = player.Center + projectile.velocity * Distance;
-				if (!Collision.CanHit(player.Center, 1, 1, start, 1, 1))
+				var start = Player.Center + Projectile.velocity * Distance;
+				if (!Collision.CanHit(Player.Center, 1, 1, start, 1, 1))
 				{
 					Distance -= 5f;
 					break;
@@ -177,35 +177,35 @@ namespace KirillandRandom.Projectiles
 			}
 		}
 
-		private void ChargeLaser(Player player)
+		private void ChargeLaser(Player Player)
 		{
-			// Kill the projectile if the player stops channeling
-			if (!player.channel)
+			// Kill the Projectile if the Player stops channeling
+			if (!Player.channel)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 			}
 			else
 			{
-				// Do we still have enough mana? If not, we kill the projectile because we cannot use it anymore
-				if (Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
+				// Do we still have enough mana? If not, we kill the Projectile because we cannot use it anymore
+				if (Main.time % 10 < 1 && !Player.CheckMana(Player.inventory[Player.selectedItem].mana, true))
 				{
-					projectile.Kill();
+					Projectile.Kill();
 				}
-				Vector2 offset = projectile.velocity;
+				Vector2 offset = Projectile.velocity;
 				offset *= MOVE_DISTANCE - 20;
-				Vector2 pos = player.Center + offset - new Vector2(10, 10);
+				Vector2 pos = Player.Center + offset - new Vector2(10, 10);
 				if (Charge < MAX_CHARGE)
 				{
 					Charge++;
 				}
 				int chargeFact = (int)(Charge / 20f);
 				Vector2 dustVelocity = Vector2.UnitX * 18f;
-				dustVelocity = dustVelocity.RotatedBy(projectile.rotation - 1.57f);
-				Vector2 spawnPos = projectile.Center + dustVelocity;
+				dustVelocity = dustVelocity.RotatedBy(Projectile.rotation - 1.57f);
+				Vector2 spawnPos = Projectile.Center + dustVelocity;
 				for (int k = 0; k < chargeFact + 1; k++)
 				{
 					Vector2 spawn = spawnPos + ((float)Main.rand.NextDouble() * 6.28f).ToRotationVector2() * (12f - chargeFact * 2);
-					Dust dust = Main.dust[Dust.NewDust(pos, 20, 20, 226, projectile.velocity.X / 2f, projectile.velocity.Y / 2f)];
+					Dust dust = Main.dust[Dust.NewDust(pos, 20, 20, 226, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f)];
 					dust.velocity = Vector2.Normalize(spawnPos - spawn) * 1.5f * (10f - chargeFact * 2f) / 10f;
 					dust.noGravity = true;
 					dust.scale = Main.rand.Next(10, 20) * 0.05f;
@@ -213,30 +213,30 @@ namespace KirillandRandom.Projectiles
 			}
 		}
 
-		private void UpdatePlayer(Player player)
+		private void UpdatePlayer(Player Player)
 		{
-			// Multiplayer support here, only run this code if the client running it is the owner of the projectile
-			if (projectile.owner == Main.myPlayer)
+			// Multiplayer support here, only run this code if the client running it is the owner of the Projectile
+			if (Projectile.owner == Main.myPlayer)
 			{
-				Vector2 diff = Main.MouseWorld - player.Center;
+				Vector2 diff = Main.MouseWorld - Player.Center;
 				diff.Normalize();
-				projectile.velocity = diff.RotateRandom(5);
-				projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
-				projectile.netUpdate = true;
+				Projectile.velocity = diff.RotateRandom(5);
+				Projectile.direction = Main.MouseWorld.X > Player.position.X ? 1 : -1;
+				Projectile.netUpdate = true;
 			}
-			int dir = projectile.direction;
-			player.ChangeDir(dir); // Set player direction to where we are shooting
-			player.heldProj = projectile.whoAmI; // Update player's held projectile
-			player.itemTime = 2; // Set item time to 2 frames while we are used
-			player.itemAnimation = 2; // Set item animation time to 2 frames while we are used
-			player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir); // Set the item rotation to where we are shooting
+			int dir = Projectile.direction;
+			Player.ChangeDir(dir); // Set Player direction to where we are shooting
+			Player.heldProj = Projectile.whoAmI; // Update Player's held Projectile
+			Player.itemTime = 2; // Set Item time to 2 frames while we are used
+			Player.itemAnimation = 2; // Set Item animation time to 2 frames while we are used
+			Player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * dir, Projectile.velocity.X * dir); // Set the Item rotation to where we are shooting
 		}
 
 		private void CastLights()
 		{
 			// Cast a light along the line of the laser
 			DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
-			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MOVE_DISTANCE), 26, DelegateMethods.CastLight);
+			Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * (Distance - MOVE_DISTANCE), 26, DelegateMethods.CastLight);
 		}
 
 		public override bool ShouldUpdatePosition() => false;
@@ -247,8 +247,8 @@ namespace KirillandRandom.Projectiles
 		public override void CutTiles()
 		{
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Vector2 unit = projectile.velocity;
-			Utils.PlotTileLine(projectile.Center, projectile.Center + unit * Distance, (projectile.width + 16) * projectile.scale, DelegateMethods.CutTiles);
+			Vector2 unit = Projectile.velocity;
+			Utils.PlotTileLine(Projectile.Center, Projectile.Center + unit * Distance, (Projectile.width + 16) * Projectile.scale, DelegateMethods.CutTiles);
 		}
 	}
 }

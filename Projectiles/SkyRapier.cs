@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using KirillandRandom.Projectiles;
 
 
 
@@ -18,28 +20,26 @@ namespace KirillandRandom.Projectiles
 
         public override void SetDefaults()
         {
-            //projectile.position.Y -= 80;
-            projectile.Name = "Brilliancy";
-            projectile.width = 70;
-            projectile.height = 70;
-            projectile.timeLeft = 13;
-            projectile.penetrate = 9999;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.ranged = false;
-            projectile.melee = true;
+            //Projectile.position.Y -= 80;
+            Projectile.Name = "Brilliancy";
+            Projectile.width = 70;
+            Projectile.height = 70;
+            Projectile.timeLeft = 13;
+            Projectile.penetrate = 9999;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Melee;
 
-
-            //projectile.netUpdate2 = true;
-            //projectile.netUpdate = true;//this thing is pretty unreliable. and by unreliable i mean those sometimes don't work. at all.
-            //projectile.netSpam = 6;//fix desync asap
-            //projectile.netImportant = true;//i dunno what those do, i just slapped them wothout thinking twice. Remove if it lags.
+            //Projectile.netUpdate2 = true;
+            //Projectile.netUpdate = true;//this thing is pretty unreliable. and by unreliable i mean those sometimes don't work. at all.
+            //Projectile.netSpam = 6;//fix desync asap
+            //Projectile.netImportant = true;//i dunno what those do, i just slapped them wothout thinking twice. Remove if it lags.
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {if (projectile.timeLeft >= 4) {
-                int DDustID = Dust.NewDust(target.Center, 2, 2, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 0.8f); //Spawns dust
+        {if (Projectile.timeLeft >= 4) {
+                int DDustID = Dust.NewDust(target.Center, 2, 2, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.8f); //Spawns dust
                 Main.dust[DDustID].noGravity = true;
                 Main.dust[DDustID].velocity = 0.8f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(2));
             }
@@ -47,16 +47,16 @@ namespace KirillandRandom.Projectiles
         }
         public override bool? CanHitNPC(NPC target)
         {
-            Vector2 Vel = projectile.velocity;
+            Vector2 Vel = Projectile.velocity;
             Vel.Normalize();
 
-            Rectangle test = new Rectangle((int)projectile.Center.X + ((int)Vel.X * -21) - 4, (int)projectile.Center.Y + ((int)Vel.Y * -21) - 4, 8, 8);
-            Rectangle test1 = new Rectangle((int)projectile.Center.X + ((int)Vel.X * -1) - 4, (int)projectile.Center.Y + ((int)Vel.Y * -1) - 4, 8, 8);
-            Rectangle test2 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 19) - 4, (int)projectile.Center.Y + (int)(Vel.Y * 19) - 4, 8, 8);
-            Rectangle test3 = new Rectangle((int)projectile.Center.X + (int)(Vel.X * 39) - 5, (int)projectile.Center.Y + (int)(Vel.Y * 39) - 5, 10, 10);
+            Rectangle test = new Rectangle((int)Projectile.Center.X + ((int)Vel.X * -21) - 4, (int)Projectile.Center.Y + ((int)Vel.Y * -21) - 4, 8, 8);
+            Rectangle test1 = new Rectangle((int)Projectile.Center.X + ((int)Vel.X * -1) - 4, (int)Projectile.Center.Y + ((int)Vel.Y * -1) - 4, 8, 8);
+            Rectangle test2 = new Rectangle((int)Projectile.Center.X + (int)(Vel.X * 19) - 4, (int)Projectile.Center.Y + (int)(Vel.Y * 19) - 4, 8, 8);
+            Rectangle test3 = new Rectangle((int)Projectile.Center.X + (int)(Vel.X * 39) - 5, (int)Projectile.Center.Y + (int)(Vel.Y * 39) - 5, 10, 10);
 
-            Player player = Main.player[projectile.owner];
-            if ((((!target.friendly || (target.type == NPCID.Guide && projectile.owner < 255 && player.killGuide) || (target.type == NPCID.Clothier && projectile.owner < 255 && player.killClothier)))))
+            Player Player = Main.player[Projectile.owner];
+            if ((((!target.friendly || (target.type == NPCID.Guide && Projectile.owner < 255 && Player.killGuide) || (target.type == NPCID.Clothier && Projectile.owner < 255 && Player.killClothier)))))
             {
                 if ((test2.Intersects(target.Hitbox))|| (test3.Intersects(target.Hitbox)) || (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
                 {
@@ -76,9 +76,9 @@ namespace KirillandRandom.Projectiles
         public override void AI()
         {
 
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
 
-            projectile.velocity *= 1.25f;
+            Projectile.velocity *= 1.25f;
 
             if (first)
             {
@@ -86,9 +86,9 @@ namespace KirillandRandom.Projectiles
                 Vector2 PlayerPos = owner.Center;
                 //float angle;
 
-                Vector2 AimFor = 150 * Vector2.Normalize(projectile.velocity) + PlayerPos;
+                Vector2 AimFor = 150 * Vector2.Normalize(Projectile.velocity) + PlayerPos;
 
-                Vector2 Diff2 = AimFor - projectile.Center;
+                Vector2 Diff2 = AimFor - Projectile.Center;
 
                 //if (Diff2.X >= 0)
                 //{
@@ -99,52 +99,52 @@ namespace KirillandRandom.Projectiles
                 //    angle = (float)Math.Atan(Diff2.Y / Diff2.X);
 
                 //}
-                //projectile.velocity;
+                //Projectile.velocity;
 
-                projectile.velocity.X = Diff2.X;
-                projectile.velocity.Y = Diff2.Y;
-                projectile.velocity.Normalize();
-                projectile.velocity *= 3.1f;
+                Projectile.velocity.X = Diff2.X;
+                Projectile.velocity.Y = Diff2.Y;
+                Projectile.velocity.Normalize();
+                Projectile.velocity *= 3.1f;
 
-                projectile.light = 0.4f;
+                Projectile.light = 0.4f;
                 lastplpos = owner.Center;
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
 
                 if (owner.whoAmI == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, mod.ProjectileType("SkyRapier2"), 0, 0, owner.whoAmI);
+                    Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile),Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<SkyRapier2>(), 0, 0, owner.whoAmI);
                 }
 
                 first = false;
             }
             else
             {
-                projectile.netUpdate = true;
+                Projectile.netUpdate = true;
 
             }
 
 
-            projectile.position += owner.Center - lastplpos;
+            Projectile.position += owner.Center - lastplpos;
 
             lastplpos = owner.Center;
 
-            int DDustID = Dust.NewDust(projectile.Center-new Vector2(8,4), 0, 0, 226, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 0.2f); //Spawns dust
+            int DDustID = Dust.NewDust(Projectile.Center-new Vector2(8,4), 0, 0, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.2f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
             Main.dust[DDustID].velocity = 1.1f*Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(10));
 
-            if (projectile.timeLeft < 4)
+            if (Projectile.timeLeft < 4)
             {
-                projectile.alpha += 60;
-                if (projectile.timeLeft ==3)
+                Projectile.alpha += 60;
+                if (Projectile.timeLeft ==3)
                 {
-                    projectile.velocity *= -0.3f;
+                    Projectile.velocity *= -0.3f;
                 };
 
             }
 
-            //if (projectile.velocity.Y > 16f)
+            //if (Projectile.velocity.Y > 16f)
             //{
-            //    projectile.velocity.Y = 16f;
+            //    Projectile.velocity.Y = 16f;
             //}
 
 
@@ -177,24 +177,24 @@ namespace KirillandRandom.Projectiles
 
         //public override void PostAI()
         //{
-        //    Vector2 Vel = projectile.velocity;
+        //    Vector2 Vel = Projectile.velocity;
         //    Vel.Normalize();
-        //    Rectangle test = new Rectangle((int)projectile.Center.X + (int)Vel.X * -16, (int)projectile.Center.Y + (int)Vel.Y * -16, 1,1);
-        //    Rectangle test2 = new Rectangle((int)projectile.Center.X+ (int)Vel.X*14, (int)projectile.Center.Y + (int)Vel.Y * 14,1,1);
-        //    Rectangle test3 = new Rectangle((int)projectile.Center.X + (int)Vel.X * 46, (int)projectile.Center.Y + (int)Vel.Y * 46, 1, 1);
-        //    if (projectile.owner == Main.myPlayer && projectile.damage > 0)
+        //    Rectangle test = new Rectangle((int)Projectile.Center.X + (int)Vel.X * -16, (int)Projectile.Center.Y + (int)Vel.Y * -16, 1,1);
+        //    Rectangle test2 = new Rectangle((int)Projectile.Center.X+ (int)Vel.X*14, (int)Projectile.Center.Y + (int)Vel.Y * 14,1,1);
+        //    Rectangle test3 = new Rectangle((int)Projectile.Center.X + (int)Vel.X * 46, (int)Projectile.Center.Y + (int)Vel.Y * 46, 1, 1);
+        //    if (Projectile.owner == Main.myPlayer && Projectile.damage > 0)
         //    {
-        //        Player player = Main.player[projectile.owner];
+        //        Player Player = Main.player[Projectile.owner];
         //        for (int k = 0; k < 200; k++)
         //        {
         //            NPC curNPC = Main.npc[k];
-        //            if ((((!curNPC.friendly || (curNPC.type == 22 && projectile.owner < 255 && player.killGuide) || (curNPC.type == 54 && projectile.owner < 255 && player.killClothier)))))
+        //            if ((((!curNPC.friendly || (curNPC.type == 22 && Projectile.owner < 255 && Player.killGuide) || (curNPC.type == 54 && Projectile.owner < 255 && Player.killClothier)))))
         //            {
         //                if ((test3.Intersects(curNPC.Hitbox)) || (test.Intersects(curNPC.Hitbox)) || (test2.Intersects(curNPC.Hitbox)))
         //                {
-        //                    vasya = projectile.damage - 17 + rnd.Next(34);
-        //                    curNPC.StrikeNPC(vasya, projectile.knockBack, (int)projectile.velocity.ToRotation());
-        //                    player.addDPS(vasya);
+        //                    vasya = Projectile.damage - 17 + rnd.Next(34);
+        //                    curNPC.StrikeNPC(vasya, Projectile.knockBack, (int)Projectile.velocity.ToRotation());
+        //                    Player.addDPS(vasya);
         //            } }
         //        }
         //        if (Main.LocalPlayer.hostile)
@@ -202,11 +202,11 @@ namespace KirillandRandom.Projectiles
         //            for (int l = 0; l < 255; l++)
         //            {
         //                Player subPlayer = Main.player[l];
-        //                if (l != projectile.owner && subPlayer.active && !subPlayer.dead && !subPlayer.immune && subPlayer.hostile && projectile.playerImmune[l] <= 0 && (Main.LocalPlayer.team == 0 || Main.LocalPlayer.team != subPlayer.team))
+        //                if (l != Projectile.owner && subPlayer.active && !subPlayer.dead && !subPlayer.immune && subPlayer.hostile && Projectile.playerImmune[l] <= 0 && (Main.LocalPlayer.team == 0 || Main.LocalPlayer.team != subPlayer.team))
         //                {
         //                    if ((test3.Intersects(subPlayer.Hitbox)) || (test.Intersects(subPlayer.Hitbox)) || (test2.Intersects(subPlayer.Hitbox)))
         //                    {
-        //                        subPlayer.HurtOld(projectile.damage, (int)projectile.knockBack);
+        //                        subPlayer.HurtOld(Projectile.damage, (int)Projectile.knockBack);
         //                    }
         //                }
         //            }

@@ -13,7 +13,7 @@ namespace KirillandRandom.Projectiles
         public override void Kill(int timeLeft)
         {
 
-            Main.player[projectile.owner].GetModPlayer<MPlayer>().BookCreated = false;
+            Main.player[Projectile.owner].GetModPlayer<MPlayer>().BookCreated = false;
             base.Kill(timeLeft);
         }
 
@@ -23,36 +23,36 @@ namespace KirillandRandom.Projectiles
         public bool first = true;
         public override void SetDefaults()
         {
-            projectile.light = 0.3f;
-            projectile.Name = "Last Flame Book(how? just how?)";
-            projectile.width = 12;
-            projectile.height = 12;
-            projectile.timeLeft = 7200;
-            projectile.penetrate = 1;
-            projectile.friendly = false;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.ranged = true;
-            projectile.aiStyle = 0;
+            Projectile.light = 0.3f;
+            Projectile.Name = "Last Flame Book(how? just how?)";
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.timeLeft = 7200;
+            Projectile.penetrate = 1;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.aiStyle = 0;
         }
         public override void AI()
         {
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
             if (owner.dead == true)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
             if (owner.direction == 1)
             {
-                projectile.position.X= owner.Center.X - 43;
+                Projectile.position.X= owner.Center.X - 43;
             }
             else
             {
-                projectile.position.X = owner.Center.X + 13;
+                Projectile.position.X = owner.Center.X + 13;
             }
 
-            projectile.position.Y = (float)(owner.Center.Y - 40f+10*Math.Sin(angle*Math.PI/128f));
+            Projectile.position.Y = (float)(owner.Center.Y - 40f+10*Math.Sin(angle*Math.PI/128f));
 
 
             angle += 1;
@@ -66,9 +66,9 @@ namespace KirillandRandom.Projectiles
 
             if (owner.HeldItem != Book)
                 {
-                projectile.Kill();//РАБОТАЕТ, ЮХУ!
+                Projectile.Kill();//РАБОТАЕТ, ЮХУ!
 
-                Main.player[projectile.owner].GetModPlayer<MPlayer>().BookCreated = false;
+                Main.player[Projectile.owner].GetModPlayer<MPlayer>().BookCreated = false;
             }
             
 

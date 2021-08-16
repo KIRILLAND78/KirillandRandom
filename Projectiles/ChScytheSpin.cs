@@ -19,21 +19,21 @@ namespace KirillandRandom.Projectiles
         private int direct;
         public override void SetDefaults()
         {
-            projectile.melee = true;
-            Player player = Main.player[projectile.owner];
-            projectile.light = 0.3f;
-            projectile.damage = 80;
-            projectile.Name = "Spark";
-            projectile.width = 118;
-            projectile.height = 118;
-            projectile.penetrate = 999;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.ranged = false;
-            projectile.aiStyle = -1;
-            projectile.knockBack = 5;
+            Projectile.DamageType = DamageClass.Melee;
+            Player Player = Main.player[Projectile.owner];
+            Projectile.light = 0.3f;
+            Projectile.damage = 80;
+            Projectile.Name = "Spark";
+            Projectile.width = 118;
+            Projectile.height = 118;
+            Projectile.penetrate = 999;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.aiStyle = -1;
+            Projectile.knockBack = 5;
         }
         
 
@@ -54,51 +54,55 @@ namespace KirillandRandom.Projectiles
        
         public override void AI()
         {
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[Projectile.owner];
             if (owner.dead == true)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
-            if (!owner.channel)
+            if (Main.myPlayer == Projectile.owner)
             {
-                projectile.Kill();
+                if (!Main.mouseRight)
+                {
+                    Projectile.Kill();
+                }
             }
-                //int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
+                //int DDustID = Dust.NewDust(Projectile.position - new Vector2(2f, 2f), Projectile.width + 4, Projectile.height + 4, 17, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
                 //Main.dust[DDustID].noGravity = true;
 
 
 
-                Player p = Main.player[projectile.owner];
+                Player p = Main.player[Projectile.owner];
                 if (first == 1)
             {
                 direct = p.direction;
                 first = 0;
                 }
-                deg = (double)projectile.ai[0] + 45;
+                deg = (double)Projectile.ai[0] + 45;
                 rad = deg * (Math.PI / 180);
-                projectile.rotation = MathHelper.ToRadians(projectile.ai[0]);
-            if (projectile.ai[0]%180 == 0)
+                Projectile.rotation = MathHelper.ToRadians(Projectile.ai[0]);
+            if (Projectile.ai[0]%180 == 0)
             {
-                p.heldProj = projectile.whoAmI;
-                p.itemTime = 21; // Set item time to 2 frames while we are used
-                p.itemAnimation = 21; // Set item animation time to 2 frames while we are used
+                //p.heldProj = Projectile.whoAmI;
+                Projectile.timeLeft = 22;
+                p.itemTime = 20; // Set Item time to 2 frames while we are used
+                p.itemAnimation = 20; // Set Item animation time to 2 frames while we are used
             }
 
 
-            projectile.Center = p.Center;
-            projectile.Center = p.Center;
+            Projectile.Center = p.Center;
+            Projectile.Center = p.Center;
             if (direct== 1)
             {
                 p.direction = 1;
-                projectile.ai[0] += 9f;
-                //projectile.spriteDirection = 1;
+                Projectile.ai[0] += 9f;
+                //Projectile.spriteDirection = 1;
             }
             else
             {
                 p.direction = -1;
-                projectile.ai[0] -= 9f;
+                Projectile.ai[0] -= 9f;
 
-                projectile.spriteDirection = -1;
+                Projectile.spriteDirection = -1;
             }
 
         }

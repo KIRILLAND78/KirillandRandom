@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Text;
-using KirillandRandom.NPCs;
+using KirillandRandom.Projectiles;
+using Terraria.DataStructures;
 
 namespace KirillandRandom.Items
 {
@@ -21,48 +22,48 @@ namespace KirillandRandom.Items
 
 		public override void SetDefaults()
 		{
-			item.noUseGraphic = true;
-			item.shoot = mod.ProjectileType("SkyRapier");
-			item.melee = true;
-			item.width = 0;
-			item.noMelee = true;
-			item.height = 0;
-			item.useTime = 4;
-			item.useAnimation = 4;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.knockBack = 4;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
-			item.shootSpeed = 18;
-			item.damage = 88;
-			item.value = 10000;
-			item.rare = ItemRarityID.Cyan;
-		}
+			Item.noUseGraphic = true;
+			Item.shoot = ModContent.ProjectileType<SkyRapier>();
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 0;
+			Item.noMelee = true;
+			Item.height = 0;
+			Item.useTime = 4;
+			Item.useAnimation = 4;
+			Item.useStyle = ItemUseStyleID.Rapier;//Testing out new weapon anims
+			Item.knockBack = 4;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
+			Item.shootSpeed = 18;
+			Item.damage = 88;
+			Item.value = 10000;
+			Item.rare = ItemRarityID.Cyan;
+			Item.channel = true;
+        }
+
+
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Nanites, 50);
-			recipe.AddIngredient(ItemID.TitaniumBar, 4);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-
-			ModRecipe recipe2 = new ModRecipe(mod);
-			recipe2.AddIngredient(ItemID.Nanites, 50);
-			recipe2.AddIngredient(ItemID.AdamantiteBar, 4);
-			recipe2.AddTile(TileID.MythrilAnvil);
-			recipe2.SetResult(this);
-			recipe2.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.Nanites, 50)
+				.AddIngredient(ItemID.TitaniumBar, 4)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
+			CreateRecipe()
+				.AddIngredient(ItemID.Nanites, 50)
+				.AddIngredient(ItemID.AdamantiteBar, 4)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
 
+		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
 			Vector2 MousePos = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y);
 			Vector2 PlayerPos = player.Center;
 			Vector2 Diff = MousePos - PlayerPos;
 			Vector2 DiffRand = Diff.RotatedByRandom(MathHelper.ToRadians(45));
 			Vector2 nposition = player.Center+(30 * Vector2.Normalize(DiffRand));
-			Projectile.NewProjectile(nposition.X, nposition.Y, speedX, speedY, mod.ProjectileType("SkyRapier"), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source,new Vector2(nposition.X, nposition.Y), velocity.RotateRandom(0.1), type, damage, knockback, player.whoAmI);
 			return false;
 		}
 

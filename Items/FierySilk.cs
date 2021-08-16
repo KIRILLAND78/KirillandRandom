@@ -15,21 +15,21 @@ namespace KirillandRandom.Items
 
 		public override void SetDefaults()
 		{
-			item.flame = true;
-			item.width = 26;
-			item.height = 28;
-			item.value = 0;
-			item.rare = ItemRarityID.Orange;
+			Item.flame = true;
+			Item.width = 26;
+			Item.height = 28;
+			Item.value = 0;
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.LivingFireBlock, 10);
-			recipe.AddIngredient(ItemID.SoulofLight, 1);
-			recipe.AddIngredient(ItemID.SoulofNight, 1);
-			recipe.AddIngredient(ItemID.Silk, 1);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe()
+				.AddIngredient(ItemID.LivingFireBlock, 10)
+				.AddIngredient(ItemID.SoulofLight, 2)
+				.AddIngredient(ItemID.SoulofNight, 2)
+				.AddIngredient(ItemID.Silk, 1)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
 
 

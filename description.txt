@@ -1,3 +1,8 @@
-Small content mod. Developing this to just test my skills in programming. Nothing too exciting, but i trying to make this mod as unique as possible.
-Last major update: Hex debuff and weapon. Weapons balance and changes. Bugfixes.
-Last minor update: Added icon back. Renamed most weapons. bugfixes and new weapon/accessory (proof of concept) prototype.
+KIRILLAND's random stuff but ported to 1.4.
+
+Small content mod. Developing this to just test my skills in programming. Nothing too exciting, but i am trying to make this mod as unique as possible.
+
+Might be a bit too OP.
+
+Some weapons have alt attack.
+No wiki or something. Sorry. You have to figure everything on your own right now.
