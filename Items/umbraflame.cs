@@ -105,7 +105,7 @@ namespace KirillandRandom.Items
 			}
 			if (player.GetModPlayer<MPlayer>().flames_summoned == 0)
 			{
-				for (int i = 0; i <= 3; i++)
+				for (int i = 1; i <= 3; i++)
 				{
 					Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, i);
 				}

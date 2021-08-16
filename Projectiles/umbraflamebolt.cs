@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-
 using Terraria.ID;
+using KirillandRandom.Dusts;
 
 
 namespace KirillandRandom.Projectiles
@@ -16,6 +16,10 @@ namespace KirillandRandom.Projectiles
         public int mode = 2;
         private int first=1;
         private bool backup_update=false;
+        private int orig_dmg = 0;
+
+
+
 
         public override void SetDefaults()
         {
@@ -23,7 +27,7 @@ namespace KirillandRandom.Projectiles
             projectile.Name = "Umbra Flame";
             projectile.width = 12;
             projectile.height = 12;
-            projectile.timeLeft = 7200;
+            projectile.timeLeft = 99999999;
             projectile.penetrate = 99999;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -38,10 +42,18 @@ namespace KirillandRandom.Projectiles
             if (mode != 1)
             {
                 Main.player[projectile.owner].GetModPlayer<MPlayer>().flames_summoned -= 1;
-
             }
             base.Kill(timeLeft);
         }
+
+
+
+
+
+
+
+
+
         public override void AI()
         {
             Player owner = Main.player[projectile.owner];
@@ -53,12 +65,7 @@ namespace KirillandRandom.Projectiles
             }
 
 
-
-
-
-
-
-            int DDustID = Dust.NewDust(projectile.position - new Vector2(2f, 2f), projectile.width + 4, projectile.height + 4, 17, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100, default, 1.1f); //Spawns dust
+            int DDustID = Dust.NewDust(projectile.Center-new Vector2(2,2), 4 , 4 , mod.DustType("Umbra_smoke"), 0, 0, 100, default, 1f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
 
 
@@ -73,7 +80,6 @@ namespace KirillandRandom.Projectiles
 
 
 
-                    projectile.damage +=bonusDamage;
                     projectile.light = 0.6f;
                     if (Main.myPlayer == projectile.owner)
                     {
@@ -101,6 +107,7 @@ namespace KirillandRandom.Projectiles
                 }
                 if (first == 1)
                 {
+                    orig_dmg = projectile.damage;
                     Book = p.HeldItem;
                     if (Main.myPlayer == projectile.owner)
                     {if (projectile.ai[0] < 4)
@@ -124,6 +131,7 @@ namespace KirillandRandom.Projectiles
                 }
                     projectile.alpha = 64;
 
+
                 double deg = (double)projectile.ai[1];
                 double rad = deg * (Math.PI / 180);
                 double dist = 32;
@@ -134,9 +142,11 @@ namespace KirillandRandom.Projectiles
                     dist = 88;
                 }
 
-                bonusDamage = owner.GetModPlayer<MPlayer>().flames_summoned == 3 ? 16 : 0;
+                bonusDamage = owner.GetModPlayer<MPlayer>().flames_summoned == 8 ? 32 : 16;
 
-                bonusDamage = owner.GetModPlayer<MPlayer>().flames_summoned == 3 ? 32 : bonusDamage;
+                bonusDamage = owner.GetModPlayer<MPlayer>().flames_summoned == 16 ? 48 : bonusDamage;
+
+                projectile.damage =orig_dmg+bonusDamage;
 
                 projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
                 projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;

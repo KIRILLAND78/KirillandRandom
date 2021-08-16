@@ -75,7 +75,6 @@ namespace KirillandRandom.Items
 			item.melee = true;
 		}
 
-
         public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
