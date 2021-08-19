@@ -15,8 +15,8 @@ namespace KirillandRandom.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("UndeadSword");
-			Tooltip.SetDefault("Cannot be used while Mana Sickness is active. Work in progress.");
+			DisplayName.SetDefault("Soul Guardian");
+			Tooltip.SetDefault("Cannot be used while Mana Sickness is active.\r\nI HAVEN'T tested this in multiplayer, please be cautious.");
 		}
 
 		public override void SetDefaults()
@@ -35,9 +35,9 @@ namespace KirillandRandom.Items
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = false;
 			Item.shootSpeed = 20;
-			Item.damage = 88;
+			Item.damage = 196;
 			Item.value = 10000;
-			Item.rare = ItemRarityID.Expert;
+			Item.rare = ItemRarityID.Yellow;
         }
         public override bool CanUseItem(Player player)
         {if (!player.manaSick && player.statMana>=player.GetManaCost(Item))
@@ -48,18 +48,18 @@ namespace KirillandRandom.Items
         }
 
 
-        //public override void AddRecipes()
-        //{
-        //	CreateRecipe()
-        //		.AddIngredient(ItemID.Nanites, 50)
-        //		.AddIngredient(ItemID.TitaniumBar, 4)
-        //		.AddTile(TileID.MythrilAnvil)
-        //		.Register();
-        //	CreateRecipe()
-        //		.AddIngredient(ItemID.Nanites, 50)
-        //		.AddIngredient(ItemID.AdamantiteBar, 4)
-        //		.AddTile(TileID.MythrilAnvil)
-        //		.Register();
-        //}
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Ectoplasm, 4)
+                .AddIngredient(ItemID.TitaniumBar, 8)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.Ectoplasm, 4)
+                .AddIngredient(ItemID.AdamantiteBar, 8)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
     }
 }

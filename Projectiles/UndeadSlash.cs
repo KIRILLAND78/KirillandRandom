@@ -13,6 +13,7 @@ namespace KirillandRandom.Projectiles
 {
     public class UndeadSlash : ModProjectile
     {
+        public Player owner;
         public int timer_d=0;
         public int slashes=0;
         public NPC targetd = null;
@@ -20,9 +21,10 @@ namespace KirillandRandom.Projectiles
         public Vector2 lastplpos;
         bool first = true;
 
+
         public override void SetDefaults()
         {
-            Projectile.Name = "UndeadSlash";
+            Projectile.Name = "Soul Slash";
             Projectile.width = 40;
             Projectile.height = 40;
             Projectile.timeLeft = 40;
@@ -38,7 +40,7 @@ namespace KirillandRandom.Projectiles
         {if (target == targetd)
             {
                 slashes++;
-                timer_d = 12;
+                timer_d = 9;
             }
 
             if (targetd == null){
@@ -78,6 +80,7 @@ namespace KirillandRandom.Projectiles
         public override void Kill(int timeLeft)
         {
 
+            owner.GetModPlayer<MPlayer>().targetd = null;
             Main.player[Projectile.owner].teleporting = true;
             Main.player[Projectile.owner].teleportTime = 2;
             Main.player[Projectile.owner].Teleport(PlayerPos, 6, 1);
@@ -86,11 +89,10 @@ namespace KirillandRandom.Projectiles
 
         public override void AI()
         {
-
+            //Main.NewText(Convert.ToString(Main.screenPosition.X));
             timer_d--;
-            Player owner = Main.player[Projectile.owner];
-
-            owner.direction = ((MathHelper.ToDegrees(Projectile.rotation)+45)) > 0 ? 1:-1;
+            owner = Main.player[Projectile.owner];
+            owner.direction = ((MathHelper.ToDegrees(Projectile.rotation) + 45)<180&&((MathHelper.ToDegrees(Projectile.rotation)+45)) > 0)? 1:-1;
             if (owner.dead)
             {
                 Projectile.Kill();
@@ -112,7 +114,6 @@ namespace KirillandRandom.Projectiles
             {
                 Projectile.netUpdate = true;
             }
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
             owner.immune = true;
             owner.SetImmuneTimeForAllTypes(5);
             owner.Center = Projectile.Center - Projectile.velocity*0.7f;
@@ -121,6 +122,7 @@ namespace KirillandRandom.Projectiles
             //Projectile.velocity *= 1.25f;
             if (targetd != null)
             {
+                owner.GetModPlayer<MPlayer>().targetd = targetd;
                 Projectile.timeLeft = 4;
                 owner.itemAnimation = 4;
                 owner.itemTime = 4;
@@ -128,10 +130,31 @@ namespace KirillandRandom.Projectiles
                 //slashes
                 if ((timer_d == 0) || ((owner.Center - targetd.Center).Length() >= 200))
                 {
-                    if (slashes == 6)
+                    int GreenFl = Dust.NewDust(owner.Center, 2, 2, DustID.Clentaminator_Green, 0, 0, 0, default, 1f);
+
+                     GreenFl = Dust.NewDust(owner.Center, 2, 2, DustID.Clentaminator_Green, 0, 0, 0, default, 1f);
+
+                    if (Main.myPlayer == Projectile.owner)
                     {
-                        Projectile.Kill();
-                        return;
+                        if (slashes == 6)
+                        {
+                            if (!Main.mouseLeft||owner.GetManaCost(owner.HeldItem)>owner.statMana)
+                            {
+                                Projectile.Kill();
+                                return;
+                            }
+                            else
+                            {
+                                slashes = 0;
+                                owner.statMana -= owner.GetManaCost(owner.HeldItem);
+                            }
+                        }
+
+                        if (!targetd.active)
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
                     }
                     if ((owner.Center - targetd.Center).Length() >= 200)
                     {
@@ -140,11 +163,13 @@ namespace KirillandRandom.Projectiles
                         Projectile.Center = targetd.Center + new Vector2(175,0).RotatedByRandom(MathHelper.ToRadians(360));
                     Projectile.velocity = targetd.Center - Projectile.Center;
                     Projectile.velocity.Normalize();
-                    Projectile.velocity *= 20;
+                    Projectile.velocity *= 27;
                     Main.player[Projectile.owner].teleporting = true;
                     Main.player[Projectile.owner].teleportTime = 2;
-                    Main.player[Projectile.owner].Teleport(Projectile.Center - Projectile.velocity * 0.7f, 6, 1);
+                    Main.player[Projectile.owner].Teleport(Projectile.Center - Projectile.velocity * 0.5f, 6, 1);
 
+                    GreenFl = Dust.NewDust(owner.Center, 2, 2, DustID.Clentaminator_Green, 0, 0, 0, default, 1f);
+                    GreenFl = Dust.NewDust(owner.Center, 2, 2, DustID.Clentaminator_Green, 0, 0, 0, default, 1f);
                 }
 
                 //int DDustID = Dust.NewDust(Projectile.Center - new Vector2(8, 4), 0, 0, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.2f); //Spawns dust
@@ -152,11 +177,8 @@ namespace KirillandRandom.Projectiles
                 //Main.dust[DDustID].velocity = 1.1f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(10));
 
             }
-            else
-            {
 
-
-            }
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
         }
 
 
