@@ -26,18 +26,22 @@ namespace KirillandRandom
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.ArmOverItem);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
-
 			if (drawInfo.drawPlayer.GetModPlayer<MPlayer>().fireBody)
 			{
-				HandArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/FiresoulRobe_Arms_Glow");
-
+				if (drawInfo.drawPlayer.mount.Active) return;
+					HandArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/FiresoulRobe_Arms_Glow");
+				
 				var position = drawInfo.Position + new Vector2(-10f, -10f) - Main.screenPosition;
-				position = new Vector2((int)position.X, (int)position.Y);
+				position = new Vector2((int)position.X, (int)position.Y + drawInfo.drawPlayer.mount.PlayerHeadOffset);
+				if (drawInfo.drawPlayer.mount.Active)
+				{
+					position += new Vector2(0, -2);
+				}
 				DrawData drdt = new DrawData(
 					HandArmorTexture.Value, //The texture to render.
 					position, //Position to render at.
 					drawInfo.drawPlayer.bodyFrame, //Source rectangle.
-					new Color(100, 100, 100, 100), //Color.
+					drawInfo.colorArmorBody == Color.Transparent ? Color.Transparent : new Color(100, 100, 100, 100), //Color.
 					0f, //Rotation.
 					Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
 					1f, //Scale.
@@ -58,13 +62,18 @@ namespace KirillandRandom
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
+			if (drawInfo.drawPlayer.mount.Active) return;
 
+			//Main.NewText(Convert.ToString(drawInfo.drawPlayer.mount.PlayerHeadOffset),Color.Yellow);
 			if (drawInfo.drawPlayer.GetModPlayer<MPlayer>().fireHead)
 			{
 				HeadArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/FiresoulRobeHood_Head_Glow");
-				
 				var position = drawInfo.Position + new Vector2(-10f, -10f) - Main.screenPosition;
-				position = new Vector2((int)position.X, (int)position.Y);
+				position = new Vector2((int)position.X, (int)position.Y + drawInfo.mountOffSet);
+				//if (drawInfo.drawPlayer.mount.Active)
+    //            {
+				//	position += new Vector2(0,-2);
+    //            }
 				DrawData drdt = new DrawData(
 					HeadArmorTexture.Value, //The texture to render.
 					position, //Position to render at.
@@ -90,13 +99,18 @@ namespace KirillandRandom
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Torso);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
+			if (drawInfo.drawPlayer.mount.Active) return;
 
 			if (drawInfo.drawPlayer.GetModPlayer<MPlayer>().fireBody)
 			{
 				BodyArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/FiresoulRobe_Body_Glow");
 
 				var position = drawInfo.Position + new Vector2(-10f, -10f) - Main.screenPosition;
-				position = new Vector2((int)position.X, (int)position.Y);
+				position = new Vector2((int)position.X, (int)position.Y + drawInfo.drawPlayer.mount.PlayerHeadOffset);
+				if (drawInfo.drawPlayer.mount.Active)
+				{
+					position += new Vector2(0, -2);
+				}
 				DrawData drdt = new DrawData(
 					BodyArmorTexture.Value, //The texture to render.
 					position, //Position to render at.
@@ -124,12 +138,17 @@ namespace KirillandRandom
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Leggings);
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
+			if (drawInfo.drawPlayer.mount.Active) return;
 			if (drawInfo.drawPlayer.GetModPlayer<MPlayer>().Hexed)
 			{
 				LegArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/Pig_Legs");
 
 				var position = drawInfo.Position + new Vector2(-10f, -10f) - Main.screenPosition;
-				position = new Vector2((int)position.X, (int)position.Y);
+				position = new Vector2((int)position.X, (int)position.Y + drawInfo.drawPlayer.mount.PlayerHeadOffset);
+				if (drawInfo.drawPlayer.mount.Active)
+				{
+					position += new Vector2(0, -2);
+				}
 				drawInfo.DrawDataCache.Add(new DrawData(
 					LegArmorTexture.Value, //The texture to render.
 					position, //Position to render at.
@@ -148,10 +167,20 @@ namespace KirillandRandom
 
 				if (drawInfo.drawPlayer.GetModPlayer<MPlayer>().fireLeggings)
 			{
-				   LegArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/FiresoulRobeLeggings_Legs_Glow");
+				
+					  LegArmorTexture = ModContent.Request<Texture2D>("KirillandRandom/Items/Armor/FiresoulRobeLeggings_Legs_Glow");
 
 				var position = drawInfo.Position + new Vector2(-10f, -10f) - Main.screenPosition;
-				position = new Vector2((int)position.X, (int)position.Y);
+				if (drawInfo.isSitting)
+                {
+					position += new Vector2(drawInfo.drawPlayer.direction == 1 ? 6 : -6, -7);
+				}
+				
+				position = new Vector2((int)position.X, (int)position.Y + drawInfo.drawPlayer.mount.PlayerHeadOffset);
+				if (drawInfo.drawPlayer.mount.Active)
+				{
+					position += new Vector2(0, -2);
+				}
 				DrawData drdt = new DrawData(
 					LegArmorTexture.Value, //The texture to render.
 					position, //Position to render at.
@@ -164,7 +193,6 @@ namespace KirillandRandom
 					0 //'Layer'. This is always 0 in Terraria.
 				);
 				drdt.shader = drawInfo.cLegs;
-
 				drawInfo.DrawDataCache.Add(drdt);
 
 			}
