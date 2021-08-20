@@ -40,6 +40,7 @@ namespace KirillandRandom
         public NPC targetd = null;
         public override void ResetEffects()
         {
+            targetd = null;
             flamingdedication = false;
             Something = false;
             fireregen = false;

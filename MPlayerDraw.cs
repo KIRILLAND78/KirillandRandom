@@ -45,7 +45,7 @@ namespace KirillandRandom
 					0f, //Rotation.
 					Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
 					1f, //Scale.
-					Main.player[Main.myPlayer].direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
+					drawInfo.drawPlayer.direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
 					0 //'Layer'. This is always 0 in Terraria.
 				);
 				drdt.shader = drawInfo.cBody;
@@ -82,7 +82,7 @@ namespace KirillandRandom
 					0f, //Rotation.
 					Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
 					1f, //Scale.
-					Main.player[Main.myPlayer].direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
+					drawInfo.drawPlayer.direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
 					0 //'Layer'. This is always 0 in Terraria.
 				);
 				drdt.shader = drawInfo.cHead;
@@ -119,7 +119,7 @@ namespace KirillandRandom
 					0f, //Rotation.
 					Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
 					1f, //Scale.
-					Main.player[Main.myPlayer].direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
+					drawInfo.drawPlayer.direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
 					0 //'Layer'. This is always 0 in Terraria.
 				);
 				drdt.shader = drawInfo.cBody;
@@ -157,7 +157,7 @@ namespace KirillandRandom
 					0f, //Rotation.
 					Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
 					1f, //Scale.
-					Main.player[Main.myPlayer].direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
+					drawInfo.drawPlayer.direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
 					0 //'Layer'. This is always 0 in Terraria.
 				));
 
@@ -189,7 +189,7 @@ namespace KirillandRandom
 					0f, //Rotation.
 					Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
 					1f, //Scale.
-					Main.player[Main.myPlayer].direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
+					drawInfo.drawPlayer.direction == 1f ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
 					0 //'Layer'. This is always 0 in Terraria.
 				);
 				drdt.shader = drawInfo.cLegs;

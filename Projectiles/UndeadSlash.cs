@@ -6,6 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using KirillandRandom.Projectiles;
+using KirillandRandom.Dusts;
+using Terraria.Graphics;
 
 
 
@@ -20,8 +22,12 @@ namespace KirillandRandom.Projectiles
         public Vector2 PlayerPos;
         public Vector2 lastplpos;
         bool first = true;
-
-
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Example Bullet");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+        }
         public override void SetDefaults()
         {
             Projectile.Name = "Soul Slash";
@@ -34,6 +40,24 @@ namespace KirillandRandom.Projectiles
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Melee;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (targetd != null) { 
+                //Redraw the projectile with the color not influenced by light
+                Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Color.White * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.oldRot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            }
+            }
+            else
+            {
+                return true;
+            }
+            return false;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -86,9 +110,16 @@ namespace KirillandRandom.Projectiles
             Main.player[Projectile.owner].Teleport(PlayerPos, 6, 1);
             base.Kill(timeLeft);
         }
-
+        
+        
         public override void AI()
         {
+
+                if (Projectile.position.X < 40) Projectile.position.X = 40;
+            if (Projectile.position.Y < 40) Projectile.position.Y = 40;
+
+            if (Projectile.position.X > Main.maxTilesX * 16 - 40) Projectile.position.X = Main.maxTilesX*16 - 40;
+            if (Projectile.position.Y > Main.maxTilesY * 16 - 40) Projectile.position.Y = Main.maxTilesY * 16 - 40;
             //Main.NewText(Convert.ToString(Main.screenPosition.X));
             timer_d--;
             owner = Main.player[Projectile.owner];
@@ -99,7 +130,7 @@ namespace KirillandRandom.Projectiles
             }
                 if (first)
             {
-                PlayerPos = owner.position;
+                    PlayerPos = owner.position;
                 //Vector2 AimFor = 150 * Vector2.Normalize(Projectile.velocity) + PlayerPos;
                 //Vector2 Diff2 = AimFor - Projectile.Center;
                 //Projectile.velocity.X = Diff2.X;
@@ -114,7 +145,6 @@ namespace KirillandRandom.Projectiles
             {
                 Projectile.netUpdate = true;
             }
-            owner.immune = true;
             owner.SetImmuneTimeForAllTypes(5);
             owner.Center = Projectile.Center - Projectile.velocity*0.7f;
 
@@ -155,7 +185,7 @@ namespace KirillandRandom.Projectiles
                             Projectile.Kill();
                             return;
                         }
-                    }
+                        }
                     if ((owner.Center - targetd.Center).Length() >= 200)
                     {
                         timer_d = -1;
@@ -179,6 +209,12 @@ namespace KirillandRandom.Projectiles
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
+
+            for (int k = Projectile.oldRot.Length-1; k > 0; k--)
+            {
+                Projectile.oldRot[k] = Projectile.oldRot[k - 1];
+            }
+            Projectile.oldRot[0] = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45f);
         }
 
 
