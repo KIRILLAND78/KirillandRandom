@@ -31,7 +31,7 @@ namespace KirillandRandom.Items
 			Item.shoot = ModContent.ProjectileType<Firegun_damage_zone>();
 			Item.shootSpeed = 9;
 			Item.damage = 37;
-			Item.DamageType = DamageClass.Magic;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 30;
 			Item.height = 90;
 			Item.useTime = 5;

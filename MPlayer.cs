@@ -21,6 +21,7 @@ namespace KirillandRandom
 {
     class MPlayer : ModPlayer
     {
+        public bool ThankYouThoriumDevIOweYou = true;
         public int overuse;
         public int charge_e = 0;
         public bool charge;
