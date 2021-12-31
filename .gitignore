@@ -3,3 +3,5 @@
 /obj/**
 /bin/**
 *.cache
+Properties/launchSettings.json
+KirillandRandom.csproj

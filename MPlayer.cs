@@ -21,6 +21,7 @@ namespace KirillandRandom
 {
     class MPlayer : ModPlayer
     {
+        public bool ThankYouThoriumDevIOweYou = true;
         public int overuse;
         public int charge_e = 0;
         public bool charge;
@@ -37,8 +38,10 @@ namespace KirillandRandom
         public bool fireBody;
         public bool fireHead;
         public bool Hexed;
+        public NPC targetd = null;
         public override void ResetEffects()
         {
+            targetd = null;
             flamingdedication = false;
             Something = false;
             fireregen = false;
@@ -48,13 +51,11 @@ namespace KirillandRandom
             Hexed = false;
             fireamplification = 0;
         }
-        public override TagCompound Save()
+        public override void SaveData(TagCompound saveCompound)
         {
-            return new TagCompound {
-				{"eyeofdeath", eyeofdeath}
-            };
+            saveCompound.Set("eyeofdeath", eyeofdeath);
         }
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             eyeofdeath = tag.GetBool("eyeofdeath");
         }
@@ -105,9 +106,20 @@ namespace KirillandRandom
             return base.CanHitNPC(Item, target);
         }
 
+        public override void ModifyScreenPosition()
+        {
+            if (targetd != null)
+            {
+                //Main.screenLastPosition = targetd.position - new Vector2(Main.ScreenSize.X / 2, Main.ScreenSize.Y / 2);
+                Main.screenPosition = targetd.Center - new Vector2(Main.ScreenSize.X / 2, Main.ScreenSize.Y / 2);
+            }
+            base.ModifyScreenPosition();
+        }
+
+
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {if (Player.name == "KIRILLAND-Modder") {
+        {if (Player.name == "KIRILLAND-Modder"&& !Player.dead) {
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
                     int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, 63, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
@@ -115,7 +127,7 @@ namespace KirillandRandom
                     Main.dust[TestDust].noLight = true;
                 }
             }
-        if (fireamplification == 0.24f)
+        if (fireamplification == 0.24f&&!Player.dead)
             {
                 if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
                 {

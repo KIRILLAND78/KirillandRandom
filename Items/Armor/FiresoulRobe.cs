@@ -22,13 +22,14 @@ namespace KirillandRandom.Items.Armor
 			Item.flame = true;
 			Item.defense = 10;
 		}
-        public override void DrawHands(ref bool drawHands, ref bool drawArms)
-        {
-			drawHands = true;
-			drawArms = true;
+		
+   //     public override void DrawHands(ref bool drawHands, ref bool drawArms)
+   //     {
+			//drawHands = true;
+			//drawArms = true;
 
-            base.DrawHands(ref drawHands, ref drawArms);
-        }
+   //         base.DrawHands(ref drawHands, ref drawArms);
+   //     }
         public override void UpdateEquip(Player Player)
 		{
 			Player.GetModPlayer<MPlayer>().fireBody = true;

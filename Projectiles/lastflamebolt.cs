@@ -66,7 +66,7 @@ namespace KirillandRandom.Projectiles
             {
                 if (first == 0)
                 {
-
+                    Projectile.netUpdate = true;
                     Projectile.friendly = true;
                     Projectile.tileCollide = true;
 
@@ -81,7 +81,6 @@ namespace KirillandRandom.Projectiles
                     shootToY *= 15.0f/ distance;
                     Projectile.velocity.X = shootToX;//обоже.
                     Projectile.velocity.Y = shootToY;//обоже.
-                        Projectile.netUpdate = true;
                     }
                     first = 2;
                 }

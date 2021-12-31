@@ -71,6 +71,7 @@ namespace KirillandRandom.Projectiles
 
             if (mode == 1)
             {
+                Projectile.netUpdate = true;
                 if (first == 0)
                 {
                     Projectile.penetrate = 1;
@@ -90,7 +91,7 @@ namespace KirillandRandom.Projectiles
                     shootToY *= 15.0f/ distance;
                     Projectile.velocity.X = shootToX;//обоже.
                     Projectile.velocity.Y = shootToY;//обоже.
-                        Projectile.netUpdate = true;
+                        
                     }
                     first = 2;
                 }
