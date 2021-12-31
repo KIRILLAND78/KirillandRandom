@@ -1,6 +1,6 @@
-displayName = Kirilland's team stuff
+displayName = Kirilland's random stuff
 author = KIRILLAND
-version = 0.19.4
+version = 0.19.5
 
 
 includePDB = false

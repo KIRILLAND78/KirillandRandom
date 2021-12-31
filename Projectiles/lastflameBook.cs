@@ -23,7 +23,7 @@ namespace KirillandRandom.Projectiles
         public override void SetDefaults()
         {
             Projectile.light = 0.3f;
-            Projectile.Name = "Last Flame Book(how? just how did you that!?)";
+            Projectile.Name = "Last Flame Book(how? just how did you do that!?)";
             Projectile.width = 12;
             Projectile.height = 12;
             Projectile.timeLeft = 7200;

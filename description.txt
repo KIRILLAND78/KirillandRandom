@@ -6,5 +6,3 @@ Might be a bit OP.
 
 Some weapons have alt attack.
 No wiki or something. Sorry. You have to figure everything on your own right now.
-
-Armor glowing on mounts disabled until i figure out how mount offsets works.

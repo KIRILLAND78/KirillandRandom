@@ -51,8 +51,8 @@ namespace KirillandRandom.Projectiles
                     if ((Main.player[i].Center - Projectile.Center).Length() <= 60)
                     {
                         Main.player[i].AddBuff(ModContent.BuffType<Hexed>(), 600);
-                        Main.player[i].AddBuff(ModContent.BuffType<CrystalPB>(), 600);
-                        Main.player[i].AddBuff(ModContent.BuffType<Hexed>(), 600);
+                        //Main.player[i].AddBuff(ModContent.BuffType<CrystalPB>(), 600);
+                        //Main.player[i].AddBuff(ModContent.BuffType<Hexed>(), 600);
                     }
                 }
             }
