@@ -55,7 +55,7 @@ namespace KirillandRandom.Items
 		{
 			return new Vector2(0, -2); // If your own flamethrower is being held wrong, edit these values. You can test out holdout offsets using Modder's Toolkit.
 		}
-		public override bool ConsumeAmmo(Player Player)
+		public override bool CanConsumeAmmo(Player Player)
 		{
 			// To make this Item only consume ammo during the first jet, we check to make sure the animation just started. ConsumeAmmo is called 5 times because of Item.useTime and Item.useAnimation values in SetDefaults above.
 			return ((Player.itemAnimation >= Player.itemAnimationMax - 2)&& (Main.rand.NextFloat() >= .2f));

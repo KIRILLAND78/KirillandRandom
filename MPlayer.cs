@@ -51,13 +51,11 @@ namespace KirillandRandom
             Hexed = false;
             fireamplification = 0;
         }
-        public override TagCompound Save()
+        public override void SaveData(TagCompound saveCompound)
         {
-            return new TagCompound {
-				{"eyeofdeath", eyeofdeath}
-            };
+            saveCompound.Set("eyeofdeath", eyeofdeath);
         }
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             eyeofdeath = tag.GetBool("eyeofdeath");
         }
