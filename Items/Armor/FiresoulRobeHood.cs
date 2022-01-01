@@ -8,18 +8,11 @@ namespace KirillandRandom.Items.Armor
     public class FiresoulRobeHood : ModItem
 	{
 		public override void SetStaticDefaults()
-		{
+		{	ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 			base.SetStaticDefaults();
 			//DisplayName.SetDefault("Somethinngg");
 			Tooltip.SetDefault("'On Fire!' grants 6% increased damage.\r\n+40 max mana.\r\n+6% magic damage and crit chance.");
 		}
-
-   //     public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-   //     {
-			//drawHair = true;
-			//drawAltHair = true;
-   //         base.DrawHair(ref drawHair, ref drawAltHair);
-   //     }
         public override void SetDefaults()
 		{
 			Item.width = 20;
