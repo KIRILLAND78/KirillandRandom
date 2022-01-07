@@ -33,7 +33,7 @@ namespace KirillandRandom.Projectiles
 
             Projectile.DamageType = DamageClass.Melee;
             Projectile.light = 0.4f;
-            Projectile.damage = 90;
+            Projectile.damage = 80;
             Projectile.Name = "Spark";
             Projectile.width = 80;
             Projectile.height = 80;
@@ -49,7 +49,7 @@ namespace KirillandRandom.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             knockback = 12;
-            damage += (90 * target.GetGlobalNPC<MNPC>().charge_e);
+            damage += (50 * target.GetGlobalNPC<MNPC>().charge_e);
             //target.GetGlobalNPC<MNPC>().charge_e = 0;
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }

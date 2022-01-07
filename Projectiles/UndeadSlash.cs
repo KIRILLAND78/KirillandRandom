@@ -24,7 +24,7 @@ namespace KirillandRandom.Projectiles
         bool first = true;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Example Bullet");
+            DisplayName.SetDefault("Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -89,7 +89,7 @@ namespace KirillandRandom.Projectiles
             {
                 if ((test2.Intersects(target.Hitbox))|| (test3.Intersects(target.Hitbox)) || (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
                 {
-                    return true;
+                    return target.immune[Main.myPlayer] <= 0;
                 }
                 else
                 {
