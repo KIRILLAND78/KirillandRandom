@@ -16,7 +16,7 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Soul Guardian");
-			Tooltip.SetDefault("Cannot be used while Mana Sickness is active.\r\nI HAVEN'T tested this in multiplayer, please be cautious.");
+			Tooltip.SetDefault("Cannot be used while Mana Sickness is active.");
 		}
 
 		public override void SetDefaults()

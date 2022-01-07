@@ -52,7 +52,7 @@ namespace KirillandRandom.Projectiles
             {
                 if (((target.Center-Player.Center).Length()<=distance)&& ((target.Center - Player.Center).Length() >= distance-60))
                 {
-                    return true;
+                    return target.immune[Main.myPlayer] <= 0;
                 }
                 else
                 {

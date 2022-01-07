@@ -17,7 +17,7 @@ namespace KirillandRandom.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spark");
-			Tooltip.SetDefault("Charge enemies with right click.\r\n+90 bonus damage (for right click attack) with each stored charge on enemy.");
+			Tooltip.SetDefault("Charge enemies with right click.\r\n+50 bonus damage (for left click attack) with each stored charge on enemy.");
 		}
 		public override bool AltFunctionUse(Player Player)
 		{
@@ -55,7 +55,7 @@ namespace KirillandRandom.Items
 		{
 			
 			Item.noUseGraphic = true;
-			Item.damage = 75;
+			Item.damage = 80;
 			Item.noMelee = true;
 			Item.useTime = 10;
 			Item.shootSpeed = 0;

@@ -54,13 +54,12 @@ namespace KirillandRandom.Projectiles
             Rectangle test1 = new Rectangle((int)Projectile.Center.X + ((int)Vel.X * -1) - 4, (int)Projectile.Center.Y + ((int)Vel.Y * -1) - 4, 8, 8);
             Rectangle test2 = new Rectangle((int)Projectile.Center.X + (int)(Vel.X * 19) - 4, (int)Projectile.Center.Y + (int)(Vel.Y * 19) - 4, 8, 8);
             Rectangle test3 = new Rectangle((int)Projectile.Center.X + (int)(Vel.X * 39) - 5, (int)Projectile.Center.Y + (int)(Vel.Y * 39) - 5, 10, 10);
-
             Player Player = Main.player[Projectile.owner];
             if ((((!target.friendly || (target.type == NPCID.Guide && Projectile.owner < 255 && Player.killGuide) || (target.type == NPCID.Clothier && Projectile.owner < 255 && Player.killClothier)))))
             {
                 if ((test2.Intersects(target.Hitbox))|| (test3.Intersects(target.Hitbox)) || (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
                 {
-                    return true;
+                    return target.immune[Main.myPlayer] <= 0;
                 }
                 else
                 {
