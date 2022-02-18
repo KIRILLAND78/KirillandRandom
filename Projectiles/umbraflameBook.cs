@@ -3,8 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-
-
+using Terraria.ID;
 
 namespace KirillandRandom.Projectiles
 {
@@ -24,7 +23,7 @@ namespace KirillandRandom.Projectiles
         public override void SetDefaults()
         {
             Projectile.light = 0.3f;
-            Projectile.Name = "Last Flame Book(how? just how?)";
+            Projectile.Name = "Last Flame Book";
             Projectile.width = 12;
             Projectile.height = 12;
             Projectile.timeLeft = 7200;

@@ -18,8 +18,11 @@ namespace KirillandRandom.Items
 		{
 			Tooltip.SetDefault("Right click to release flames. +5 damage boost and reduced mana usage (-5) for each summoned flame.");
 		}
-
-        public override bool AltFunctionUse(Player Player)
+		public override bool? CanAutoReuseItem(Player player)
+		{
+			return true;
+		}
+		public override bool AltFunctionUse(Player Player)
 		{
 			return true;
 		}

@@ -1,4 +1,5 @@
 ﻿
+
 using Terraria.Graphics.Shaders;
 using KirillandRandom.Buffs;
 using KirillandRandom.Items;
@@ -73,10 +74,10 @@ namespace KirillandRandom
                 drawInfo.colorBodySkin = Color.Transparent;
                 drawInfo.colorLegs = Color.Transparent;
                 drawInfo.colorArmorBody = Color.Transparent;
-                drawInfo.colorArmorLegs=Color.Transparent;
-                drawInfo.colorShoes= Color.Transparent;
-                drawInfo.colorPants= Color.Transparent;
-                drawInfo.colorArmorHead= Color.Transparent;
+                drawInfo.colorArmorLegs = Color.Transparent;
+                drawInfo.colorShoes = Color.Transparent;
+                drawInfo.colorPants = Color.Transparent;
+                drawInfo.colorArmorHead = Color.Transparent;
 
             }
             base.ModifyDrawInfo(ref drawInfo);
@@ -119,7 +120,9 @@ namespace KirillandRandom
 
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {if (Player.name == "KIRILLAND-Modder"&& !Player.dead) {
+        {
+            if (Player.name == "KIRILLAND-Modder" && !Player.dead)
+            {
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
                     int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, 63, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
@@ -127,7 +130,7 @@ namespace KirillandRandom
                     Main.dust[TestDust].noLight = true;
                 }
             }
-        if (fireamplification == 0.24f&&!Player.dead)
+            if (fireamplification == 0.24f && !Player.dead)
             {
                 if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
                 {
@@ -141,7 +144,7 @@ namespace KirillandRandom
 
             }
 
-base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+            base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         }
         public override void PostUpdateEquips()
         {
@@ -150,7 +153,7 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             {
                 Player.wingTime = 0;
             }
-            if (Player.forceMerman||Player.forceWerewolf || Player.wereWolf || Player.merman)
+            if (Player.forceMerman || Player.forceWerewolf || Player.wereWolf || Player.merman)
             {
                 fireBody = false;
                 fireHead = false;
@@ -166,9 +169,10 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
                     fireHead = false;
                 }
                 else
-                { fireHead = true;
+                {
+                    fireHead = true;
                 }
-                }
+            }
             if (Player.armor[11].type > ItemID.None)
             {
 
@@ -177,8 +181,10 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
                     fireBody = false;
                 }
                 else
-                { fireBody = true;
-                } }
+                {
+                    fireBody = true;
+                }
+            }
             if (Player.armor[12].type > ItemID.None)
             {
 
@@ -188,7 +194,7 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
                 }
                 else
                 {
-                        fireLeggings = true;
+                    fireLeggings = true;
                 }
             }
             base.PostUpdateEquips();
@@ -200,7 +206,9 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
 
 
         public override void OnHitNPC(Item Item, NPC target, int damage, float knockback, bool crit)
-        {if (flamingdedication) {
+        {
+            if (flamingdedication)
+            {
                 target.AddBuff(BuffID.OnFire, 60);
             }
             base.OnHitNPC(Item, target, damage, knockback, crit);
@@ -228,17 +236,18 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
             ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            float custom_endurance= Player.endurance;
+            float custom_endurance = Player.endurance;
 
-                if (flamingdedication)
+            if (flamingdedication)
             {
                 Player.AddBuff(BuffID.OnFire, 120);
             }
             int fdamage = (int)((damage - (0.5 * Player.statDefense)) * (1 - custom_endurance));
             if (Main.expertMode)
-            {fdamage = (int)((damage - (0.75 * Player.statDefense)) * (1 - custom_endurance));
+            {
+                fdamage = (int)((damage - (0.75 * Player.statDefense)) * (1 - custom_endurance));
             }
-            if ((eyeofdeath==true) && (fdamage < 30) && (damageSource.SourceOtherIndex!=3))
+            if ((eyeofdeath == true) && (fdamage < 30) && (damageSource.SourceOtherIndex != 3))
             {
                 Player.immune = true;
                 Player.immuneTime = Player.longInvince ? 80 : 40;
@@ -260,16 +269,17 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             {
                 if (Player.onFire == true)
                 {
-                    damage *= 1+fireamplification;
+                    damage *= 1 + fireamplification;
                 }
             }
             base.ModifyWeaponDamage(item, ref damage, ref flat);
         }
 
         public override void UpdateLifeRegen()
-        {   if (fireregen)
+        {
+            if (fireregen)
             {
-                
+
                 if (Player.onFire == true)
                 {
                     Player.lifeRegen = +16;
@@ -284,7 +294,7 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             base.UpdateLifeRegen();
         }
 
-        
+
 
         public override void PreUpdate()
         {
@@ -292,9 +302,9 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             {
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    if (Player.statLife >= (Player.statLifeMax / 2))
+                    if (Player.statLife >= (Player.statLifeMax2 / 2))
                     {
-                        Player.statLife = (Player.statLifeMax / 2);
+                        Player.statLife = (Player.statLifeMax2 / 2);
                     }
 
 
@@ -318,6 +328,8 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         {
             MPlayer clone = clientClone as MPlayer;
             clone.flames_summoned = flames_summoned;
+            clone.Hexed = Hexed;
+            clone.fireregen = fireregen;
         }
 
         //public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
@@ -344,4 +356,6 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         //    }
         //}
     }
+
 }
+
