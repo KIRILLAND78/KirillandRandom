@@ -18,11 +18,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
+using KirillandRandom.Projectiles;
 namespace KirillandRandom
 {
     class MPlayer : ModPlayer
     {
-        public bool ThankYouThoriumDevIOweYou = true;
+        public int WatSoulMode = 0;
+        public Projectile WatSoulHelper=null; 
+        public bool ThankYouThoriumDev = true;
         public int overuse;
         public int charge_e = 0;
         public bool charge;
