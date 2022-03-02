@@ -111,7 +111,7 @@ namespace KirillandRandom.Projectiles
 
                 if (owner.whoAmI == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile),Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<SkyRapier2>(), 0, 0, owner.whoAmI);
+                    Projectile.NewProjectile(new EntitySource_ByProjectileSourceId(Projectile.whoAmI),Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<SkyRapier2>(), 0, 0, owner.whoAmI);
                 }
 
                 first = false;

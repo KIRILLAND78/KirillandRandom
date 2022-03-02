@@ -58,7 +58,7 @@ namespace KirillandRandom.Items
 			Vector2 position = Player.RotatedRelativePoint(new Vector2(Player.itemLocation.X + 12f * Player.direction + Player.velocity.X, Player.itemLocation.Y - 14f + Player.velocity.Y), true);
 			Lighting.AddLight(position, 1f, 1f, 1f);
 		}
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			player.AddBuff(BuffID.OnFire, 340);
 			return base.Shoot(player, source, position, velocity, type, damage, knockback);

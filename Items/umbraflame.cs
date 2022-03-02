@@ -30,7 +30,7 @@ namespace KirillandRandom.Items
             {
 				Player.GetModPlayer<MPlayer>().BookCreated = true;
                 //POSSIBLE ERROR
-                IProjectileSource spawnSource = new ProjectileSource_Item(Player, Item);
+                IEntitySource spawnSource = new EntitySource_ItemUse(Player, Item);
                 Projectile.NewProjectile(spawnSource, new Vector2(Player.position.X, Player.position.Y), Vector2.Zero, ModContent.ProjectileType<UmbraFlameBook>(), 0,0, Player.whoAmI);
             }
 		}
@@ -100,7 +100,7 @@ namespace KirillandRandom.Items
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 		}
-        public override bool Shoot(Player Player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Player Player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			if (Player.GetModPlayer<MPlayer>().flames_summoned == 8)
 			{

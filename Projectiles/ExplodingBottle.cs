@@ -31,14 +31,14 @@ namespace KirillandRandom.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile), Projectile.position - new Vector2(-10f, 10f), new Vector2(0f, 0f), ProjectileID.DD2ExplosiveTrapT1Explosion, 60, 0);
+            Projectile.NewProjectile(new EntitySource_ByProjectileSourceId(Projectile.whoAmI), Projectile.position - new Vector2(-10f, 10f), new Vector2(0f, 0f), ProjectileID.DD2ExplosiveTrapT1Explosion, 60, 0);
         }
         public override void AI()
         {
 
             Player owner = Main.player[Projectile.owner];
             if (first) { 
-            int id = NPC.NewNPC((int)Projectile.position.X, (int)Projectile.position.Y, ModContent.NPCType<NPC_Dog>());
+            int id = NPC.NewNPC(new EntitySource_ByProjectileSourceId(Projectile.whoAmI), (int)Projectile.position.X, (int)Projectile.position.Y, ModContent.NPCType<NPC_Dog>());
             NPC summonedNPC = Main.npc[id];
             MNPC modSummonedNPC = summonedNPC.GetGlobalNPC<MNPC>();
             modSummonedNPC.barrel = Projectile;

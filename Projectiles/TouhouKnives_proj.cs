@@ -51,7 +51,7 @@ namespace KirillandRandom.Projectiles
             
             if ((owner.controlUseItem) && (origtimeleft==90) && (owner.HeldItem.type==ModContent.ItemType<TouhouKnives>()) && (owner.CheckMana(owner.GetManaCost(owner.HeldItem))) && (Projectile.timeLeft < origtimeleft - 1)&& (owner.altFunctionUse == 2))
             {
-                IProjectileSource source = new ProjectileSource_ProjectileParent(Projectile);
+                IEntitySource source = new EntitySource_ByProjectileSourceId(Projectile.whoAmI);
                 for (int i = 0; i < 6; i++)
                 {
                     int DDustID = Dust.NewDust(Projectile.Center - new Vector2(2, 2)+new Vector2(20,0).RotatedBy(MathHelper.TwoPi/6*i), 4, 4, DustID.PurificationPowder, 0, 0, 100, default, 1f); //Spawns dust

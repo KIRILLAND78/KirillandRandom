@@ -75,7 +75,7 @@ namespace KirillandRandom.Items
 			return true;
 		}
 
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Projectile.NewProjectile(source, position, velocity.RotateRandom(MathHelper.PiOver2 / 6), type, damage, knockback, player.whoAmI);
             Projectile.NewProjectile(source, position, velocity.RotateRandom(MathHelper.PiOver2 / 6), type, damage, knockback, player.whoAmI);

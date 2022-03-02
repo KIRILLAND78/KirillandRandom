@@ -60,7 +60,7 @@ namespace KirillandRandom.Items
 			// To make this Item only consume ammo during the first jet, we check to make sure the animation just started. ConsumeAmmo is called 5 times because of Item.useTime and Item.useAnimation values in SetDefaults above.
 			return ((Player.itemAnimation >= Player.itemAnimationMax - 2)&& (Main.rand.NextFloat() >= .2f));
 		}
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 pos, Vector2 velocity, int type, int damage, float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 pos, Vector2 velocity, int type, int damage, float knockBack)
         {
 			int fire = ModContent.ProjectileType<Firegun_damage_zone>();
 

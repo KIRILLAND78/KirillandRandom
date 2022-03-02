@@ -122,24 +122,24 @@ namespace KirillandRandom.Items
 
 			return true;
 		}
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			Vector2 newpos = position + velocity * 20;
 			if (player.GetModPlayer<MPlayer>().WatSoulMode == 1)
             {
-				int id = Projectile.NewProjectile(new ProjectileSource_Item(player, Item), newpos, velocity.RotatedBy(MathHelper.PiOver2/3), type, damage, knockback, player.whoAmI);
+				int id = Projectile.NewProjectile(source, newpos, velocity.RotatedBy(MathHelper.PiOver2/3), type, damage, knockback, player.whoAmI);
 				Main.projectile[id].timeLeft = 15;
-				id = Projectile.NewProjectile(new ProjectileSource_Item(player, Item), newpos, velocity.RotatedBy(MathHelper.PiOver2/6), type, damage, knockback, player.whoAmI);
+				id = Projectile.NewProjectile(source, newpos, velocity.RotatedBy(MathHelper.PiOver2/6), type, damage, knockback, player.whoAmI);
 				Main.projectile[id].timeLeft = 25;
-				id = Projectile.NewProjectile(new ProjectileSource_Item(player, Item), newpos, velocity.RotatedBy(-MathHelper.PiOver2/3), type, damage, knockback, player.whoAmI);
+				id = Projectile.NewProjectile(source, newpos, velocity.RotatedBy(-MathHelper.PiOver2/3), type, damage, knockback, player.whoAmI);
 				Main.projectile[id].timeLeft = 15;
-				id = Projectile.NewProjectile(new ProjectileSource_Item(player, Item), newpos, velocity.RotatedBy(-MathHelper.PiOver2/6), type, damage, knockback, player.whoAmI);
+				id = Projectile.NewProjectile(source, newpos, velocity.RotatedBy(-MathHelper.PiOver2/6), type, damage, knockback, player.whoAmI);
 				Main.projectile[id].timeLeft = 25;
-				id = Projectile.NewProjectile(new ProjectileSource_Item(player, Item), newpos, velocity, type, damage, knockback, player.whoAmI);
+				id = Projectile.NewProjectile(source, newpos, velocity, type, damage, knockback, player.whoAmI);
 				Main.projectile[id].timeLeft = 40;
 				return false;
 			}
-			Projectile.NewProjectile(new ProjectileSource_Item(player, Item), newpos, velocity, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, newpos, velocity, type, damage, knockback, player.whoAmI);
 			return false;
         }
         public override void SetDefaults()
