@@ -17,8 +17,6 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.DataStructures;
-using KirillandRandom.Projectiles;
 namespace KirillandRandom
 {
     class MPlayer : ModPlayer
@@ -128,7 +126,7 @@ namespace KirillandRandom
             {
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
-                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, 63, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
+                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.WhiteTorch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
                     Main.dust[TestDust].noGravity = true;
                     Main.dust[TestDust].noLight = true;
                 }
@@ -137,7 +135,7 @@ namespace KirillandRandom
             {
                 if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
                 {
-                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, 6, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.5f);
+                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.5f);
                     Main.dust[TestDust].shader = GameShaders.Armor.GetSecondaryShader(drawInfo.cBody, drawInfo.drawPlayer);
 
 
@@ -262,7 +260,8 @@ namespace KirillandRandom
 
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
         }
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
+
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage)
         {
             if (eyeofdeath == true)
             {
@@ -275,7 +274,7 @@ namespace KirillandRandom
                     damage *= 1 + fireamplification;
                 }
             }
-            base.ModifyWeaponDamage(item, ref damage, ref flat);
+            base.ModifyWeaponDamage(item, ref damage);
         }
 
         public override void UpdateLifeRegen()

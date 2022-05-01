@@ -35,7 +35,7 @@ namespace KirillandRandom.Items
             {
 				player.GetModPlayer<MPlayer>().BookCreated = true;
 
-				Projectile.NewProjectile(new EntitySource_ItemUse(player, Item),new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), ModContent.ProjectileType<LastFlameBook>(), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
+				Projectile.NewProjectile(player.GetSource_ItemUse(Item),new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), ModContent.ProjectileType<LastFlameBook>(), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
             }
         }
 

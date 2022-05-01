@@ -1,8 +1,8 @@
-KIRILLAND's random stuff but ported to 1.4.
+Small content pack. Developing this to just test my skills in programming. Nothing too exciting, but i am trying to make this mod as unique as possible.
 
-Small content mod. Developing this to just test my skills in programming. Nothing too exciting, but i am trying to make this mod as unique as possible.
+Balancing might be a bit off.
 
-Might be a bit OP.
+Most weapons have their own gimmicks.
+No wiki or something like that. Sorry. You have to figure everything on your own right now.
 
-Some weapons have alt attack.
-No wiki or something. Sorry. You have to figure everything on your own right now.
+Join the Discord: https://discord.gg/847GSU82e7

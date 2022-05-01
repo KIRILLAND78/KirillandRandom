@@ -51,9 +51,9 @@ namespace KirillandRandom.Items
 		}
 		public override void HoldItem(Player Player)
 		{
-			if (Main.rand.Next(Player.itemAnimation > 0 ? 40 : 80) == 0)
+			if (Main.rand.NextBool(Player.itemAnimation > 0 ? 40 : 80))
 			{
-				Dust.NewDust(new Vector2(Player.itemLocation.X + 12f * Player.direction, Player.itemLocation.Y - 12f * Player.gravDir), 4, 4, 6);
+				Dust.NewDust(new Vector2(Player.itemLocation.X + 12f * Player.direction, Player.itemLocation.Y - 12f * Player.gravDir), 4, 4, DustID.Torch);
 			}
 			Vector2 position = Player.RotatedRelativePoint(new Vector2(Player.itemLocation.X + 12f * Player.direction + Player.velocity.X, Player.itemLocation.Y - 14f + Player.velocity.Y), true);
 			Lighting.AddLight(position, 1f, 1f, 1f);

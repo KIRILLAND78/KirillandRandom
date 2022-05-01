@@ -18,10 +18,11 @@ namespace KirillandRandom.Projectiles
 {
     internal class TouhouKnives_proj: ModProjectile
     {
-        int origtimeleft;
         bool first = true;
         public override void SetDefaults()
         {
+            Projectile.friendly=true;
+            Projectile.hostile = false;
             Projectile.width = 100;
             Projectile.height = 100;
             Projectile.ignoreWater = true;
@@ -43,15 +44,24 @@ namespace KirillandRandom.Projectiles
         }
         public override void AI()
         {
-            if (first) { origtimeleft = Projectile.timeLeft;
-                Projectile.rotation = Projectile.velocity.ToRotation()+MathHelper.ToRadians(45);
+            if (first)
+            {
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
             }
+            if (Projectile.ai[0] > 0)
+            {
+                Projectile.timeLeft++;
+                Projectile.position -= Projectile.velocity;
+                Projectile.ai[0]--;
+            }
+            
             first = false;
             Player owner = Main.player[Projectile.owner];
             
-            if ((owner.controlUseItem) && (origtimeleft==90) && (owner.HeldItem.type==ModContent.ItemType<TouhouKnives>()) && (owner.CheckMana(owner.GetManaCost(owner.HeldItem))) && (Projectile.timeLeft < origtimeleft - 1)&& (owner.altFunctionUse == 2))
+            if ((owner.itemAnimation>owner.itemAnimationMax-1)&&(owner.controlUseItem) && (Projectile.ai[1]==0) && (owner.HeldItem.type==ModContent.ItemType<TouhouKnives>()) && (owner.CheckMana(owner.GetManaCost(owner.HeldItem))) && (Projectile.timeLeft < 89)&& (owner.altFunctionUse == 2))
             {
-                IEntitySource source = new EntitySource_ByProjectileSourceId(Projectile.whoAmI);
+                Projectile.ai[1] = 1;
+                Projectile.ai[0] = 15;
                 for (int i = 0; i < 6; i++)
                 {
                     int DDustID = Dust.NewDust(Projectile.Center - new Vector2(2, 2)+new Vector2(20,0).RotatedBy(MathHelper.TwoPi/6*i), 4, 4, DustID.PurificationPowder, 0, 0, 100, default, 1f); //Spawns dust
@@ -61,8 +71,10 @@ namespace KirillandRandom.Projectiles
                 for (int i = 0; i <= 3; i++)
                 {
                     Vector2 Pos = Projectile.position+new Vector2(20,0).RotateRandom(MathHelper.TwoPi);
-                    int proj = Projectile.NewProjectile(source, Pos, Projectile.velocity.RotateRandom(MathHelper.PiOver2 / 6), Projectile.type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Pos, Projectile.velocity.RotateRandom(MathHelper.PiOver2 / 6), Projectile.type, Projectile.damage, Projectile.knockBack, Projectile.owner);
                     Main.projectile[proj].timeLeft = Projectile.timeLeft;
+                    Main.projectile[proj].ai[0]=15;
+                    Main.projectile[proj].ai[1] = 1;
                 }
             }
         }

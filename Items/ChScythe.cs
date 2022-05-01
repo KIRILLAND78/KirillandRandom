@@ -46,7 +46,7 @@ namespace KirillandRandom.Items
 				Item.channel = true;
 				Item.shootSpeed = 0;
 				Item.useAnimation = 21;
-				Item.useStyle = 6;
+				Item.useStyle = ItemUseStyleID.DrinkLong;
 				Item.UseSound = SoundID.DD2_SkyDragonsFurySwing;
 			}
 			return true;

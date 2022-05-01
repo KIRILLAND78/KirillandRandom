@@ -54,7 +54,7 @@ namespace KirillandRandom.Items
 				{
 					if (Player.GetModPlayer<MPlayer>().WatSoulHelper == null)
 					{
-						int a = Projectile.NewProjectile(Player.GetProjectileSource_Item(Item), Player.Center, Vector2.Zero, ModContent.ProjectileType<WatersoulGuardianStaffP>(), 0, 0, Player.whoAmI);
+						int a = Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center, Vector2.Zero, ModContent.ProjectileType<WatersoulGuardianStaffP>(), 0, 0, Player.whoAmI);
 						Player.GetModPlayer<MPlayer>().WatSoulHelper = Main.projectile[a];
 						//Item.shoot = ModContent.ProjectileType<WatersoulGuardianStaffP>();
 
@@ -160,15 +160,15 @@ namespace KirillandRandom.Items
 
 			Item.DamageType = DamageClass.Melee;
 		}
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-				.AddIngredient(ItemID.MartianConduitPlating, 50)
-				.AddIngredient(ItemID.InfluxWaver, 1)
-				.AddIngredient(ItemID.ChargedBlasterCannon, 1)
-				.AddTile(TileID.MythrilAnvil)
-				.Register();
-		}
+		//public override void AddRecipes()
+		//{
+		//	CreateRecipe()
+		//		.AddIngredient(ItemID.MartianConduitPlating, 50)
+		//		.AddIngredient(ItemID.InfluxWaver, 1)
+		//		.AddIngredient(ItemID.ChargedBlasterCannon, 1)
+		//		.AddTile(TileID.MythrilAnvil)
+		//		.Register();
+		//}
 
 	}
 }

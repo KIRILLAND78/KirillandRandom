@@ -18,14 +18,15 @@ namespace KirillandRandom.Items
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("what?");
+            DisplayName.SetDefault("Silver knives");
+            Tooltip.SetDefault("Right clicking spawns additional projectiles around existing ones.\r\nSakuya? Never heard about her.");
         }
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 30;
-            Item.DamageType = DamageClass.Melee;
-            Item.damage = 20;
+            Item.DamageType = DamageClass.Magic;
+            Item.damage = 28;
             Item.knockBack = 5;
             Item.useTime = 20;
             Item.useAnimation = 20;
@@ -81,6 +82,16 @@ namespace KirillandRandom.Items
             Projectile.NewProjectile(source, position, velocity.RotateRandom(MathHelper.PiOver2 / 6), type, damage, knockback, player.whoAmI);
 
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
+        }
+        public override void AddRecipes()
+        {
+
+            CreateRecipe()
+                .AddIngredient(ItemID.SilverBar, 5)
+                .AddIngredient(ItemID.SoulofLight, 6)
+                .AddTile(TileID.AdamantiteForge)
+                .Register();
+            base.AddRecipes();
         }
 
     }
