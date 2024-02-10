@@ -1,0 +1,210 @@
+Buffs: {
+	Hexed: {
+		DisplayName: Hexed
+		Description:
+			'''
+			-60 defense
+			You are transformed into harmless critter!
+			You can't attack and your wings are disabled.
+			'''
+	}
+
+	stacking_charge: {
+		DisplayName: Stacking Charge
+		Description: Harmful charge is stored in you
+	}
+
+	WorkFasterDamn: {
+		DisplayName: Leather Whip
+		Description: Increased mining speed
+	}
+
+	LinkProtection: {
+		Description: Mods.KirillandRandom.Buffs.LinkProtection.Description
+		DisplayName: Link Protection
+	}
+}
+
+Items: {
+	FiresoulRobe: {
+		DisplayName: Firesoul Robe
+		Tooltip:
+			'''
+			'On Fire!' grants 10% increased damage.
+			+40 max mana.
+			+2% magic damage and crit chance.
+			'''
+	}
+
+	FiresoulRobeHood: {
+		DisplayName: Firesoul Robe Hood
+		Tooltip:
+			'''
+			'On Fire!' grants 6% increased damage.
+			+40 max mana.
+			+6% magic damage and crit chance.
+			'''
+	}
+
+	FiresoulRobeLeggings: {
+		DisplayName: Firesoul Robe Leggings
+		Tooltip:
+			'''
+			'On Fire!' grants 8% increased damage.
+			+20 max mana.
+			+4% magic damage and crit chance.
+			'''
+	}
+
+	ChScythe: {
+		DisplayName: Spark
+		Tooltip:
+			'''
+			Charge enemies with right click.
+			+40 bonus damage (for left click attack) for each stored charge on enemy.
+			'''
+	}
+
+	DarkLamp: {
+		DisplayName: Cursed Candle
+		Tooltip: Inflicts 'On Fire!' on self on use.
+	}
+
+	ElderStaff: {
+		DisplayName: Crystal staff
+		Tooltip: Discount rod of discord.
+	}
+
+	EyeOfDeath: {
+		DisplayName: Ruby Eye
+		Tooltip:
+			'''
+			Your hp is limited to half of maximum hp.
+			Increases your damage by 30%
+			Ignore instances of damage that would deal less than 30 hp.
+			Can't use during bossfights.
+			'''
+	}
+
+	FamiliarHelmet: {
+		DisplayName: Familiar Helmet
+		Tooltip: ""
+	}
+
+	FierySilk: {
+		DisplayName: Fiery Silk
+		Tooltip: Seems to regenerate from fire.
+	}
+
+	Firegun: {
+		DisplayName: Nethersong
+		Tooltip:
+			'''
+			Spreads fire in a cone.
+			Uses gel for ammo
+			WIP!
+			20% chance to not consume ammo
+			'''
+	}
+
+	firering: {
+		DisplayName: Ruby Ring
+		Tooltip:
+			'''
+			Every attack inflicts 'On Fire!' for a second.
+			Taking damage sets melee attacker 'On Fire!' for two seconds.
+			Taking damage also inflict 'On Fire!' on you for two second.
+			'''
+	}
+
+	CirnoIceWings: {
+		DisplayName: Ice Wings
+		Tooltip: The strongest
+	}
+
+	TimelessHat: {
+		DisplayName: Timeless Hat
+		Tooltip: Lost by some kind of time traveller
+	}
+
+	TimelessUmbrella: {
+		DisplayName: Timeless Umbrella
+		Tooltip: Lost by some kind of time traveller
+	}
+
+	LastFlame: {
+		DisplayName: Last Flame
+		Tooltip: Right click to release flames. +5 damage and reduced mana usage (-5) for each summoned flame
+	}
+
+	ScytheOfVyse: {
+		DisplayName: Scythe Of Vyse
+		Tooltip: Turns people (players) into harmless critters
+	}
+
+	SkyRapier_item: {
+		DisplayName: Brilliance
+		Tooltip:
+			'''
+			Mom, can we have Starlight?
+			We have Starlight at home.
+			Starlight at home:
+			'''
+	}
+
+	StoneCrusher: {
+		DisplayName: Stone Crusher
+		Tooltip: You shouldn't be seeing this.
+	}
+
+	TouhouKnives: {
+		DisplayName: Silver Knives
+		Tooltip:
+			'''
+			Right clicking spawns additional projectiles around existing ones.
+			Sakuya? Never heard about her.
+			'''
+	}
+
+	UmbraFlame: {
+		DisplayName: Inner Flame
+		Tooltip: Right click to release flames. +16 damage boost for each summoned circle of flames
+	}
+
+	UndeadSword: {
+		DisplayName: Soul Guardian
+		Tooltip: Cannot be used while Mana Sickness is active
+	}
+
+	RobloxSvd: {
+		DisplayName: Phantom Rifle
+		Tooltip: ""
+	}
+
+	UltraGun: {
+		DisplayName: Marksman Revolver
+		Tooltip: Each ricochet increases damage by 20%
+	}
+
+	Glitch: {
+		DisplayName: Console
+		Tooltip: ":(){ :|:& };:"
+	}
+}
+
+Projectiles: {
+	ChScythe.DisplayName: Spark
+	ChScytheSpin.DisplayName: Spark
+	DarkLampLight.DisplayName: Cursed Candle Light
+	ElderStaffProjectile.DisplayName: Crystal Staff
+	Firegun_damage_zone.DisplayName: Nethersong
+	Hex.DisplayName: Hex
+	LastFlameBolt.DisplayName: Last Flame Bolt
+	SkyRapier.DisplayName: Sky Rapier
+	TouhouKnives_proj.DisplayName: Silver Knife
+	UmbraFlameBolt.DisplayName: Inner Flame Bolt
+	UndeadSlash.DisplayName: Soul Guardian
+	UltraGunCoin.DisplayName: Coin
+	UltraGunShot.DisplayName: Bullet
+	GlitchProjectile.DisplayName: Console Command
+}

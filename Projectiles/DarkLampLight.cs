@@ -1,17 +1,15 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
-using Terraria.ModLoader;
-
 using Terraria.ID;
+using Terraria.ModLoader;
 
 
 namespace KirillandRandom.Projectiles
 {
     public class DarkLampLight : ModProjectile
     {
-        Random rnd = new Random();
         public int timer = 0;
         public int distance = 0;
         public int hitcount = 0;
@@ -30,18 +28,18 @@ namespace KirillandRandom.Projectiles
             Projectile.DamageType = DamageClass.Magic;
             Projectile.aiStyle = 0;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            modifiers.SourceDamage.Base -= ((hitcount) * 8);
             hitcount += 1;
-                damage -= ((hitcount) * 8);
-            
+            modifiers.HitDirectionOverride = (target.Center.X >= Main.player[Projectile.owner].Center.X).ToDirectionInt();
             target.AddBuff(BuffID.OnFire, 200);
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+            base.ModifyHitNPC(target, ref modifiers);
         }
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 200);
-            base.OnHitPvp(target, damage, crit);
+            base.OnHitPlayer(target, info);
         }
 
 
@@ -50,7 +48,7 @@ namespace KirillandRandom.Projectiles
             Player Player = Main.player[Projectile.owner];
             if ((((!target.friendly || (target.type == 22 && Projectile.owner < 255 && Player.killGuide) || (target.type == 54 && Projectile.owner < 255 && Player.killClothier)))))
             {
-                if (((target.Center-Player.Center).Length()<=distance)&& ((target.Center - Player.Center).Length() >= distance-60))
+                if (((target.Center - Player.Center).Length() <= distance) && ((target.Center - Player.Center).Length() >= distance - 60))
                 {
                     return target.immune[Main.myPlayer] <= 0;
                 }
@@ -78,10 +76,10 @@ namespace KirillandRandom.Projectiles
             distance = (int)(600 * (Math.Sin(MathHelper.ToRadians(90 * timer / 160))));
             if (timer >= 5)
             {
-                int[] DDustID= new int[12];
+                int[] DDustID = new int[12];
                 for (int k = 0; k < 12; k++)
                 {
-                    float randi = (float)MathHelper.ToRadians(rnd.Next(360));
+                    float randi = (float)MathHelper.ToRadians(Main.rand.Next(360));
 
                     Vector2 randpos = new Vector2((distance * (float)Math.Cos(randi)), (distance * (float)Math.Sin(randi)));
                     DDustID[k] = Dust.NewDust(owner.Center + randpos, 0, 0, 6, 0, 0, 50, default(Color), 3f); //Spawns dust
@@ -95,7 +93,7 @@ namespace KirillandRandom.Projectiles
                 //int DDustID2 = Dust.NewDust(owner.Center + randpos, 0, 0, 6, 0, 0, 50, default(Color), 8f); //Spawns dust
                 //Main.dust[DDustID2].noGravity = true;
                 //Main.dust[DDustID2].velocity = 0.9f * Main.dust[DDustID2].velocity;
-                
+
 
                 //int DDustID = Dust.NewDust(owner.Center + randpos, 0, 0, 6, 0, 0, 50, default(Color), 8f); //Spawns dust
                 //Main.dust[DDustID].noGravity = true;
@@ -106,13 +104,23 @@ namespace KirillandRandom.Projectiles
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            // By using ModifyDamageHitbox, we can allow the flames to damage enemies in a larger area than normal without colliding with tiles.
-            // Here we adjust the damage hitbox. We adjust the normal 6x6 hitbox and make it 66x66 while moving it left and up to keep it centered.
             int size = 1000;
             hitbox.X -= size;
             hitbox.Y -= size;
             hitbox.Width += size * 2;
             hitbox.Height += size * 2;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Main.instance.LoadFlameRing();
+            Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.FlameRing.Value, Projectile.Center - Main.screenPosition,
+                new Rectangle(0, 0, 400, 400), Color.White * (0.55f - (distance * 0.5f / 600)), distance * 0.01f,
+                new Vector2(400 * 0.5f, 400 * 0.5f), distance * 0.0057f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.FlameRing.Value, Projectile.Center - Main.screenPosition,
+                new Rectangle(0, 400, 400, 400), Color.White * (0.55f - (distance * 0.5f / 600)), distance * -0.008f,
+                new Vector2(400 * 0.5f, 400 * 0.5f), distance * 0.0055f, SpriteEffects.None, 0);
+
+            return base.PreDraw(ref lightColor);
         }
 
     }

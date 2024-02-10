@@ -1,35 +1,32 @@
 ﻿
-using Terraria.Graphics.Shaders;
-using KirillandRandom.Buffs;
+
 using KirillandRandom.Items;
 using KirillandRandom.Items.Armor;
-using KirillandRandom.Projectiles;
+using KirillandRandom.Items.FriendsStuff;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameInput;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.DataStructures;
+
 namespace KirillandRandom
 {
     class MPlayer : ModPlayer
     {
-        public bool ThankYouThoriumDevIOweYou = true;
+        public int WatSoulMode = 0;
+        public Projectile WatSoulHelper = null;
+        public bool ThankYouThoriumDev = true;
         public int overuse;
         public int charge_e = 0;
         public bool charge;
         public bool OveruseMeterCreated;
-        public bool BookCreated;
         public bool Something;
         public int flames_summoned;
         public float angle;
+        public bool EyeOfDeath { get { return eyeofdeath; } set { eyeofdeath = value; if (value == true) { Player.Hurt(PlayerDeathReason.LegacyEmpty(), Player.statLife / 2, 0); } } }
         public bool eyeofdeath;
         public bool fireregen;
         public float fireamplification;
@@ -38,6 +35,9 @@ namespace KirillandRandom
         public bool fireBody;
         public bool fireHead;
         public bool Hexed;
+        private int coin = 0;
+        public int Coin { get { return coin; } set { if (value > coin) coinTimer = 0; coin = value; if (coin < 0) coin = 0; if (coin > 3) { coin = 3; coinTimer = 0; } } }
+        public int coinTimer;
         public NPC targetd = null;
         public override void ResetEffects()
         {
@@ -73,15 +73,15 @@ namespace KirillandRandom
                 drawInfo.colorBodySkin = Color.Transparent;
                 drawInfo.colorLegs = Color.Transparent;
                 drawInfo.colorArmorBody = Color.Transparent;
-                drawInfo.colorArmorLegs=Color.Transparent;
-                drawInfo.colorShoes= Color.Transparent;
-                drawInfo.colorPants= Color.Transparent;
-                drawInfo.colorArmorHead= Color.Transparent;
+                drawInfo.colorArmorLegs = Color.Transparent;
+                drawInfo.colorShoes = Color.Transparent;
+                drawInfo.colorPants = Color.Transparent;
+                drawInfo.colorArmorHead = Color.Transparent;
 
             }
             base.ModifyDrawInfo(ref drawInfo);
         }
-        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Hexed)
             {
@@ -97,13 +97,13 @@ namespace KirillandRandom
             }
             return base.CanHitPvp(Item, target);
         }
-        public override bool? CanHitNPC(Item Item, NPC target)
+        public override bool CanHitNPC(NPC target)
         {
             if (Hexed)
             {
                 return false;
             }
-            return base.CanHitNPC(Item, target);
+            return base.CanHitNPC(target);
         }
 
         public override void ModifyScreenPosition()
@@ -119,19 +119,40 @@ namespace KirillandRandom
 
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
-        {if (Player.name == "KIRILLAND-Modder"&& !Player.dead) {
+        {
+            if ((drawInfo.shadow == 0f) && (Player.HeldItem.type == ModContent.ItemType<UltraGun>()))
+            {
+                if (coin == 3)
+                {
+                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Coin[2].Value, Player.Top - Main.screenPosition - Vector2.UnitY * 30 - Vector2.UnitX * 6, new Rectangle(0, 0, 12, 16), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None);
+                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Coin[2].Value, Player.Top - Main.screenPosition - Vector2.UnitY * 30 + Vector2.UnitX * 18 - Vector2.UnitX * 6, new Rectangle(0, 0, 12, 16), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None);
+                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Coin[2].Value, Player.Top - Main.screenPosition - Vector2.UnitY * 30 - Vector2.UnitX * 18 - Vector2.UnitX * 6, new Rectangle(0, 0, 12, 16), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None);
+                }
+                if (coin == 2)
+                {
+
+                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Coin[2].Value, Player.Top - Main.screenPosition - Vector2.UnitY * 30 + Vector2.UnitX * 8 - Vector2.UnitX * 6, new Rectangle(0, 0, 12, 16), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None);
+                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Coin[2].Value, Player.Top - Main.screenPosition - Vector2.UnitY * 30 - Vector2.UnitX * 8 - Vector2.UnitX * 6, new Rectangle(0, 0, 12, 16), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None);
+                }
+                if (coin == 1)
+                {
+                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Coin[2].Value, Player.Top - Main.screenPosition - Vector2.UnitY * 30 - Vector2.UnitX * 6, new Rectangle(0, 0, 12, 16), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None);
+                }
+            }
+            if (Player.name == "KIRILLAND-Modder" && !Player.dead)
+            {
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
-                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, 63, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
+                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.WhiteTorch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.8f);
                     Main.dust[TestDust].noGravity = true;
                     Main.dust[TestDust].noLight = true;
                 }
             }
-        if (fireamplification == 0.24f&&!Player.dead)
+            if (fireamplification == 0.24f && !Player.dead)
             {
                 if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
                 {
-                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, 6, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.5f);
+                    int TestDust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, Color.White, 0.5f);
                     Main.dust[TestDust].shader = GameShaders.Armor.GetSecondaryShader(drawInfo.cBody, drawInfo.drawPlayer);
 
 
@@ -141,7 +162,7 @@ namespace KirillandRandom
 
             }
 
-base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+            base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         }
         public override void PostUpdateEquips()
         {
@@ -150,7 +171,7 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             {
                 Player.wingTime = 0;
             }
-            if (Player.forceMerman||Player.forceWerewolf || Player.wereWolf || Player.merman)
+            if (Player.forceMerman || Player.forceWerewolf || Player.wereWolf || Player.merman)
             {
                 fireBody = false;
                 fireHead = false;
@@ -166,9 +187,10 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
                     fireHead = false;
                 }
                 else
-                { fireHead = true;
+                {
+                    fireHead = true;
                 }
-                }
+            }
             if (Player.armor[11].type > ItemID.None)
             {
 
@@ -177,8 +199,10 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
                     fireBody = false;
                 }
                 else
-                { fireBody = true;
-                } }
+                {
+                    fireBody = true;
+                }
+            }
             if (Player.armor[12].type > ItemID.None)
             {
 
@@ -188,69 +212,56 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
                 }
                 else
                 {
-                        fireLeggings = true;
+                    fireLeggings = true;
                 }
             }
             base.PostUpdateEquips();
         }
 
-
-
-
-
-
-        public override void OnHitNPC(Item Item, NPC target, int damage, float knockback, bool crit)
-        {if (flamingdedication) {
-                target.AddBuff(BuffID.OnFire, 60);
-            }
-            base.OnHitNPC(Item, target, damage, knockback, crit);
+        public override void PostUpdate()
+        {
+            base.PostUpdate();
+            if (eyeofdeath)
+                Player.statLifeMax2 = (Player.statLifeMax2 / 2);
         }
 
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (flamingdedication)
             {
                 target.AddBuff(BuffID.OnFire, 60);
             }
-            base.OnHitNPCWithProj(proj, target, damage, knockback, crit);
+            base.OnHitNPC(target, hit, damageDone);
         }
-
-
-        public override void OnHitByNPC(NPC NPC, int damage, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (flamingdedication)
             {
-                NPC.AddBuff(BuffID.OnFire, 120);
+                target.AddBuff(BuffID.OnFire, 60);
             }
-            base.OnHitByNPC(NPC, damage, crit);
+            base.OnHitNPCWithProj(proj, target, hit, damageDone);
         }
-
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
-            ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
-            float custom_endurance= Player.endurance;
-
-                if (flamingdedication)
+            if (flamingdedication)
             {
-                Player.AddBuff(BuffID.OnFire, 120);
+                npc.AddBuff(BuffID.OnFire, 120);
             }
-            int fdamage = (int)((damage - (0.5 * Player.statDefense)) * (1 - custom_endurance));
-            if (Main.expertMode)
-            {fdamage = (int)((damage - (0.75 * Player.statDefense)) * (1 - custom_endurance));
-            }
-            if ((eyeofdeath==true) && (fdamage < 30) && (damageSource.SourceOtherIndex!=3))
+            base.OnHitByNPC(npc, hurtInfo);
+        }
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        {
+
+            if ((eyeofdeath == true) && (modifiers.FinalDamage.Flat < 30) && (modifiers.DamageSource.SourceOtherIndex != 3))
             {
                 Player.immune = true;
                 Player.immuneTime = Player.longInvince ? 80 : 40;
 
-                damage = 0;
-
-                customDamage = true;
+                modifiers.FinalDamage.Base = 0;
             }
-
-            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
         }
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
+
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage)
         {
             if (eyeofdeath == true)
             {
@@ -260,16 +271,17 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             {
                 if (Player.onFire == true)
                 {
-                    damage *= 1+fireamplification;
+                    damage *= 1 + fireamplification;
                 }
             }
-            base.ModifyWeaponDamage(item, ref damage, ref flat);
+            base.ModifyWeaponDamage(item, ref damage);
         }
 
         public override void UpdateLifeRegen()
-        {   if (fireregen)
+        {
+            if (fireregen)
             {
-                
+
                 if (Player.onFire == true)
                 {
                     Player.lifeRegen = +16;
@@ -284,22 +296,16 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             base.UpdateLifeRegen();
         }
 
-        
+
 
         public override void PreUpdate()
         {
-            if (eyeofdeath)
+            if (coin < 3)
+                coinTimer++;
+            if (coinTimer > 100)
             {
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    if (Player.statLife >= (Player.statLifeMax / 2))
-                    {
-                        Player.statLife = (Player.statLifeMax / 2);
-                    }
-
-
-
-                }
+                coin++;
+                coinTimer = 0;
             }
 
             base.PreUpdate();
@@ -308,18 +314,27 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         public override void Initialize()
         {
             OveruseMeterCreated = false;
-            BookCreated = false;
             flames_summoned = 0;
             angle = 0;
             overuse = 0;
             base.Initialize();
         }
-        public override void clientClone(ModPlayer clientClone)
+        public override ModPlayer Clone(Player newEntity)
+        {
+            return base.Clone(newEntity);
+        }
+        public override void CopyClientState(ModPlayer clientClone)/* tModPorter Suggestion: Replace Item.Clone usages with Item.CopyNetStateTo */
         {
             MPlayer clone = clientClone as MPlayer;
             clone.flames_summoned = flames_summoned;
+            clone.Hexed = Hexed;
+            clone.fireregen = fireregen;
         }
-
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {//todo..?
+            //if (clientPlayer.Player.Hex)
+            base.SendClientChanges(clientPlayer);
+        }
         //public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
         //{
         //    ModPacket packet = mod.GetPacket();
@@ -344,4 +359,6 @@ base.DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         //    }
         //}
     }
+
 }
+

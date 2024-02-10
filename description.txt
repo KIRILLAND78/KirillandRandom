@@ -1,8 +1,19 @@
-KIRILLAND's random stuff but ported to 1.4.
+Small content pack. Developing this to just test my skills in programming. Nothing too exciting, but i am trying to make this mod as unique as possible.
 
-Small content mod. Developing this to just test my skills in programming. Nothing too exciting, but i am trying to make this mod as unique as possible.
+Balancing might be a bit off.
 
-Might be a bit OP.
+Most weapons have their own gimmicks.
+No wiki or something like that. Sorry. You have to figure everything on your own right now. But it is more fun that way, right?
 
-Some weapons have alt attack.
-No wiki or something. Sorry. You have to figure everything on your own right now.
+Update 0.20! More bug fixes!
+More content!
+Translation Fixes!
+Weapon reworks (Both visuals and mechanics!)!
+Better multiplayer compatability!
+Code cleanups and optimisations!
+Secret feature!?
+Hooray!
+
+"Just ship it now, take care of bugs later" - My friend apparently.
+
+Probably contain some bugs. Please report if you found any.

@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Terraria.ModLoader;
-
 using Terraria.ID;
+using Terraria.ModLoader;
 
 
 namespace KirillandRandom.Projectiles
@@ -28,15 +26,15 @@ namespace KirillandRandom.Projectiles
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.aiStyle = 0;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 60);
-            base.OnHitNPC(target, damage, knockback, crit);
+            base.OnHitNPC(target, hit, damageDone);
         }
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 60);
-            base.OnHitPvp(target, damage, crit);
+            base.OnHitPlayer(target, info);
         }
 
         public override void AI()
@@ -59,9 +57,9 @@ namespace KirillandRandom.Projectiles
                 int DDustID3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 50, default(Color), 1f); //Spawns dust
 
                 int DDustID = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 50, default(Color), 4f); //Spawns dust
-                    Main.dust[DDustID].noGravity = true;
-                    Main.dust[DDustID].velocity = 0.9f * Main.dust[DDustID].velocity;
-                } 
+                Main.dust[DDustID].noGravity = true;
+                Main.dust[DDustID].velocity = 0.9f * Main.dust[DDustID].velocity;
+            }
             timer++;
 
 

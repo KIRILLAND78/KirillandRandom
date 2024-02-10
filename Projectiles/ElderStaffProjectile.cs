@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Terraria.ModLoader;
-
 using Terraria.ID;
+using Terraria.ModLoader;
 
 
 namespace KirillandRandom.Projectiles
@@ -27,7 +25,7 @@ namespace KirillandRandom.Projectiles
             Projectile.DamageType = DamageClass.Magic;
             Projectile.aiStyle = 0;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -38,20 +36,17 @@ namespace KirillandRandom.Projectiles
                 ADust = Dust.NewDust(Projectile.Center - new Vector2(30, 30), 60, 60, 64, 0, 0, 0, default, 1.6f);
 
             }
-            if (Projectile.owner == Main.myPlayer)
-            {if (first>=3)
+                if (first >= 3)
                 {
                     Main.player[Projectile.owner].teleporting = true;
                     Main.player[Projectile.owner].teleportTime = 2;
 
-                    Terraria.Audio.SoundEngine.PlaySound(2, Projectile.position,8);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
                     Main.player[Projectile.owner].Teleport(Projectile.Center - new Vector2(0, 21), 6, 1);
-                    
+
                 }
 
-
-            }
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
         public override void AI()
         {
@@ -73,21 +68,22 @@ namespace KirillandRandom.Projectiles
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
             Dustt = new Vector2((float)Math.Cos(Projectile.velocity.ToRotation() + MathHelper.ToRadians(15f)), (float)Math.Sin(Projectile.velocity.ToRotation() + MathHelper.ToRadians(15f)));
-            if (Projectile.timeLeft % 3 == 0) { 
-            int GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 61, 0, 0, 0, default, 1f);
-            GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 64, 0, 0, 0, default, 1f);
-            GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 62, 0, 0, 0, default, 1f);
-            GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 60, 0, 0, 0, default, 1f);
-            GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 59, 0, 0, 0, default, 1f);
-            //Main.NewText(Convert.ToString(Projectile.velocity.ToRotation()));
+            if (Projectile.timeLeft % 3 == 0)
+            {
+                int GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 61, 0, 0, 0, default, 1f);
+                GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 64, 0, 0, 0, default, 1f);
+                GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 62, 0, 0, 0, default, 1f);
+                GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 60, 0, 0, 0, default, 1f);
+                GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 59, 0, 0, 0, default, 1f);
+                //Main.NewText(Convert.ToString(Projectile.velocity.ToRotation()));
 
-        }
+            }
 
             Player p = Main.player[Projectile.owner];
-            
-                double deg = (double)Projectile.ai[1];
-                double rad = deg * (Math.PI / 180);
-                double dist = 32;
+
+            double deg = (double)Projectile.ai[1];
+            double rad = deg * (Math.PI / 180);
+            double dist = 32;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

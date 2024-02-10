@@ -1,26 +1,20 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
-using Terraria.ID;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using KirillandRandom.Projectiles;
-
-
 
 namespace KirillandRandom.Projectiles
 {
     public class SkyRapier : ModProjectile
     {
-        //Random rnd = new Random();
-        public Vector2 lastplpos;
         bool first = true;
-        //private int vasya;
 
+        VertexStrip vertexStr = new();
         public override void SetDefaults()
         {
-            //Projectile.position.Y -= 80;
             Projectile.Name = "Brilliancy";
             Projectile.width = 70;
             Projectile.height = 70;
@@ -31,45 +25,83 @@ namespace KirillandRandom.Projectiles
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Melee;
-
-            //Projectile.netUpdate2 = true;
-            //Projectile.netUpdate = true;//this thing is pretty unreliable. and by unreliable i mean those sometimes don't work. at all.
-            //Projectile.netSpam = 6;//fix desync asap
-            //Projectile.netImportant = true;//i dunno what those do, i just slapped them wothout thinking twice. Remove if it lags.
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {if (Projectile.timeLeft >= 4) {
-                int DDustID = Dust.NewDust(target.Center, 2, 2, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.8f); //Spawns dust
-                Main.dust[DDustID].noGravity = true;
-                Main.dust[DDustID].velocity = 0.8f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(2));
-            }
-            base.OnHitNPC(target, damage, knockback, crit);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            int DDustID = Dust.NewDust(target.Center, 2, 2, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.8f); //Spawns dust
+            Main.dust[DDustID].noGravity = true;
+            Main.dust[DDustID].velocity = 0.8f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(2));
+            target.immune[Projectile.owner] = 4;
+
         }
         public override bool? CanHitNPC(NPC target)
         {
-            Vector2 Vel = Projectile.velocity;
-            Vel.Normalize();
+            return base.CanHitNPC(target);
 
-            Rectangle test = new Rectangle((int)Projectile.Center.X + ((int)Vel.X * -21) - 4, (int)Projectile.Center.Y + ((int)Vel.Y * -21) - 4, 8, 8);
-            Rectangle test1 = new Rectangle((int)Projectile.Center.X + ((int)Vel.X * -1) - 4, (int)Projectile.Center.Y + ((int)Vel.Y * -1) - 4, 8, 8);
-            Rectangle test2 = new Rectangle((int)Projectile.Center.X + (int)(Vel.X * 19) - 4, (int)Projectile.Center.Y + (int)(Vel.Y * 19) - 4, 8, 8);
-            Rectangle test3 = new Rectangle((int)Projectile.Center.X + (int)(Vel.X * 39) - 5, (int)Projectile.Center.Y + (int)(Vel.Y * 39) - 5, 10, 10);
-            Player Player = Main.player[Projectile.owner];
-            if ((((!target.friendly || (target.type == NPCID.Guide && Projectile.owner < 255 && Player.killGuide) || (target.type == NPCID.Clothier && Projectile.owner < 255 && Player.killClothier)))))
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            ;
+            for (var i = 0; i < 2; i++)
             {
-                if ((test2.Intersects(target.Hitbox))|| (test3.Intersects(target.Hitbox)) || (test.Intersects(target.Hitbox))|| (test1.Intersects(target.Hitbox)))
-                {
-                    return target.immune[Main.myPlayer] <= 0;
-                }
-                else
-                {
-                    return false;
-                }
+                Vector2 back = (Vector2.UnitX * -50f).RotatedBy(Projectile.rotation + MathHelper.ToRadians(45));
+                var rot = MathHelper.ToRadians(Main.rand.NextFloat(-15, 15));
+                Vector2 to = (Vector2.UnitX * Main.rand.NextFloat(2f, 20f)).RotatedBy(Projectile.rotation + MathHelper.ToRadians(45)).RotatedBy(rot);
+                Main.EntitySpriteDraw(ModContent.Request<Texture2D>("KirillandRandom/Projectiles/SkyRapier").Value,
+                    Projectile.Center + back
+                    + to
+                    - Main.screenPosition,
+                    null,
+                    Color.White,
+                    Projectile.rotation + rot,
+                    new Vector2(0, 0),
+                    Projectile.scale,
+                    SpriteEffects.None
+                    );
             }
-            else
+
+            //
+            for (var i = 0; i < 5; i++)
             {
-                return false;
+                Vector2 back = (Vector2.UnitX * -50f).RotatedBy(Projectile.rotation + MathHelper.ToRadians(45));
+                var rnd = Main.rand.NextFloat(-15, 15);
+                var rot = MathHelper.ToRadians(rnd) - 0.1f;
+                Vector2 to = (Vector2.UnitX * Main.rand.NextFloat(2f, 20f)).RotatedBy(Projectile.rotation + MathHelper.ToRadians(45)).RotatedBy(rot);
+                var miscShaderData = GameShaders.Misc["EmpressBlade"];
+                miscShaderData.UseImage0(ModContent.Request<Texture2D>("KirillandRandom/Visuals/testtrail"));
+                miscShaderData.UseImage1(ModContent.Request<Texture2D>("KirillandRandom/Visuals/testtrail"));
+                miscShaderData.UseImage2(ModContent.Request<Texture2D>("KirillandRandom/Visuals/testtrail"));
+                int multiplier = 1;
+                int num = 0;
+                int num2 = 0;
+                float index = 0.6f;
+                miscShaderData.UseShaderSpecificData(new Vector4(multiplier, num, num2, index));
+                miscShaderData.Apply();
+                Main.graphics.GraphicsDevice.Textures[0] = ModContent.Request<Texture2D>("KirillandRandom/Visuals/white").Value;
+                //Main.graphics.GraphicsDevice.Textures[0].GraphicsDevice.BlendState.AlphaSourceBlend= Blend.DestinationAlpha;
+                var stSize = 3.6f - MathF.Abs(rnd) / 15;
+
+                float[] mv1 = new float[5] { Projectile.rotation + rot, Projectile.rotation + rot, Projectile.rotation + rot, Projectile.rotation + rot, Projectile.rotation + rot };
+                //float[] mv1 = new float[5] { Projectile.rotation + rot-0.2f, Projectile.rotation + rot - 0.2f, Projectile.rotation + rot - 0.2f, Projectile.rotation + rot - 0.2f, Projectile.rotation + rot-0.2f };
+                Vector2 center = Projectile.Center + back + to + to - Vector2.UnitX.RotatedBy(Projectile.rotation) * 12;
+                Vector2[] f1 = new Vector2[5] { center, center + to * stSize, center + to * stSize * 2, center + to * stSize * 3, center + to * stSize * 4 };
+                vertexStr.PrepareStrip(f1, mv1,
+                    ((float progress) =>
+                    {
+                        return Color.Aqua * ((progress * 4.5f) - 1);
+                    }),
+                    ((float progress) =>
+                    {
+                        return 40f * (0.5f - MathF.Abs(0.5f - progress));
+                    }),
+                    -Main.screenPosition, 5, includeBacksides: true);
+                //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
+                vertexStr.DrawTrail();
+                //Main.pixelShader.CurrentTechnique.Passes[0].Apply();
             }
+            //
+
+            return false;
         }
 
         public override void AI()
@@ -77,150 +109,72 @@ namespace KirillandRandom.Projectiles
 
             Player owner = Main.player[Projectile.owner];
 
-            Projectile.velocity *= 1.25f;
 
+            Projectile.velocity = Vector2.Zero;
             if (first)
             {
-
-                Vector2 PlayerPos = owner.Center;
-                //float angle;
-
-                Vector2 AimFor = 150 * Vector2.Normalize(Projectile.velocity) + PlayerPos;
-
-                Vector2 Diff2 = AimFor - Projectile.Center;
-
-                //if (Diff2.X >= 0)
-                //{
-                //    angle = (float)Math.Atan(Diff2.Y / Diff2.X);
-                //}
-                //else
-                //{
-                //    angle = (float)Math.Atan(Diff2.Y / Diff2.X);
-
-                //}
-                //Projectile.velocity;
-
-                Projectile.velocity.X = Diff2.X;
-                Projectile.velocity.Y = Diff2.Y;
-                Projectile.velocity.Normalize();
-                Projectile.velocity *= 3.1f;
-
+                Projectile.velocity = Vector2.Zero;
                 Projectile.light = 0.4f;
-                lastplpos = owner.Center;
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(-45f);
-
-                if (owner.whoAmI == Main.myPlayer)
-                {
-                    Projectile.NewProjectile(new ProjectileSource_ProjectileParent(Projectile),Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<SkyRapier2>(), 0, 0, owner.whoAmI);
-                }
-
                 first = false;
             }
             else
             {
                 Projectile.netUpdate = true;
 
-            }
-
-
-            Projectile.position += owner.Center - lastplpos;
-
-            lastplpos = owner.Center;
-
-            int DDustID = Dust.NewDust(Projectile.Center-new Vector2(8,4), 0, 0, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.2f); //Spawns dust
-            Main.dust[DDustID].noGravity = true;
-            Main.dust[DDustID].velocity = 1.1f*Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(10));
-
-            if (Projectile.timeLeft < 4)
-            {
-                Projectile.alpha += 60;
-                if (Projectile.timeLeft ==3)
+                owner.itemTime = 2;
+                Projectile.timeLeft = 2;
+                if ((Projectile.owner == Main.myPlayer) && (!Main.mouseLeft))
                 {
-                    Projectile.velocity *= -0.3f;
-                };
-
+                    Projectile.Kill();
+                }
             }
+            if (Projectile.owner == Main.myPlayer)
+            {
+                Projectile.ai[0] = (owner.Center).AngleTo(Main.MouseWorld) + MathHelper.ToRadians(-45f);
+            }
+            Projectile.rotation = Projectile.ai[0];
+            if ((Projectile.rotation < MathHelper.ToRadians(45)) && (Projectile.rotation > MathHelper.ToRadians(-135))) owner.direction = 1;
+            else owner.direction = -1;
+            owner.itemRotation = Projectile.rotation + MathHelper.ToRadians(45) + MathHelper.ToRadians((owner.direction == 1) ? 0f : 180f) + Main._rand.NextFloat(-0.3f, 0.3f);
+            Projectile.Center = owner.Center + new Vector2(30).RotatedBy(Projectile.rotation);
 
-            //if (Projectile.velocity.Y > 16f)
-            //{
-            //    Projectile.velocity.Y = 16f;
-            //}
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = (target.Center.X >= Main.player[Projectile.owner].Center.X).ToDirectionInt();
+            base.ModifyHitNPC(target, ref modifiers);
+        }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = (target.Center.X >= Main.player[Projectile.owner].Center.X).ToDirectionInt();
+            base.ModifyHitPlayer(target, ref modifiers);
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            /* //DAMN
+            for (int i = -1; i<=1; i++)
+            {
+                for (int j = 0; j<4; j++)
+                {
+                    var _f = Projectile.Center+ Vector2.UnitX.RotatedBy(Projectile.rotation + (i * 0.1f))*j*5;
+                    var f = new Rectangle((int)_f.X, (int)_f.Y, 1,1);
+                }
+            }
+            */
+            return targetHitbox.IntersectsConeSlowMoreAccurate(Main.player[Projectile.owner].Center, 140f, Projectile.rotation + 0.785f, 0.25f);
 
-
-
-
-
+            return false;
+            //return base.Colliding(projHitbox, targetHitbox);
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            // By using ModifyDamageHitbox, we can allow the flames to damage enemies in a larger area than normal without colliding with tiles.
-            // Here we adjust the damage hitbox. We adjust the normal 6x6 hitbox and make it 66x66 while moving it left and up to keep it centered.
             int size = 500;
             hitbox.X -= size;
             hitbox.Y -= size;
             hitbox.Width += size * 2;
             hitbox.Height += size * 2;
+
         }
-
-        //pls someone help im tired and this is code nightmare please don't look at this.
-        //i am tired
-        //i am tired
-        //i am tired
-        //i don't like making custom hitboxes AT ALL
-        //i am tired
-        //i am tired
-        //i am tired
-
-
-
-
-        //public override void PostAI()
-        //{
-        //    Vector2 Vel = Projectile.velocity;
-        //    Vel.Normalize();
-        //    Rectangle test = new Rectangle((int)Projectile.Center.X + (int)Vel.X * -16, (int)Projectile.Center.Y + (int)Vel.Y * -16, 1,1);
-        //    Rectangle test2 = new Rectangle((int)Projectile.Center.X+ (int)Vel.X*14, (int)Projectile.Center.Y + (int)Vel.Y * 14,1,1);
-        //    Rectangle test3 = new Rectangle((int)Projectile.Center.X + (int)Vel.X * 46, (int)Projectile.Center.Y + (int)Vel.Y * 46, 1, 1);
-        //    if (Projectile.owner == Main.myPlayer && Projectile.damage > 0)
-        //    {
-        //        Player Player = Main.player[Projectile.owner];
-        //        for (int k = 0; k < 200; k++)
-        //        {
-        //            NPC curNPC = Main.npc[k];
-        //            if ((((!curNPC.friendly || (curNPC.type == 22 && Projectile.owner < 255 && Player.killGuide) || (curNPC.type == 54 && Projectile.owner < 255 && Player.killClothier)))))
-        //            {
-        //                if ((test3.Intersects(curNPC.Hitbox)) || (test.Intersects(curNPC.Hitbox)) || (test2.Intersects(curNPC.Hitbox)))
-        //                {
-        //                    vasya = Projectile.damage - 17 + rnd.Next(34);
-        //                    curNPC.StrikeNPC(vasya, Projectile.knockBack, (int)Projectile.velocity.ToRotation());
-        //                    Player.addDPS(vasya);
-        //            } }
-        //        }
-        //        if (Main.LocalPlayer.hostile)
-        //        {
-        //            for (int l = 0; l < 255; l++)
-        //            {
-        //                Player subPlayer = Main.player[l];
-        //                if (l != Projectile.owner && subPlayer.active && !subPlayer.dead && !subPlayer.immune && subPlayer.hostile && Projectile.playerImmune[l] <= 0 && (Main.LocalPlayer.team == 0 || Main.LocalPlayer.team != subPlayer.team))
-        //                {
-        //                    if ((test3.Intersects(subPlayer.Hitbox)) || (test.Intersects(subPlayer.Hitbox)) || (test2.Intersects(subPlayer.Hitbox)))
-        //                    {
-        //                        subPlayer.HurtOld(Projectile.damage, (int)Projectile.knockBack);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-
-
-        //    base.PostAI();
-        //}
-
-
-
-
-
-
 
     }
 }
