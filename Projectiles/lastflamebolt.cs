@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 
-using Terraria.ID;
 
 
 namespace KirillandRandom.Projectiles
@@ -14,9 +13,8 @@ namespace KirillandRandom.Projectiles
         public int bonusDamage = 0;
         Item Book;
         public int mode = 2;
-        private int first=1;
-        private bool backup_update=false;
-
+        private int first = 1;
+        
         public override void SetDefaults()
         {
 
@@ -33,34 +31,35 @@ namespace KirillandRandom.Projectiles
             Projectile.aiStyle = 0;
 
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (mode != 1)
             {
                 Main.player[Projectile.owner].GetModPlayer<MPlayer>().flames_summoned -= 1;
 
             }
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(mode);
+            base.SendExtraAI(writer);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            mode = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
         public override void AI()
         {
             Player owner = Main.player[Projectile.owner];
 
-
             if (owner.dead == true)
             {
                 Projectile.Kill();
             }
-
-
-
-
-
-
-
             int DDustID = Dust.NewDust(Projectile.position - new Vector2(2f, 2f), Projectile.width + 4, Projectile.height + 4, 17, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 1.1f); //Spawns dust
             Main.dust[DDustID].noGravity = true;
-
 
             if (mode == 1)
             {
@@ -70,47 +69,38 @@ namespace KirillandRandom.Projectiles
                     Projectile.friendly = true;
                     Projectile.tileCollide = true;
 
-                    Projectile.damage +=bonusDamage;
+                    Projectile.damage += bonusDamage;
                     Projectile.light = 0.6f;
                     if (Main.myPlayer == Projectile.owner && Projectile.ai[0] == 0f)
                     {
-                        var shootToX = Main.MouseWorld.X - Projectile.Center.X;//обоже.
-                        var shootToY = Main.MouseWorld.Y - Projectile.Center.Y;//обоже.
-                    float distance = (float)Math.Sqrt((shootToX * shootToX + shootToY * shootToY));
-                    shootToX *= 15.0f/ distance;
-                    shootToY *= 15.0f/ distance;
-                    Projectile.velocity.X = shootToX;//обоже.
-                    Projectile.velocity.Y = shootToY;//обоже.
+                        var vec = (Main.MouseWorld - Projectile.Center);
+                        vec.Normalize();
+                        Projectile.velocity = vec * 15f;
                     }
+                    Projectile.netUpdate = true;
                     first = 2;
                 }
             }
-            else{
+            else
+            {
 
                 Player p = Main.player[Projectile.owner];
-                if ((first != 1)&&(backup_update))
-                {
-
-                    Projectile.netUpdate = true;
-
-
-                }
                 if (first == 1)
                 {
                     Book = p.HeldItem;
                     if (Main.myPlayer == Projectile.owner && Projectile.ai[0] == 0f)
                     {
-                        Projectile.ai[1] = p.GetModPlayer<MPlayer>().angle+ 90* p.GetModPlayer<MPlayer>().flames_summoned;
+                        Projectile.ai[1] = p.GetModPlayer<MPlayer>().angle + 90 * p.GetModPlayer<MPlayer>().flames_summoned;
 
                         Projectile.netUpdate = true;
                     }
                     first = 0;
                 }
-                    Projectile.alpha = 64;
+                Projectile.alpha = 64;
 
                 double deg = (double)Projectile.ai[1];
                 double rad = deg * (Math.PI / 180);
-                double dist = 32; 
+                double dist = 32;
 
                 Projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * dist) - Projectile.width / 2;
                 Projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * dist) - Projectile.height / 2;
@@ -124,11 +114,10 @@ namespace KirillandRandom.Projectiles
 
                 if (owner.HeldItem != Book)
                 {
-                    Projectile.Kill();//РАБОТАЕТ, ЮХУ!
+                    Projectile.Kill();
                 }
-                if ((p.controlUseItem)&&(p.altFunctionUse==2))
+                if ((p.controlUseItem) && (p.altFunctionUse == 2))
                 {
-
                     mode = 1;
                 }
 

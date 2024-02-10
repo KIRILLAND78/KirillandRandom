@@ -1,6 +1,6 @@
 displayName = Kirilland's random additions
 author = KIRILLAND
-version = 0.19.8.2
+version = 0.20
 
 
 includePDB = false

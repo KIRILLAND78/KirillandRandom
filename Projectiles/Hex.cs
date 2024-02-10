@@ -1,11 +1,7 @@
-﻿using System;
+﻿using KirillandRandom.Buffs;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using KirillandRandom.Buffs;
-
-using Terraria.ID;
 
 
 namespace KirillandRandom.Projectiles
@@ -29,11 +25,11 @@ namespace KirillandRandom.Projectiles
             Projectile.alpha = 255;
 
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            damage = 0;
+            info.Damage = 1;
             target.AddBuff(ModContent.BuffType<Hexed>(), 600);
-            base.OnHitPlayer(target, damage, crit);
+            base.OnHitPlayer(target, info);
         }
 
 
@@ -44,7 +40,8 @@ namespace KirillandRandom.Projectiles
                 Projectile.position = new Vector2(Main.MouseWorld.X - 50, Main.MouseWorld.Y - 50);
                 Projectile.netUpdate = true;
             }
-            if (Projectile.timeLeft == 25){
+            if (Projectile.timeLeft == 25)
+            {
                 for (int i = 0; i < 256; i++)
                 {
                     Projectile.alpha = 0;
@@ -56,7 +53,7 @@ namespace KirillandRandom.Projectiles
                     }
                 }
             }
-            
+
             Player owner = Main.player[Projectile.owner];
 
 

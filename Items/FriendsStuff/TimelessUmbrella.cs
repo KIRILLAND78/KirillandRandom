@@ -1,9 +1,6 @@
 ﻿using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace KirillandRandom.Items.FriendsStuff
@@ -12,7 +9,7 @@ namespace KirillandRandom.Items.FriendsStuff
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Anything can be a weapon if you try hard enough!");
+            // Tooltip.SetDefault("Anything can be a weapon if you try hard enough!");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             base.SetStaticDefaults();
         }
@@ -35,8 +32,8 @@ namespace KirillandRandom.Items.FriendsStuff
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Umbrella)
-                .AddIngredient(ItemID.IronBar,4)
-                .AddIngredient(ItemID.Silk,8)
+                .AddIngredient(ItemID.IronBar, 4)
+                .AddIngredient(ItemID.Silk, 8)
                 .Register();
         }
     }

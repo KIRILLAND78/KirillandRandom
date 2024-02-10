@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using KirillandRandom.NPCs;
 using Terraria;
-using KirillandRandom.NPCs;
+using Terraria.ModLoader;
 
 namespace KirillandRandom.Buffs
 {
@@ -17,8 +11,8 @@ namespace KirillandRandom.Buffs
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            DisplayName.SetDefault("Stacking charge");
-            Description.SetDefault("Charged!");
+            // DisplayName.SetDefault("Stacking charge");
+            // Description.SetDefault("Charged!");
             base.SetStaticDefaults();
         }
 

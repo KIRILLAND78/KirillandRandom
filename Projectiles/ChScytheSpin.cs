@@ -1,26 +1,19 @@
-﻿using System;
+﻿using KirillandRandom.NPCs;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
-using KirillandRandom.NPCs;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 
 namespace KirillandRandom.Projectiles
 {
     public class ChScytheSpin : ModProjectile
     {
-        public bool todelete = false;
-        public double rad;
-        public double deg;
-        public double rad2;
         private int first = 1;
         private int direct;
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Melee;
-            Player Player = Main.player[Projectile.owner];
             Projectile.light = 0.3f;
             Projectile.damage = 80;
             Projectile.Name = "Spark";
@@ -31,27 +24,26 @@ namespace KirillandRandom.Projectiles
             Projectile.hostile = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.DamageType = DamageClass.MeleeNoSpeed;
             Projectile.aiStyle = -1;
             Projectile.knockBack = 5;
         }
-        
 
-
-
-        public override void Kill(int timeLeft)
+        public override void PostDraw(Color lightColor)
         {
-            base.Kill(timeLeft);
+            //Main.EntitySpriteDraw(ModContent.Request<Texture2D>("KirillandRandom/Projectiles/ChScytheSpin_Glow").Value, Projectile.position-Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(0,0), Projectile.scale, SpriteEffects.None  );
+            base.PostDraw(lightColor);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);
+            if (target.GetGlobalNPC<MNPC>().charge_e < 5)
             {
-                target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);
-                if (target.GetGlobalNPC<MNPC>().charge_e < 5)
-                {
-                    target.GetGlobalNPC<MNPC>().charge_e += 1;
-                }
+                target.GetGlobalNPC<MNPC>().charge_e += 1;
             }
-       
+        }
+
         public override void AI()
         {
             Player owner = Main.player[Projectile.owner];
@@ -66,44 +58,56 @@ namespace KirillandRandom.Projectiles
                     Projectile.Kill();
                 }
             }
-                //int DDustID = Dust.NewDust(Projectile.position - new Vector2(2f, 2f), Projectile.width + 4, Projectile.height + 4, 17, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
-                //Main.dust[DDustID].noGravity = true;
-
-
-
-                Player p = Main.player[Projectile.owner];
-                if (first == 1)
+            Player p = Main.player[Projectile.owner];
+            if (first == 1)
             {
                 direct = p.direction;
                 first = 0;
-                }
-                deg = (double)Projectile.ai[0] + 45;
-                rad = deg * (Math.PI / 180);
-                Projectile.rotation = MathHelper.ToRadians(Projectile.ai[0]);
-            if (Projectile.ai[0]%180 == 0)
+            }
+            Projectile.rotation = MathHelper.ToRadians(Projectile.ai[0] * p.direction);
+            if (Projectile.ai[0] % 130 == 0)
             {
                 //p.heldProj = Projectile.whoAmI;
                 Projectile.timeLeft = 22;
                 p.itemTime = 20; // Set Item time to 2 frames while we are used
                 p.itemAnimation = 20; // Set Item animation time to 2 frames while we are used
             }
+            if ((Projectile.ai[0] % 520 == 0) && (Projectile.ai[0] >= 250))
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    var f = Dust.NewDust(Projectile.Center + (new Vector2(1, 0) * 400).RotatedBy(MathHelper.ToRadians(18f * j)), 1, 1, DustID.Electric);
+                    Main.dust[f].noGravity = true;
+                    Main.dust[f].noLight = true;
+                }
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    if ((!Main.npc[i].friendly) && ((Main.npc[i].Center - Projectile.Center).Length() < 400))
+                    {
+
+                        Main.npc[i].AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);
+                        if (Main.npc[i].GetGlobalNPC<MNPC>().charge_e < 5)
+                        {
+                            Main.npc[i].GetGlobalNPC<MNPC>().charge_e += 1;
+                        }
+                    }
+
+                }
+            }
 
 
             Projectile.Center = p.Center;
-            Projectile.Center = p.Center;
-            if (direct== 1)
+            if (direct == 1)
             {
                 p.direction = 1;
-                Projectile.ai[0] += 9f;
-                //Projectile.spriteDirection = 1;
+                Projectile.spriteDirection = 1;
             }
             else
             {
                 p.direction = -1;
-                Projectile.ai[0] -= 9f;
-
                 Projectile.spriteDirection = -1;
             }
+            Projectile.ai[0] += 13f;
 
         }
     }
