@@ -9,11 +9,6 @@ namespace KirillandRandom.Items
 {
     internal class TouhouKnives : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Silver knives");
-            // Tooltip.SetDefault("Right clicking spawns additional projectiles around existing ones.\r\nSakuya? Never heard about her.");
-        }
         public override void SetDefaults()
         {
             Item.width = 30;

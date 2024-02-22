@@ -11,8 +11,6 @@ namespace KirillandRandom.Items.Armor
         {
             ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
             base.SetStaticDefaults();
-            //DisplayName.SetDefault("Somethinngg");
-            // Tooltip.SetDefault("'On Fire!' grants 6% increased damage.\r\n+40 max mana.\r\n+6% magic damage and crit chance.");
         }
         public override void SetDefaults()
         {

@@ -41,7 +41,7 @@ namespace KirillandRandom.Projectiles
         {
             if (Projectile.wet)
             {
-                Projectile.Kill(); //This kills the Projectile when touching water. However, since our Projectile is a cursed flame, we will comment this so that it won't run it. If you want to test this, feel free to uncomment this.
+                Projectile.Kill();
             }
             if (timer >= 2)
             {

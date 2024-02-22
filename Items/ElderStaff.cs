@@ -7,15 +7,6 @@ namespace KirillandRandom.Items
 {
     public class ElderStaff : ModItem
     {
-
-        public override void SetStaticDefaults()
-        {
-
-            // DisplayName.SetDefault("Crystal staff");
-            // Tooltip.SetDefault("Holding same energy as Rod of Discord.");
-        }
-
-
         public override bool CanUseItem(Player Player)
         {
             return true;
@@ -53,16 +44,6 @@ namespace KirillandRandom.Items
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }
-
-        //public override void AddRecipes()
-        //{
-        //	ModRecipe recipe = new ModRecipe(mod);
-
-
-        //	recipe.AddRecipe();
-
-        //}
-
 
     }
 }

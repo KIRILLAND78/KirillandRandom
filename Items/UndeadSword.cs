@@ -7,12 +7,6 @@ namespace KirillandRandom.Items
 {
     public class UndeadSword : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Soul Guardian");
-            // Tooltip.SetDefault("Cannot be used while Mana Sickness is active.");
-        }
-
         public override void SetDefaults()
         {
             Item.mana = 100;
@@ -41,7 +35,6 @@ namespace KirillandRandom.Items
             }
             else return false;
         }
-
 
         public override void AddRecipes()
         {

@@ -5,11 +5,6 @@ namespace KirillandRandom.Items
 {
     public class EyeOfDeath : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Eye Of Death");
-            // Tooltip.SetDefault("Your hp is limited to half of maximum hp.\r\nIncreases your damage by 30%\r\nIgnore instances of damage that would deal less than 30 hp.\r\nCan't use during bossfights.");
-        }
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.HoldUp;

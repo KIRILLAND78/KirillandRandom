@@ -128,18 +128,18 @@ namespace KirillandRandom
                 var position = drawInfo.Position + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.legPosition - Main.screenPosition;
                 position = new Vector2((int)position.X, (int)position.Y);
                 if (drawInfo.isSitting) position.Y -= 14;
-                    drawInfo.DrawDataCache.Add(new DrawData(
-                    LegArmorTexture.Value, //The texture to render.
-                    position, //Position to render at.
-                    //new Rectangle(0, 0, 100, 100),
-                    drawPlayer.legFrame,//new Rectangle(0, (((int)drawInfo.drawPlayer.legFrameCounter)==0)?0:((((int)(drawInfo.drawPlayer.legFrameCounter))%8)+5)*22, 26, 22), //Source rectangle.
-                    Lighting.GetColor((int)drawInfo.Center.X / 16, (int)drawInfo.Center.Y / 16, Color.White), //Color.
-                    0f, //Rotation.
-                    Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
-                    1f, //Scale.
-                    (drawInfo.playerEffect == SpriteEffects.FlipHorizontally)? SpriteEffects.None: SpriteEffects.FlipHorizontally, //SpriteEffects.
-                    0 //'Layer'. This is always 0 in Terraria.
-                ));
+                drawInfo.DrawDataCache.Add(new DrawData(
+                LegArmorTexture.Value, //The texture to render.
+                position, //Position to render at.
+                          //new Rectangle(0, 0, 100, 100),
+                drawPlayer.legFrame,//new Rectangle(0, (((int)drawInfo.drawPlayer.legFrameCounter)==0)?0:((((int)(drawInfo.drawPlayer.legFrameCounter))%8)+5)*22, 26, 22), //Source rectangle.
+                Lighting.GetColor((int)drawInfo.Center.X / 16, (int)drawInfo.Center.Y / 16, Color.White), //Color.
+                0f, //Rotation.
+                Vector2.Zero,//exampleItemTexture.Size() * 0.5f, //Origin. Uses the texture's center.
+                1f, //Scale.
+                (drawInfo.playerEffect == SpriteEffects.FlipHorizontally) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, //SpriteEffects.
+                0 //'Layer'. This is always 0 in Terraria.
+            ));
 
 
                 return;

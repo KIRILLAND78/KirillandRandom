@@ -88,16 +88,6 @@ namespace KirillandRandom.Projectiles
 
 
                 }
-
-
-                //int DDustID2 = Dust.NewDust(owner.Center + randpos, 0, 0, 6, 0, 0, 50, default(Color), 8f); //Spawns dust
-                //Main.dust[DDustID2].noGravity = true;
-                //Main.dust[DDustID2].velocity = 0.9f * Main.dust[DDustID2].velocity;
-
-
-                //int DDustID = Dust.NewDust(owner.Center + randpos, 0, 0, 6, 0, 0, 50, default(Color), 8f); //Spawns dust
-                //Main.dust[DDustID].noGravity = true;
-                //Main.dust[DDustID].velocity = 0.9f * Main.dust[DDustID].velocity;
             }
             timer++;
 

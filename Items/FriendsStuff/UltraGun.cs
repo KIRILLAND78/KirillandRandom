@@ -80,8 +80,6 @@ namespace KirillandRandom.Items.FriendsStuff
             if (player.altFunctionUse == 2)
             {
                 Projectile.NewProjectile(source, position, velocity * 1.2f, ModContent.ProjectileType<UltraGunCoin>(), damage, knockback, Main.myPlayer);
-                //Main.NewText(player.whoAmI);
-                //Projectile.NewProjectile(source, position, velocity.RotateRandom(MathHelper.PiOver2 / 6), ModContent.ProjectileType<UltraGunCoin>(), damage, knockback, player.whoAmI);
                 return false;
             }
             return base.Shoot(player, source, position, velocity, type, damage, knockback);

@@ -12,15 +12,13 @@ namespace KirillandRandom.Projectiles
 {
     public class UmbraFlameBolt : ModProjectile
     {
-        int target=-1;
+        int target = -1;
         public int bonusDamage = 0;
         Item Book;
         public int mode = 2;
         private int first = 1;
         private int orig_dmg = 0;
         private int draw_timer = 0;
-        //drawing
-
 
         VertexStrip vertexStr = new();
 
@@ -76,7 +74,6 @@ namespace KirillandRandom.Projectiles
                 }),
 
                 -Main.screenPosition + Projectile.Size / 2f, Projectile.oldPos.Length, includeBacksides: true);
-            //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
             vertexStr.DrawTrail();
 
             miscShaderData = GameShaders.Misc["LightDisc"];
@@ -104,7 +101,6 @@ namespace KirillandRandom.Projectiles
                     return 5f * (0.5f - MathF.Abs(0.5f - progress));
                 }),
                 -Main.screenPosition + Projectile.Size / 2f, 5, includeBacksides: true);
-            //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
             vertexStr.DrawTrail();
 
             vertexStr.PrepareStrip(f2, mv2,
@@ -118,7 +114,6 @@ namespace KirillandRandom.Projectiles
                 }),
 
                 -Main.screenPosition + Projectile.Size / 2f, 5, includeBacksides: true);
-            //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
             vertexStr.DrawTrail();
             return false;
         }
@@ -189,9 +184,10 @@ namespace KirillandRandom.Projectiles
                                 if (g < Vector2.Distance(Main.npc[i].Center, Projectile.Center)) buffer = i;
 
                         }
-                        if (buffer >= 0) {
-                        target = buffer;
-                        Projectile.netUpdate = true;
+                        if (buffer >= 0)
+                        {
+                            target = buffer;
+                            Projectile.netUpdate = true;
                         }
                     }
                 }

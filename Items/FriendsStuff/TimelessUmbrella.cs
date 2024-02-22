@@ -9,7 +9,6 @@ namespace KirillandRandom.Items.FriendsStuff
     {
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Anything can be a weapon if you try hard enough!");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             base.SetStaticDefaults();
         }

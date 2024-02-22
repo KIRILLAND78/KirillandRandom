@@ -5,11 +5,6 @@ namespace KirillandRandom.Items
 {
     public class firering : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Firestorm Ring");
-            // Tooltip.SetDefault("Every attack inflicts 'On Fire!' for a second.\r\nTaking damage sets melee attacker 'On Fire!' for two seconds.\r\nTaking damage also inflict 'On Fire!' on you for two second.");
-        }
         public override void SetDefaults()
         {
             Item.width = 30;

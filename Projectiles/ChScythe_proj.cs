@@ -55,13 +55,8 @@ namespace KirillandRandom.Projectiles
             {
                 Projectile.Kill();
             }
-
-            //int DDustID = Dust.NewDust(Projectile.position - new Vector2(2f, 2f), Projectile.width + 4, Projectile.height + 4, 17, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default(Color), 1.1f); //Spawns dust
-            //Main.dust[DDustID].noGravity = true;
             if (first == 1)
             {
-                //Shader
-                //Filters.Scene.Activate("nihil");
                 first = 0;
             }
             acceleration = 0;

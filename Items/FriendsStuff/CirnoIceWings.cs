@@ -12,7 +12,6 @@ namespace KirillandRandom.Items.FriendsStuff
     {
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Baka!");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             // These wings use the same values as the solar wings
             // Fly time: 180 ticks = 3 seconds
@@ -82,7 +81,6 @@ namespace KirillandRandom.Items.FriendsStuff
             constantAscend = 0.215f;
         }
 
-        // Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
         public override void AddRecipes()
         {
             CreateRecipe()

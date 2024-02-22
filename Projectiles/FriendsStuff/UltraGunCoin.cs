@@ -40,7 +40,6 @@ namespace KirillandRandom.Projectiles.FriendsStuff
                     return 8f * (0.5f - MathF.Abs(0.5f - progress));
                 }),
                 -Main.screenPosition + Projectile.Size / 2f, 5, includeBacksides: true);
-            //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
             vertexStr.DrawTrail();
 
             vertexStr.PrepareStrip(f2, mv2,
@@ -54,7 +53,6 @@ namespace KirillandRandom.Projectiles.FriendsStuff
                 }),
 
                 -Main.screenPosition + Projectile.Size / 2f, 5, includeBacksides: true);
-            //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
             vertexStr.DrawTrail();
             return false;
         }

@@ -11,8 +11,6 @@ namespace KirillandRandom.Buffs
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            // DisplayName.SetDefault("Stacking charge");
-            // Description.SetDefault("Charged!");
             base.SetStaticDefaults();
         }
 

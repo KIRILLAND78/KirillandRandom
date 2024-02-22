@@ -10,11 +10,6 @@ namespace KirillandRandom.Items
 {
     public class UmbraFlame : ModItem
     {
-        public int first = 1;
-        public override void SetStaticDefaults()
-        {
-            // Tooltip.SetDefault("Right click to release flames. +16 damage boost for each summoned circle of flames.");
-        }
         public override bool AltFunctionUse(Player player)
         {
             return true;

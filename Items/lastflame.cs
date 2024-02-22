@@ -9,10 +9,6 @@ namespace KirillandRandom.Items
     public class LastFlame : ModItem
     {
         public int first = 1;
-        public override void SetStaticDefaults()
-        {
-            // Tooltip.SetDefault("Right click to release flames. +5 damage boost and reduced mana usage (-5) for each summoned flame.");
-        }
         public override bool? CanAutoReuseItem(Player player)
         {
             return true;
@@ -27,12 +23,9 @@ namespace KirillandRandom.Items
             player.GetModPlayer<MPlayer>().angle += 3f;
             if (player.GetModPlayer<ItemDrawPlayer>().flyingItemDraw == false)
             {
-                //player.GetModPlayer<MPlayer>().BookCreated = true;
-
                 player.GetModPlayer<ItemDrawPlayer>().flyingItemDraw = true;
                 player.GetModPlayer<ItemDrawPlayer>().flyingItemAsset = ModContent.Request<Texture2D>("KirillandRandom/Items/LastFlame");
                 player.GetModPlayer<ItemDrawPlayer>().itemLookForForDrawing = Item;
-                //Projectile.NewProjectile(player.GetSource_ItemUse(Item),new Vector2(player.position.X, player.position.Y), new Vector2(0, 0), ModContent.ProjectileType<LastFlameBook>(), 0, 0, player.whoAmI); //owner.rangedDamage is basically the damage multiplier for ranged weapons
             }
             base.HoldItem(player);
         }
@@ -91,8 +84,6 @@ namespace KirillandRandom.Items
             Item.autoReuse = true;
         }
 
-
-
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -102,7 +93,5 @@ namespace KirillandRandom.Items
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
-
-
     }
 }

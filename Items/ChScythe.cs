@@ -24,7 +24,7 @@ namespace KirillandRandom.Items
             if (Player.altFunctionUse != 2)
             {
                 Item.channel = false;
-                Item.shoot = ModContent.ProjectileType<Projectiles.ChScythe>();//BIG SCYTHE
+                Item.shoot = ModContent.ProjectileType<Projectiles.ChScythe>();//SHOOT
                 Item.shootSpeed = 17;
                 Item.useTime = 600;
                 Item.useStyle = ItemUseStyleID.Swing;
@@ -34,7 +34,7 @@ namespace KirillandRandom.Items
             }
             else
             {
-                Item.shoot = ModContent.ProjectileType<ChScytheSpin>();//SPINNING SCYTHE
+                Item.shoot = ModContent.ProjectileType<ChScytheSpin>();//SPINNING
                 Item.useTime = 21;
                 Item.autoReuse = false;
 

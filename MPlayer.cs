@@ -1,7 +1,4 @@
-﻿
-
-using KirillandRandom.Items;
-using KirillandRandom.Items.Armor;
+﻿using KirillandRandom.Items.Armor;
 using KirillandRandom.Items.FriendsStuff;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -331,33 +328,9 @@ namespace KirillandRandom
             clone.fireregen = fireregen;
         }
         public override void SendClientChanges(ModPlayer clientPlayer)
-        {//todo..?
-            //if (clientPlayer.Player.Hex)
+        {
             base.SendClientChanges(clientPlayer);
         }
-        //public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
-        //{
-        //    ModPacket packet = mod.GetPacket();
-        //    packet.Write((byte)ExampleModMessageType.ExamplePlayerSyncPlayer);
-        //    packet.Write((byte)Player.whoAmI);
-        //    packet.Write(flames_summoned);
-        //    packet.Send(toWho, fromWho);
-        //}
-
-        //public override void SendClientChanges(ModPlayer clientPlayer)
-        //{
-        //    // Here we would sync something like an RPG stat whenever the Player changes it.
-        //    ExamplePlayer clone = clientPlayer as ExamplePlayer;
-        //    if (clone.nonStopParty != nonStopParty)
-        //    {
-        //        // Send a Mod Packet with the changes.
-        //        var packet = mod.GetPacket();
-        //        packet.Write((byte)ExampleModMessageType.NonStopPartyChanged);
-        //        packet.Write((byte)Player.whoAmI);
-        //        packet.Write(nonStopParty);
-        //        packet.Send();
-        //    }
-        //}
     }
 
 }

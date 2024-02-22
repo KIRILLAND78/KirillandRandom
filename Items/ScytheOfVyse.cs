@@ -7,15 +7,6 @@ namespace KirillandRandom.Items
 {
     public class ScytheOfVyse : ModItem
     {
-
-        public override void SetStaticDefaults()
-        {
-
-            // DisplayName.SetDefault("Scythe Of Vyse"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-            // Tooltip.SetDefault("Turns people (players) into pigs.");
-        }
-
-
         public override void SetDefaults()
         {
             Item.mana = 200;

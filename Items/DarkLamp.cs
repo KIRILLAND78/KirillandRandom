@@ -9,22 +9,11 @@ namespace KirillandRandom.Items
 {
     public class DarkLamp : ModItem
     {
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Cursed Candle");
-            // Tooltip.SetDefault("Burns self on use.");
-        }
-
-
-
-
         public override void SetDefaults()
         {
             Item.width = 10;
             Item.height = 12;
             Item.holdStyle = 1;
-            //Item.noWet = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 120;

@@ -10,12 +10,6 @@ namespace KirillandRandom.Items
     public class SkyRapier_item : ModItem
     {
 
-        public override void SetStaticDefaults()
-        {
-
-            // DisplayName.SetDefault("Brilliancy");
-        }
-
         public override void SetDefaults()
         {
             Item.noUseGraphic = true;
@@ -26,7 +20,7 @@ namespace KirillandRandom.Items
             Item.height = 0;
             Item.useTime = 3;
             Item.useAnimation = 3;
-            Item.useStyle = ItemUseStyleID.Rapier;//Testing out new weapon anims
+            Item.useStyle = ItemUseStyleID.Rapier;
             Item.knockBack = 4;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;

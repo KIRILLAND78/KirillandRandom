@@ -29,12 +29,6 @@ namespace KirillandRandom.Projectiles
             Projectile.knockBack = 5;
         }
 
-        public override void PostDraw(Color lightColor)
-        {
-            //Main.EntitySpriteDraw(ModContent.Request<Texture2D>("KirillandRandom/Projectiles/ChScytheSpin_Glow").Value, Projectile.position-Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(0,0), Projectile.scale, SpriteEffects.None  );
-            base.PostDraw(lightColor);
-        }
-
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<Buffs.stacking_charge>(), 300);
@@ -67,10 +61,9 @@ namespace KirillandRandom.Projectiles
             Projectile.rotation = MathHelper.ToRadians(Projectile.ai[0] * p.direction);
             if (Projectile.ai[0] % 130 == 0)
             {
-                //p.heldProj = Projectile.whoAmI;
                 Projectile.timeLeft = 22;
-                p.itemTime = 20; // Set Item time to 2 frames while we are used
-                p.itemAnimation = 20; // Set Item animation time to 2 frames while we are used
+                p.itemTime = 20;
+                p.itemAnimation = 20;
             }
             if ((Projectile.ai[0] % 520 == 0) && (Projectile.ai[0] >= 250))
             {
@@ -94,7 +87,6 @@ namespace KirillandRandom.Projectiles
 
                 }
             }
-
 
             Projectile.Center = p.Center;
             if (direct == 1)

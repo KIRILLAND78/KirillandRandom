@@ -19,7 +19,6 @@ namespace KirillandRandom.Projectiles
         bool first = true;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -38,16 +37,15 @@ namespace KirillandRandom.Projectiles
         }
         public override bool PreDraw(ref Color lightColor)
         {
-                //Redraw the projectile with the color not influenced by light
-                Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f);
-                for (int k = 0; k < Projectile.oldPos.Length; k++)
-                {
-                    Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                    Color color = Color.White * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                    Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.oldRot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
-                }
-                return true;
-            
+            Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Height * 0.5f);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Color.White * ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.oldRot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            }
+            return true;
+
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -112,7 +110,6 @@ namespace KirillandRandom.Projectiles
 
             if (Projectile.position.X > Main.maxTilesX * 16 - 40) Projectile.position.X = Main.maxTilesX * 16 - 40;
             if (Projectile.position.Y > Main.maxTilesY * 16 - 40) Projectile.position.Y = Main.maxTilesY * 16 - 40;
-            //Main.NewText(Convert.ToString(Main.screenPosition.X));
             timer_d--;
             owner = Main.player[Projectile.owner];
             owner.direction = ((MathHelper.ToDegrees(Projectile.rotation) + 45) < 180 && ((MathHelper.ToDegrees(Projectile.rotation) + 45)) > 0) ? 1 : -1;
@@ -123,12 +120,6 @@ namespace KirillandRandom.Projectiles
             if (first)
             {
                 PlayerPos = owner.position;
-                //Vector2 AimFor = 150 * Vector2.Normalize(Projectile.velocity) + PlayerPos;
-                //Vector2 Diff2 = AimFor - Projectile.Center;
-                //Projectile.velocity.X = Diff2.X;
-                //Projectile.velocity.Y = Diff2.Y;
-                //Projectile.velocity.Normalize();
-                //Projectile.velocity *= 3.1f;
 
                 Projectile.light = 0.4f;
                 first = false;
@@ -140,8 +131,6 @@ namespace KirillandRandom.Projectiles
             owner.SetImmuneTimeForAllTypes(5);
             owner.Center = Projectile.Center - Projectile.velocity * 0.7f;
 
-
-            //Projectile.velocity *= 1.25f;
             if (targetd != null)
             {
                 owner.GetModPlayer<MPlayer>().targetd = targetd;
@@ -194,9 +183,6 @@ namespace KirillandRandom.Projectiles
                     GreenFl = Dust.NewDust(owner.Center, 2, 2, DustID.Clentaminator_Green, 0, 0, 0, default, 1f);
                 }
 
-                //int DDustID = Dust.NewDust(Projectile.Center - new Vector2(8, 4), 0, 0, 226, Projectile.velocity.X * 0.4f, Projectile.velocity.Y * 0.4f, 100, default, 0.2f); //Spawns dust
-                //Main.dust[DDustID].noGravity = true;
-                //Main.dust[DDustID].velocity = 1.1f * Main.dust[DDustID].velocity.RotatedByRandom(MathHelper.ToRadians(10));
 
             }
 

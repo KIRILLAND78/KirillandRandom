@@ -14,7 +14,7 @@ namespace KirillandRandom.Projectiles
         Item Book;
         public int mode = 2;
         private int first = 1;
-        
+
         public override void SetDefaults()
         {
 

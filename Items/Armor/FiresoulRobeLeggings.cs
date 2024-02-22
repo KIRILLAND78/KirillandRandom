@@ -10,8 +10,6 @@ namespace KirillandRandom.Items.Armor
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            //DisplayName.SetDefault("Somethinngg");
-            // Tooltip.SetDefault("'On Fire!' grants 8% increased damage.\r\n+20 max mana.\r\n+4% magic damage and crit chance.");
 
         }
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -23,8 +21,7 @@ namespace KirillandRandom.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.GetModPlayer<MPlayer>().fireregen = true;
-            //player.allDamage += 0.2f;
-            player.GetDamage(DamageClass.Generic) += 0.2f;//Every type of damage???
+            player.GetDamage(DamageClass.Generic) += 0.2f;
             player.setBonus = "'On Fire!' grants health regeneration. +20% damage";
         }
         public override void SetDefaults()

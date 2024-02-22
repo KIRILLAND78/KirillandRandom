@@ -36,15 +36,15 @@ namespace KirillandRandom.Projectiles
                 ADust = Dust.NewDust(Projectile.Center - new Vector2(30, 30), 60, 60, 64, 0, 0, 0, default, 1.6f);
 
             }
-                if (first >= 3)
-                {
-                    Main.player[Projectile.owner].teleporting = true;
-                    Main.player[Projectile.owner].teleportTime = 2;
+            if (first >= 3)
+            {
+                Main.player[Projectile.owner].teleporting = true;
+                Main.player[Projectile.owner].teleportTime = 2;
 
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
-                    Main.player[Projectile.owner].Teleport(Projectile.Center - new Vector2(0, 21), 6, 1);
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
+                Main.player[Projectile.owner].Teleport(Projectile.Center - new Vector2(0, 21), 6, 1);
 
-                }
+            }
 
             base.OnKill(timeLeft);
         }
@@ -57,11 +57,6 @@ namespace KirillandRandom.Projectiles
             {
                 Projectile.tileCollide = true;
             }
-            //if (owner.dead == true)
-            //{
-            //    Projectile.Kill();
-            //}
-
 
             Projectile.velocity *= 0.975f;
             Vector2 Dustt = new Vector2(1, 1);
@@ -75,7 +70,6 @@ namespace KirillandRandom.Projectiles
                 GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 62, 0, 0, 0, default, 1f);
                 GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 60, 0, 0, 0, default, 1f);
                 GreenFl = Dust.NewDust(Projectile.Center + new Vector2(-4, -4) + Dustt * 20f, 2, 2, 59, 0, 0, 0, default, 1f);
-                //Main.NewText(Convert.ToString(Projectile.velocity.ToRotation()));
 
             }
 

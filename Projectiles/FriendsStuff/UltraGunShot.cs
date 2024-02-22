@@ -2,14 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.Net;
 
 namespace KirillandRandom.Projectiles.FriendsStuff
 {
@@ -41,7 +38,6 @@ namespace KirillandRandom.Projectiles.FriendsStuff
                     return 8f;
                 }),
                 -Main.screenPosition + Projectile.Size / 2f, 20, includeBacksides: true);
-            //vertexStr.PrepareStripWithProceduralPadding(a, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
             vertexStr.DrawTrail();
 
             return false;

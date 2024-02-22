@@ -78,11 +78,9 @@ namespace KirillandRandom.Projectiles
                 miscShaderData.UseShaderSpecificData(new Vector4(multiplier, num, num2, index));
                 miscShaderData.Apply();
                 Main.graphics.GraphicsDevice.Textures[0] = ModContent.Request<Texture2D>("KirillandRandom/Visuals/white").Value;
-                //Main.graphics.GraphicsDevice.Textures[0].GraphicsDevice.BlendState.AlphaSourceBlend= Blend.DestinationAlpha;
                 var stSize = 3.6f - MathF.Abs(rnd) / 15;
 
                 float[] mv1 = new float[5] { Projectile.rotation + rot, Projectile.rotation + rot, Projectile.rotation + rot, Projectile.rotation + rot, Projectile.rotation + rot };
-                //float[] mv1 = new float[5] { Projectile.rotation + rot-0.2f, Projectile.rotation + rot - 0.2f, Projectile.rotation + rot - 0.2f, Projectile.rotation + rot - 0.2f, Projectile.rotation + rot-0.2f };
                 Vector2 center = Projectile.Center + back + to + to - Vector2.UnitX.RotatedBy(Projectile.rotation) * 12;
                 Vector2[] f1 = new Vector2[5] { center, center + to * stSize, center + to * stSize * 2, center + to * stSize * 3, center + to * stSize * 4 };
                 vertexStr.PrepareStrip(f1, mv1,
@@ -151,20 +149,7 @@ namespace KirillandRandom.Projectiles
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            /* //DAMN
-            for (int i = -1; i<=1; i++)
-            {
-                for (int j = 0; j<4; j++)
-                {
-                    var _f = Projectile.Center+ Vector2.UnitX.RotatedBy(Projectile.rotation + (i * 0.1f))*j*5;
-                    var f = new Rectangle((int)_f.X, (int)_f.Y, 1,1);
-                }
-            }
-            */
             return targetHitbox.IntersectsConeSlowMoreAccurate(Main.player[Projectile.owner].Center, 140f, Projectile.rotation + 0.785f, 0.25f);
-
-            return false;
-            //return base.Colliding(projHitbox, targetHitbox);
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {

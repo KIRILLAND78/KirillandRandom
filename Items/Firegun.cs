@@ -8,16 +8,6 @@ namespace KirillandRandom.Items
 {
     public class Firegun : ModItem
     {
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Nethersong");
-            // Tooltip.SetDefault("Spreads fire in a cone.\r\nUses gel for ammo\r\nWIP!\r\n20% chance to not consume ammo");
-        }
-
-
-
-
         public override void SetDefaults()
         {
             Item.useAmmo = AmmoID.Gel;

@@ -7,10 +7,6 @@ namespace KirillandRandom.Items
     [AutoloadEquip(EquipType.Head)]
     public class FamiliarHelmet : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Familiar Helmet");
-        }
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Green;

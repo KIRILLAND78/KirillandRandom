@@ -9,8 +9,6 @@ namespace KirillandRandom.Buffs
         {
             Main.lightPet[Type] = false;
             Main.debuff[Type] = false;
-            // DisplayName.SetDefault("Protected");
-            // Description.SetDefault("+20 defense\r\nYou feel much safer.");
             Main.buffNoTimeDisplay[Type] = false;
             base.SetStaticDefaults();
         }
