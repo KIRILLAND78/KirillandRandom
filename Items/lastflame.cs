@@ -20,7 +20,7 @@ namespace KirillandRandom.Items
         public override void HoldItem(Player player)
         {
 
-            player.GetModPlayer<MPlayer>().angle += 3f;
+            player.GetModPlayer<MPlayer>().angle += 1.2f;
             if (player.GetModPlayer<ItemDrawPlayer>().flyingItemDraw == false)
             {
                 player.GetModPlayer<ItemDrawPlayer>().flyingItemDraw = true;
@@ -29,12 +29,25 @@ namespace KirillandRandom.Items
             }
             base.HoldItem(player);
         }
-
+        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                mult = 0;
+                return;
+            }
+            else
+            {
+                reduce-= (player.GetModPlayer<MPlayer>().flames_summoned-1) * 0.12f;
+            }
+            base.ModifyManaCost(player, ref reduce, ref mult);
+        }
         public override bool CanUseItem(Player Player)
         {
-            if (Player.altFunctionUse != 2)
+            if ((Player.altFunctionUse != 2) && (Player.GetModPlayer<MPlayer>().flames_summoned < 4))
             {
-                if ((Player.statMana >= (30 - Player.GetModPlayer<MPlayer>().flames_summoned * 5)) && (Player.GetModPlayer<MPlayer>().flames_summoned < 4))
+                //if ((Player.statMana >= (30 - Player.GetModPlayer<MPlayer>().flames_summoned * 5)))
+                //if ((Player.statMana >= (30 - Player.GetModPlayer<MPlayer>().flames_summoned * 5)))
                 {
                     Item.shoot = ProjectileID.None;
                     if (Player.GetModPlayer<MPlayer>().flames_summoned < 4)
@@ -42,7 +55,7 @@ namespace KirillandRandom.Items
                         Item.shoot = ModContent.ProjectileType<LastFlameBolt>();
                         Player.GetModPlayer<MPlayer>().flames_summoned += 1;
                     }
-                    Item.mana = 30 - Player.GetModPlayer<MPlayer>().flames_summoned * 5;
+                    //Item.mana = 30 - Player.GetModPlayer<MPlayer>().flames_summoned * 5;
                     Item.useTime = 30;
                     Item.useAnimation = 30;
                     Item.useStyle = ItemUseStyleID.HoldUp;
@@ -54,8 +67,8 @@ namespace KirillandRandom.Items
             }
             else
             {
-
-                Item.mana = 0;
+                Player.altFunctionUse = 2;
+                //Item.mana = 0;
                 Player.GetModPlayer<MPlayer>().flames_summoned = 0;
                 Item.shoot = ProjectileID.None;
                 Item.useTime = 5;

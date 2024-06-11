@@ -133,7 +133,7 @@ Items: {
 
 	LastFlame: {
 		DisplayName: Last Flame
-		Tooltip: Right click to release flames. +5 damage and reduced mana usage (-5) for each summoned flame
+		Tooltip: Right click to release flames. +5 damage and reduced mana usage (-12%) for each summoned flame
 	}
 
 	ScytheOfVyse: {

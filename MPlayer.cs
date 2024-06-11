@@ -13,6 +13,7 @@ namespace KirillandRandom
 {
     class MPlayer : ModPlayer
     {
+        public float thisIsKindOfDumbToBeHonest;
         public int WatSoulMode = 0;
         public Projectile WatSoulHelper = null;
         public bool ThankYouThoriumDev = true;
@@ -297,6 +298,7 @@ namespace KirillandRandom
 
         public override void PreUpdate()
         {
+            thisIsKindOfDumbToBeHonest++;
             if (coin < 3)
                 coinTimer++;
             if (coinTimer > 100)
