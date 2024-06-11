@@ -9,7 +9,6 @@ namespace KirillandRandom.Projectiles
 {
     public class Firegun_damage_zone : ModProjectile
     {
-        Random rnd = new Random();
         public int timer = 0;
 
         public override void SetDefaults()
@@ -45,7 +44,7 @@ namespace KirillandRandom.Projectiles
             }
             if (timer >= 2)
             {
-                if (rnd.Next(3) == 2)
+                if (Main.rand.Next(3) == 2)
                 {
 
                     int DDustID2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0, 0, 50, default(Color), 6f); //Spawns dust
