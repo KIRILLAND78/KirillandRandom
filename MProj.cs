@@ -18,7 +18,7 @@ namespace KirillandRandom
         }
         public override bool CanHitPlayer(Projectile projectile, Player target)
         {
-            if (target.whoAmI == projectile.owner)
+            if ((target.whoAmI == projectile.owner) && (projectile.type == ProjectileID.BlandWhip))
             {
                 return false;
             }

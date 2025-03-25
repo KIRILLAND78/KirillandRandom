@@ -14,6 +14,8 @@ Code cleanups and optimisations!
 Secret feature!?
 Hooray!
 
+0.20.2 - Bugfixes, one more rework.
+
 "Just ship it now, take care of bugs later" - My friend apparently.
 
 Probably contain some bugs. Please report if you found any.
