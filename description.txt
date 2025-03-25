@@ -14,7 +14,7 @@ Code cleanups and optimisations!
 Secret feature!?
 Hooray!
 
-0.20.2 - Bugfixes, one more rework.
+0.20.3 - Easy mode for players which should help newer players that get dragged right into expert mode by more experienced players.
 
 "Just ship it now, take care of bugs later" - My friend apparently.
 

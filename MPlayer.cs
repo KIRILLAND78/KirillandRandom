@@ -26,6 +26,7 @@ namespace KirillandRandom
         public float angle;
         public bool EyeOfDeath { get { return eyeofdeath; } set { eyeofdeath = value; if (value == true) { Player.Hurt(PlayerDeathReason.LegacyEmpty(), Player.statLife / 2, 0); } } }
         public bool eyeofdeath;
+        public bool easyMode;
         public bool fireregen;
         public float fireamplification;
         public bool flamingdedication;
@@ -52,10 +53,12 @@ namespace KirillandRandom
         public override void SaveData(TagCompound saveCompound)
         {
             saveCompound.Set("eyeofdeath", eyeofdeath);
+            saveCompound.Set("easyMode", easyMode);
         }
         public override void LoadData(TagCompound tag)
         {
             eyeofdeath = tag.GetBool("eyeofdeath");
+            easyMode = tag.GetBool("easyMode");
         }
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
@@ -249,7 +252,9 @@ namespace KirillandRandom
         }
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {
-
+            if (easyMode){
+                modifiers.IncomingDamageMultiplier*=0.7f;
+            }
             if ((eyeofdeath == true) && (modifiers.FinalDamage.Flat < 30) && (modifiers.DamageSource.SourceOtherIndex != 3))
             {
                 Player.immune = true;
@@ -279,23 +284,13 @@ namespace KirillandRandom
         {
             if (fireregen)
             {
-
                 if (Player.onFire == true)
                 {
                     Player.lifeRegen = +16;
-
-
                 }
-
-
-
             }
-
             base.UpdateLifeRegen();
         }
-
-
-
         public override void PreUpdate()
         {
             thisIsKindOfDumbToBeHonest++;

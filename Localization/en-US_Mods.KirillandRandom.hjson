@@ -189,6 +189,11 @@ Items: {
 		DisplayName: Console
 		Tooltip: ":(){ :|:& };:"
 	}
+
+	EasyModeItem: {
+		DisplayName: Easy Mode
+		Tooltip: Decreases damage taken by 30%
+	}
 }
 
 Projectiles: {

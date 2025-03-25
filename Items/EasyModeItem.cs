@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace KirillandRandom.Items
 {
-    public class EyeOfDeath : ModItem
+    public class EasyModeItem : ModItem
     {
         public override void SetDefaults()
         {
@@ -12,8 +12,8 @@ namespace KirillandRandom.Items
             Item.useAnimation = 20;
             Item.width = 30;
             Item.height = 30;
-            Item.value = Item.sellPrice(gold: 1);
-            Item.rare = ItemRarityID.Red;
+            Item.value = Item.sellPrice(0);
+            Item.rare = ItemRarityID.Blue;
         }
 
 
@@ -28,13 +28,18 @@ namespace KirillandRandom.Items
                     return false;
                 }
             }
-            player.GetModPlayer<MPlayer>().eyeofdeath = !player.GetModPlayer<MPlayer>().eyeofdeath;
+            player.GetModPlayer<MPlayer>().easyMode = !player.GetModPlayer<MPlayer>().easyMode;
+            Main.NewText(player.GetModPlayer<MPlayer>().easyMode?"Easy mode activated":"Easy mode deactivated");
             return true;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.WallOfFleshBossBag, 1)
+                .AddIngredient(ItemID.IronBar, 1)
+                .AddTile(TileID.Anvils)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.LeadBar, 1)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
