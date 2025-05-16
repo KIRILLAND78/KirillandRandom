@@ -1,0 +1,227 @@
+Buffs: {
+	Hexed: {
+		DisplayName: Проклят
+		Description:
+			'''
+			-60 защиты
+			Вы превращены в безвредное существо!
+			Вы не можете атаковать и ваши крылья отключены
+			'''
+	}
+
+	stacking_charge: {
+		DisplayName: Волновой Заряд
+		Description: Вы содержите в себе волновой заряд
+	}
+
+	WorkFasterDamn: {
+		DisplayName: Кожанный Хлыст!
+		Description: Увеличена скорость копания увеличена
+	}
+
+	LinkProtection: {
+		Description: Mods.KirillandRandom.Buffs.LinkProtection.Description
+		DisplayName: Link Protection
+	}
+}
+
+Items: {
+	FiresoulRobe: {
+		DisplayName: Роба огненной души
+		Tooltip:
+			'''
+			'В огне!' увеличивает урон на 10%
+			Увеличивает максимальный запас маны на 40
+			Увеличивает магический урон и шанс критического урона на 2%
+			'''
+	}
+
+	FiresoulRobeHood: {
+		DisplayName: Капюшон огненной души
+		Tooltip:
+			'''
+			'В огне!' увеличивает урон на 6%
+			Увеличивает максимальный запас маны на 40
+			Увеличивает магический урон и шанс критического урона на 6%
+			'''
+	}
+
+	FiresoulRobeLeggings: {
+		DisplayName: Поножи огненной души
+		Tooltip:
+			'''
+			'В огне!' увеличивает урон на 8%
+			Увеличивает максимальный запас маны на 20
+			Увеличивает магический урон и шанс критического урона на 4%
+			'''
+	}
+
+	ChScythe: {
+		DisplayName: Волновая Искра
+		Tooltip:
+			'''
+			Накладывает 'Волновой Заряд' на противников
+			Увеличивает урон на 40 (для атак левым кликом) за каждый стак заряда на противнике
+			'''
+	}
+
+	DarkLamp: {
+		DisplayName: Проклятая свеча
+		Tooltip: Накладывает 'В огне!' на себя при использовании
+	}
+
+	ElderStaff: {
+		DisplayName: Кристальный посох
+		Tooltip: '''
+		Мама, можно нам Жезл Раздора?
+		У нас уже есть Жезл Раздора
+		Жезл Раздора дома:
+		'''
+	}
+
+	EyeOfDeath: {
+		DisplayName: Рубиновый глаз
+		Tooltip:
+			'''
+			Ваше здоровье не может превышать половину
+			Увеличивает урон на 30%
+			Невозможно использовать, пока существует босс
+			'''
+	}
+
+	FamiliarHelmet: {
+		DisplayName: Знакомый шлем
+		Tooltip: "..."
+	}
+
+	FierySilk: {
+		DisplayName: Огненный шелк
+		Tooltip: Кажется, регенерирует в огне
+	}
+
+	Firegun: {
+		DisplayName: Адская Песнь
+		Tooltip:
+			'''
+			Распыляет огонь в конусе
+			Использует гель в качестве боеприпасов
+			20% шанс не использовать боеприпасы
+			'''
+	}
+
+	firering: {
+		DisplayName: Рубиновое кольцо
+		Tooltip:
+			'''
+			Каждая атака поджигает на 1 секунду
+			Получение урона поджигает атакующего на две секунды
+			Получение урона также поджигает носителя на две секунды
+			'''
+	}
+
+	CirnoIceWings: {
+		DisplayName: Ледяные крылья
+		Tooltip: Сильнейшая
+	}
+
+	TimelessHat: {
+		DisplayName: Вневременная шляпа
+		Tooltip: Видимо, потеряно путешественником во времени
+	}
+
+	TimelessUmbrella: {
+		DisplayName: Вневременной зонтик
+		Tooltip: Видимо, потерян путешественником во времени
+	}
+
+	LastFlame: {
+		DisplayName: Последний Огонёк
+		Tooltip: '''
+		Правый клик выпускает огни преждевременно
+		Увеличенный на 5 урон и уменьшение использование маны на 12.5% за каждый существующий огонек
+		'''
+	}
+
+	ScytheOfVyse: {
+		DisplayName: Коса Мудреца
+		Tooltip: Превращает игроков в безвредных существ
+	}
+
+	SkyRapier_item: {
+		DisplayName: Блеск
+		Tooltip:
+			'''
+			Мама, можно нам Звёздный Свет?
+			У нас уже есть Звёздный Свет дома
+			Звёздный Свет дома:
+			'''
+	}
+
+	StoneCrusher: {
+		DisplayName: Stone Crusher
+		Tooltip: You shouldn't be seeing this.
+	}
+
+	TouhouKnives: {
+		DisplayName: Серебряные Ножи
+		Tooltip:
+			'''
+			Правый клик создает дополнительные снаряды вокруг уже существующих
+			Никогда о ней не слышал.
+			'''
+	}
+
+	UmbraFlame: {
+		DisplayName: Внутренний Огонёк
+		Tooltip:  '''
+		Правый клик выпускает огни преждевременно
+		Увеличенный на 16 урон за каждый существующий круг огней
+		'''
+	}
+
+	UndeadSword: {
+		DisplayName: Хранитель души
+		Tooltip: Невозможно использовать, пока действует 'Истощение маны'
+	}
+
+	RobloxSvd: {
+		DisplayName: Винтовка Фантомов
+		Tooltip: ""
+	}
+
+	UltraGun: {
+		DisplayName: Револьер Стрелка
+		Tooltip: Каждый рикошет увеличивает урон на 20%
+	}
+
+	Glitch: {
+		DisplayName: Консоль
+		Tooltip: ":(){ :|:& };:"
+	}
+
+	EasyModeItem: {
+		DisplayName: Облегченный режим
+		Tooltip: '''
+		Для тех случаев, когда вы запускаете режим эксперта и понимаете, что для новичка, играющего с вами, может быть слишком тяжело
+		При активации уменьшает получаемый урон на 30%
+		Активируется для каждого игрока отдельно
+		'''
+	}
+}
+
+Projectiles: {
+	ChScythe.DisplayName: Волновая Искра
+	ChScytheSpin.DisplayName: Волновая Искра
+	DarkLampLight.DisplayName: Свет Проклятой Свечи
+	ElderStaffProjectile.DisplayName: Кристальный посох
+	Firegun_damage_zone.DisplayName: Адская Песнь
+	Hex.DisplayName: Проклятие
+	LastFlameBolt.DisplayName: Последний Огонёк
+	SkyRapier.DisplayName: Блеск
+	TouhouKnives_proj.DisplayName: Серебряный Нож
+	UmbraFlameBolt.DisplayName: Внутренний Огонёк
+	UndeadSlash.DisplayName: Хранитель Души
+	UltraGunCoin.DisplayName: Монетка
+	UltraGunShot.DisplayName: Bullet
+	GlitchProjectile.DisplayName: Консольная команда
+}

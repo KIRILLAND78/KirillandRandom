@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -84,6 +85,7 @@ namespace KirillandRandom
         }
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            //Filters.Scene.Activate("MyMod:Shockwave", Player.Center).GetShader().UseColor(3, 5, 15).UseTargetPosition(Player.Center);
             if (Hexed)
             {
                 return false;
@@ -121,6 +123,12 @@ namespace KirillandRandom
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            //if (Main.netMode != NetmodeID.Server && Filters.Scene["MyMod:Shockwave"].IsActive())
+            //{
+            //    Main.NewText(Main.timeForVisualEffects);
+            //    float progress = (((int)Main.timeForVisualEffects) % 60) / 60f;
+            //    Filters.Scene["MyMod:Shockwave"].GetShader().UseProgress(progress).UseOpacity(420 * (1 - progress));
+            //}
             if ((drawInfo.shadow == 0f) && (Player.HeldItem.type == ModContent.ItemType<UltraGun>()))
             {
                 if (coin == 3)
@@ -252,8 +260,9 @@ namespace KirillandRandom
         }
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {
-            if (easyMode){
-                modifiers.IncomingDamageMultiplier*=0.7f;
+            if (easyMode)
+            {
+                modifiers.IncomingDamageMultiplier *= 0.7f;
             }
             if ((eyeofdeath == true) && (modifiers.FinalDamage.Flat < 30) && (modifiers.DamageSource.SourceOtherIndex != 3))
             {

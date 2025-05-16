@@ -5,7 +5,7 @@ Buffs: {
 			'''
 			-60 defense
 			You are transformed into harmless critter!
-			You can't attack and your wings are disabled.
+			You can't attack and your wings are disabled
 			'''
 	}
 
@@ -15,7 +15,7 @@ Buffs: {
 	}
 
 	WorkFasterDamn: {
-		DisplayName: Leather Whip
+		DisplayName: Leather Whip!
 		Description: Increased mining speed
 	}
 
@@ -30,9 +30,9 @@ Items: {
 		DisplayName: Firesoul Robe
 		Tooltip:
 			'''
-			'On Fire!' grants 10% increased damage.
-			+40 max mana.
-			+2% magic damage and crit chance.
+			'On Fire!' grants 10% increased damage
+			Increases max mana by 40
+			Increases magic damage and crit chance by 2% 
 			'''
 	}
 
@@ -40,9 +40,9 @@ Items: {
 		DisplayName: Firesoul Robe Hood
 		Tooltip:
 			'''
-			'On Fire!' grants 6% increased damage.
-			+40 max mana.
-			+6% magic damage and crit chance.
+			'On Fire!' grants 6% increased damage
+			Increases max mana by 40
+			Increases magic damage and crit chance by 6% 
 			'''
 	}
 
@@ -50,18 +50,18 @@ Items: {
 		DisplayName: Firesoul Robe Leggings
 		Tooltip:
 			'''
-			'On Fire!' grants 8% increased damage.
-			+20 max mana.
-			+4% magic damage and crit chance.
+			'On Fire!' grants 8% increased damage
+			Increases max mana by 20
+			Increases magic damage and crit chance by 4%
 			'''
 	}
 
 	ChScythe: {
-		DisplayName: Spark
+		DisplayName: Waving Spark
 		Tooltip:
 			'''
-			Charge enemies with right click.
-			+40 bonus damage (for left click attack) for each stored charge on enemy.
+			Inflicts 'Stacking Charge' debuff with right click
+			Increased damage by 40 (for left click attack) for each 'Stacking Charge' stack on enemy
 			'''
 	}
 
@@ -72,35 +72,39 @@ Items: {
 
 	ElderStaff: {
 		DisplayName: Crystal staff
-		Tooltip: Discount rod of discord.
+		Tooltip: '''
+		Mom, can we have Rod of Discord?
+		We have Rod of Discord at home
+		Rod of Discord at home:
+		'''
 	}
 
 	EyeOfDeath: {
 		DisplayName: Ruby Eye
 		Tooltip:
 			'''
-			Your hp is limited to half of maximum hp.
+			Your hp is limited to half of maximum hp
 			Increases your damage by 30%
-			Ignore instances of damage that would deal less than 30 hp.
-			Can't use during bossfights.
+			Ignore instances of damage that would deal less than 30 hp
+			Can't use while boss is alive
 			'''
 	}
 
 	FamiliarHelmet: {
 		DisplayName: Familiar Helmet
-		Tooltip: ""
+		Tooltip: "..."
 	}
 
 	FierySilk: {
 		DisplayName: Fiery Silk
-		Tooltip: Seems to regenerate from fire.
+		Tooltip: Seems to regenerate from fire
 	}
 
 	Firegun: {
 		DisplayName: Nethersong
 		Tooltip:
 			'''
-			Spreads fire in a cone.
+			Spreads fire in a cone
 			Uses gel for ammo
 			20% chance to not consume ammo
 			'''
@@ -110,9 +114,9 @@ Items: {
 		DisplayName: Ruby Ring
 		Tooltip:
 			'''
-			Every attack inflicts 'On Fire!' for a second.
-			Taking damage sets melee attacker 'On Fire!' for two seconds.
-			Taking damage also inflict 'On Fire!' on you for two second.
+			Every attack inflicts 'On Fire!' for 1 second
+			Taking damage sets melee attacker 'On Fire!' for 2 seconds
+			Taking damage also inflict 'On Fire!' on wielder for 2 second
 			'''
 	}
 
@@ -133,12 +137,15 @@ Items: {
 
 	LastFlame: {
 		DisplayName: Last Flame
-		Tooltip: Right click to release flames. +5 damage and reduced mana usage (-12%) for each summoned flame
+		Tooltip: '''
+		Right click to release flames
+		+5 damage and reduced mana usage (-12%) for each summoned flame
+		'''
 	}
 
 	ScytheOfVyse: {
-		DisplayName: Scythe Of Vyse
-		Tooltip: Turns people (players) into harmless critters
+		DisplayName: Scythe Of Wise
+		Tooltip: Turns players into harmless critters
 	}
 
 	SkyRapier_item: {
@@ -146,7 +153,7 @@ Items: {
 		Tooltip:
 			'''
 			Mom, can we have Starlight?
-			We have Starlight at home.
+			We have Starlight at home
 			Starlight at home:
 			'''
 	}
@@ -160,19 +167,22 @@ Items: {
 		DisplayName: Silver Knives
 		Tooltip:
 			'''
-			Right clicking spawns additional projectiles around existing ones.
-			Sakuya? Never heard about her.
+			Right clicking spawns additional projectiles around existing ones
+			Never heard about her
 			'''
 	}
 
 	UmbraFlame: {
 		DisplayName: Inner Flame
-		Tooltip: Right click to release flames. +16 damage boost for each summoned circle of flames
+		Tooltip: '''
+		Right click to release flames
+		+16 damage each summoned circle of flames
+		'''
 	}
 
 	UndeadSword: {
 		DisplayName: Soul Guardian
-		Tooltip: Cannot be used while Mana Sickness is active
+		Tooltip: Cannot be used while 'Mana Sickness' is active
 	}
 
 	RobloxSvd: {
@@ -192,19 +202,23 @@ Items: {
 
 	EasyModeItem: {
 		DisplayName: Easy Mode
-		Tooltip: Decreases damage taken by 30%
+		Tooltip: '''
+		For times, when you start an expert world and then you realise it might be too hard for first-time players
+		Decreases damage taken by 30% when activated
+		Must be activated individually for each player
+		'''
 	}
 }
 
 Projectiles: {
-	ChScythe.DisplayName: Spark
-	ChScytheSpin.DisplayName: Spark
+	ChScythe.DisplayName: Waving Spark
+	ChScytheSpin.DisplayName: Waving Spark
 	DarkLampLight.DisplayName: Cursed Candle Light
 	ElderStaffProjectile.DisplayName: Crystal Staff
 	Firegun_damage_zone.DisplayName: Nethersong
 	Hex.DisplayName: Hex
 	LastFlameBolt.DisplayName: Last Flame Bolt
-	SkyRapier.DisplayName: Sky Rapier
+	SkyRapier.DisplayName: Brilliance
 	TouhouKnives_proj.DisplayName: Silver Knife
 	UmbraFlameBolt.DisplayName: Inner Flame Bolt
 	UndeadSlash.DisplayName: Soul Guardian

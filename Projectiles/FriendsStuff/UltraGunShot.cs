@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics;
@@ -12,34 +14,10 @@ namespace KirillandRandom.Projectiles.FriendsStuff
 {
     internal class UltraGunShot : ModProjectile
     {
-        int l = 0;
+        List<Vector2> rPos = new();
+        List<float> rDir = new();
         public override bool PreDraw(ref Color lightColor)
         {
-            var miscShaderData = GameShaders.Misc["FlameLash"];
-            miscShaderData.Apply();
-            Main.graphics.GraphicsDevice.Textures[0] = ModContent.Request<Texture2D>("KirillandRandom/Visuals/white").Value;
-            var stSize = 60;
-            var g = Projectile.velocity.AngleFrom(Vector2.Zero);
-            float[] mv1 = new float[5] { g, g, g, g, g };
-
-            var rt = Vector2.UnitX.RotatedBy(mv1[0]);
-            rt = Projectile.velocity;
-            rt.Normalize();
-            Vector2[] f1 = new Vector2[5] { Projectile.position, Projectile.position + (rt * stSize * -1), Projectile.position + (rt * stSize * -2), Projectile.position + (rt * stSize * -3), Projectile.position + (rt * stSize * -4) };
-
-            var vertexStr = new VertexStrip();
-            vertexStr.PrepareStrip(Projectile.oldPos, Projectile.oldRot,
-                ((float progress) =>
-                {
-                    return Color.Gold * 0.95f;
-                }),
-                ((float progress) =>
-                {
-                    return 8f;
-                }),
-                -Main.screenPosition + Projectile.Size / 2f, 20, includeBacksides: true);
-            vertexStr.DrawTrail();
-
             return false;
         }
         public override void SetStaticDefaults()
@@ -74,6 +52,9 @@ namespace KirillandRandom.Projectiles.FriendsStuff
         public override void AI()
         {
             //Main.NewText(Main.netMode);
+
+            if ((Main.netMode == NetmodeID.SinglePlayer) || (Projectile.owner == Main.myPlayer)){
+            }
             if ((Main.netMode == NetmodeID.SinglePlayer) || (Projectile.owner == Main.myPlayer))
                 for (var i = 0; i < Main.maxProjectiles; i++)
                 {
@@ -116,7 +97,7 @@ namespace KirillandRandom.Projectiles.FriendsStuff
                                 {
                                     if (Main.npc[j].active && (!Main.npc[j].dontTakeDamage) && (!Main.npc[j].friendly) && (closestD > (Main.npc[j].Center - Main.projectile[i].Center).Length()))
                                     {
-
+                                        
                                         closest = j;
                                         closestD = (int)(Main.npc[j].Center - Main.projectile[i].Center).Length();
                                     }
@@ -125,11 +106,15 @@ namespace KirillandRandom.Projectiles.FriendsStuff
                                 {
                                     //launch at enemy
                                     var vec = Main.npc[closest].Center - Main.projectile[i].Center;
+
+                                rDir.Add(Projectile.position.AngleFrom(rPos.Last()));
+                                    rPos.Add(Projectile.position);
                                     vec.Normalize();
                                     vec *= 24;
                                     Projectile.velocity = vec;
                                 }
                                 //do nothing
+
                             }
                             else
                             {
@@ -138,6 +123,9 @@ namespace KirillandRandom.Projectiles.FriendsStuff
                                 vec.Normalize();
                                 vec *= 24;
                                 Projectile.velocity = vec;
+
+                                rDir.Add(Projectile.position.AngleFrom(rPos.Last()));
+                                rPos.Add(Projectile.position);
                             }
                             break;
                         }
@@ -149,7 +137,16 @@ namespace KirillandRandom.Projectiles.FriendsStuff
         }
         public override void OnSpawn(IEntitySource source)
         {
+                                rDir.Add(Projectile.direction);
+                                rPos.Add(Projectile.position);
             base.OnSpawn(source);
+        }
+        public override void OnKill(int timeLeft)
+        {
+                                rDir.Add(Projectile.position.AngleFrom(rPos.Last()));
+            rPos.Add(Projectile.position);
+                            Main.player[Projectile.owner].GetModPlayer<TrailDrawModSystem>().trails.Add(new Trail(){entitySize= Projectile.Size, positions = rPos, rotations = rDir});
+            base.OnKill(timeLeft);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

@@ -16,6 +16,6 @@ Hooray!
 
 0.20.3 - Easy mode for players which should help newer players that get dragged right into expert mode by more experienced players.
 
-"Just ship it now, take care of bugs later" - My friend apparently.
+0.20.4 - Better visuals for Marksman Revolver, RU translation, EN retranslation.
 
 Probably contain some bugs. Please report if you found any.
