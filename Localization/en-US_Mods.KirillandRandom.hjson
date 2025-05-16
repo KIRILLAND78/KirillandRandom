@@ -72,11 +72,12 @@ Items: {
 
 	ElderStaff: {
 		DisplayName: Crystal staff
-		Tooltip: '''
-		Mom, can we have Rod of Discord?
-		We have Rod of Discord at home
-		Rod of Discord at home:
-		'''
+		Tooltip:
+			'''
+			Mom, can we have Rod of Discord?
+			We have Rod of Discord at home
+			Rod of Discord at home:
+			'''
 	}
 
 	EyeOfDeath: {
@@ -92,7 +93,7 @@ Items: {
 
 	FamiliarHelmet: {
 		DisplayName: Familiar Helmet
-		Tooltip: "..."
+		Tooltip: ...
 	}
 
 	FierySilk: {
@@ -137,10 +138,11 @@ Items: {
 
 	LastFlame: {
 		DisplayName: Last Flame
-		Tooltip: '''
-		Right click to release flames
-		+5 damage and reduced mana usage (-12%) for each summoned flame
-		'''
+		Tooltip:
+			'''
+			Right click to release flames
+			+5 damage and reduced mana usage (-12%) for each summoned flame
+			'''
 	}
 
 	ScytheOfVyse: {
@@ -174,10 +176,11 @@ Items: {
 
 	UmbraFlame: {
 		DisplayName: Inner Flame
-		Tooltip: '''
-		Right click to release flames
-		+16 damage each summoned circle of flames
-		'''
+		Tooltip:
+			'''
+			Right click to release flames
+			+16 damage each summoned circle of flames
+			'''
 	}
 
 	UndeadSword: {
@@ -202,11 +205,12 @@ Items: {
 
 	EasyModeItem: {
 		DisplayName: Easy Mode
-		Tooltip: '''
-		For times, when you start an expert world and then you realise it might be too hard for first-time players
-		Decreases damage taken by 30% when activated
-		Must be activated individually for each player
-		'''
+		Tooltip:
+			'''
+			For times, when you start an expert world and then you realise it might be too hard for first-time players
+			Decreases damage taken by 30% when activated
+			Must be activated individually for each player
+			'''
 	}
 }
 

@@ -16,8 +16,8 @@ namespace KirillandRandom
             if (Main.netMode != NetmodeID.Server)
             {
 
-                Asset<Effect> filterShader = this.Assets.Request<Effect>("Shaders/rain");
-                Asset<Effect> filterShader2 = this.Assets.Request<Effect>("Shaders/Shockwave");
+                //Asset<Effect> filterShader = this.Assets.Request<Effect>("Shaders/rain");
+                //Asset<Effect> filterShader2 = this.Assets.Request<Effect>("Shaders/Shockwave");
 
 
                 //Filters.Scene["MyMod:FilterName"] = new Filter(new ScreenShaderData(filterShader, "PixelShaderFunction"), EffectPriority.Medium);
